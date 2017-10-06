@@ -67,7 +67,29 @@ class MasterViewController: UITableViewController {
 				"grid_960x640.heic",
 				"starfield_animation.heic",
 				"sea1_animation.heic",
-			]
+				]
+		),
+		ExampleList(
+			name: "Performance",
+			filenames: [
+				"interlaced.jpeg",
+				"progressive.jpeg",
+				"animated.gif",
+				"animated.png",
+				"spring_1440x960.heic",
+				"autumn_1440x960.heic",
+				"winter_1440x960.heic",
+				"dog.heic",
+				"yard.heic",
+				"season_collection_1440x960.heic",
+				"random_collection_1440x960.heic",
+				"alpha_1440x960.heic",
+				"bird_burst.heic",
+				"grid_960x640.heic",
+				"starfield_animation.heic",
+				"sea1_animation.heic",
+			],
+			detailViewControllerType: MetricsViewController.self
 		),
 	]
 	
