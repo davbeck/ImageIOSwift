@@ -88,12 +88,21 @@ public struct ImageSource {
 	
 	// MARK: - Metadata
 	
+	public func status() -> CGImageSourceStatus {
+		return CGImageSourceGetStatus(cgImageSource)
+	}
+	
 	public func status(at index: Int) -> CGImageSourceStatus {
 		return CGImageSourceGetStatusAtIndex(cgImageSource, index)
 	}
 	
 	public var count: Int {
-		return CGImageSourceGetCount(cgImageSource)
+		switch self.status(at: 0) {
+		case .readingHeader, .unexpectedEOF:
+			return 0
+		default:
+			return CGImageSourceGetCount(cgImageSource)
+		}
 	}
 	
 	public func properties(options: ImageOptions? = nil) -> Properties? {

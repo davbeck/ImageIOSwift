@@ -21,6 +21,27 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		imageSourceView.isAnimationEnabled = true
+		
+		statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: statusLabel, name: "Status")
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		if imageSource?.status() != .complete {
+			incrementTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(incrementImage), userInfo: nil, repeats: true)
+		}
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		incrementTimer = nil
+	}
+	
+	override func loadImageSource() {
 		guard
 			let url = Bundle.main.url(forResource: filename, withExtension: nil),
 			let data = try? Data(contentsOf: url)
@@ -30,10 +51,9 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 		}
 		self.data = data
 		
-		imageSourceView.imageSource = ImageSource.incremental()
+		imageSource = ImageSource.incremental()
 		
 		progress = 0
-		incrementTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(incrementImage), userInfo: nil, repeats: true)
 	}
 	
 	private var data = Data()
@@ -58,7 +78,7 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 		imageSource.update(Data(chunk), isFinal: chunk.count == data.count)
 		
 		let percent = Int(round(Double(chunk.count) / Double(data.count) * 100))
-		self.statusLabel.text = "\(imageSource.status(at: 0)) (\(percent)%)"
+		self.statusLabel.text = "\(imageSource.status()) (\(percent)%)"
 	}
 }
 

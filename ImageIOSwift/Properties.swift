@@ -26,24 +26,18 @@ extension ImageSource {
 		}
 		
 		public var pixelWidth: CGFloat? {
-			guard let value = rawValue[kCGImagePropertyPixelWidth] as? Double else { return nil }
-			return CGFloat(value)
+			return rawValue[kCGImagePropertyPixelWidth] as? CGFloat
 		}
 		
 		public var pixelHeight: CGFloat? {
-			guard let value = rawValue[kCGImagePropertyPixelHeight] as? Double else { return nil }
-			return CGFloat(value)
-		}
-		
-		public var orientation: Int? {
-			return rawValue[kCGImagePropertyOrientation] as? Int
+			return rawValue[kCGImagePropertyPixelHeight] as? CGFloat
 		}
 		
 		public var imageSize: CGSize? {
 			guard var width = pixelWidth, var height = pixelHeight else { return nil }
 			
-			switch orientation ?? 1 {
-			case 6...8: // http://magnushoff.com/jpeg-orientation.html
+			switch tiff?.orientation ?? 1 {
+			case 5...8: // http://magnushoff.com/jpeg-orientation.html
 				swap(&width, &height)
 			default: break
 			}
@@ -116,7 +110,7 @@ extension ImageSource {
 		}
 		
 		
-		// MARK: -
+		// MARK: - PNG
 		
 		public struct PNGProperties {
 			public let rawValue: [CFString:Any]
@@ -154,6 +148,64 @@ extension ImageSource {
 			guard let rawValue = self.rawValue[kCGImagePropertyPNGDictionary] as? [CFString:Any] else { return nil }
 			
 			return PNGProperties(rawValue: rawValue)
+		}
+		
+		
+		// MARK: - JPEG
+		
+		public struct JPEGProperties {
+			public let rawValue: [CFString:Any]
+			
+			public init(rawValue: [CFString:Any]) {
+				self.rawValue = rawValue
+			}
+			
+			public var xDensity: CGFloat? {
+				return rawValue[kCGImagePropertyJFIFXDensity] as? CGFloat
+			}
+			
+			public var yDensity: CGFloat? {
+				return rawValue[kCGImagePropertyJFIFYDensity] as? CGFloat
+			}
+			
+			public var orientation: Int? {
+				return rawValue[kCGImagePropertyOrientation] as? Int
+			}
+		}
+		
+		public var jpeg: JPEGProperties? {
+			guard let rawValue = self.rawValue[kCGImagePropertyJFIFDictionary] as? [CFString:Any] else { return nil }
+			
+			return JPEGProperties(rawValue: rawValue)
+		}
+		
+		
+		// MARK: - TIFF
+		
+		public struct TIFFProperties {
+			public let rawValue: [CFString:Any]
+			
+			public init(rawValue: [CFString:Any]) {
+				self.rawValue = rawValue
+			}
+			
+			public var orientation: Int? {
+				return rawValue[kCGImagePropertyTIFFOrientation] as? Int
+			}
+			
+			public var xResolution: Int? {
+				return rawValue[kCGImagePropertyTIFFXResolution] as? Int
+			}
+			
+			public var yResolution: Int? {
+				return rawValue[kCGImagePropertyTIFFYResolution] as? Int
+			}
+		}
+		
+		public var tiff: TIFFProperties? {
+			guard let rawValue = self.rawValue[kCGImagePropertyTIFFDictionary] as? [CFString:Any] else { return nil }
+			
+			return TIFFProperties(rawValue: rawValue)
 		}
 	}
 }

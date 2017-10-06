@@ -26,12 +26,19 @@ public class ImageSourceView: UIView {
 			if let imageSource = imageSource {
 				notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource.cgImageSource, queue: .main, using: { [weak self] (notification) in
 					self?.updateImage()
+					self?.updateAnimation()
 				}))
 			}
 		}
 	}
 	
-	private var displayedIndex: Int = 0
+	private var displayedIndex: Int = 0 {
+		didSet {
+			guard displayedIndex != oldValue else { return }
+			
+			self.updateImage()
+		}
+	}
 	
 	
 	// MARK: - Animation
@@ -109,15 +116,14 @@ public class ImageSourceView: UIView {
 				elapsedTime = 0.0
 			}
 			
-			var changedFrame = false
+			var displayedIndex = view.displayedIndex
 			while elapsedTime >= currentDelayTime {
 				elapsedTime -= currentDelayTime
-				view.displayedIndex += 1
-				changedFrame = true
-				if view.displayedIndex >= image.count {
+				displayedIndex += 1
+				if displayedIndex >= image.count {
 					// Time to loop. Start infinite loops over, otherwise decrement loop count and stop if done
 					if isInfiniteLoop {
-						view.displayedIndex = 0
+						displayedIndex = 0
 					} else {
 						remainingLoopCount -= 1
 						if remainingLoopCount == 0 {
@@ -126,15 +132,12 @@ public class ImageSourceView: UIView {
 								view.updateAnimation()
 							}
 						} else {
-							view.displayedIndex = 0
+							displayedIndex = 0
 						}
 					}
 				}
 			}
-			
-			if changedFrame {
-				view.updateImage()
-			}
+			view.displayedIndex = displayedIndex
 		}
 	}
 	
@@ -153,14 +156,20 @@ public class ImageSourceView: UIView {
 	}
 	
 	private func shouldAnimate() -> Bool {
+		guard let imageSource = imageSource else { return false }
+		
 		let isShown = window != nil && superview != nil && !isHidden && alpha > 0.0
-		return isShown && imageSource != nil && isAnimationEnabled
+		return isShown && isAnimationEnabled && imageSource.count > 1
 	}
 	
 	private func updateAnimation() {
-		if shouldAnimate() {
-			if animationController == nil {
-				animationController = AnimationController(view: self)
+		if let imageSource = imageSource, shouldAnimate() {
+			if imageSource.status() == .complete {
+				if animationController == nil {
+					animationController = AnimationController(view: self)
+				}
+			} else {
+				self.displayedIndex = imageSource.count - 1
 			}
 		} else {
 			animationController = nil
