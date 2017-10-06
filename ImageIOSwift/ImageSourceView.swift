@@ -40,6 +40,114 @@ public class ImageSourceView: UIView {
 		}
 	}
 	
+	private var displayedImage: CGImage? {
+		didSet {
+			displayView.layer.contents = displayedImage
+		}
+	}
+	
+	
+	// MARK: - Initialization
+	
+	
+	/// Used to display the current CGImage
+	///
+	/// While you could set the CGImage directly on the view's primary layer, any transformations done to the view would interfere with the transformations set for the images orientation.
+	private let displayView = UIView()
+	
+	private func commonInit() {
+		self.addSubview(displayView)
+	}
+	
+	public override init(frame: CGRect) {
+		super.init(frame: frame)
+		
+		commonInit()
+	}
+	
+	public required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		
+		commonInit()
+	}
+	
+	deinit {
+		for observer in notificationObservers {
+			notificationCenter.removeObserver(observer)
+		}
+	}
+	
+	public override func didMoveToWindow() {
+		super.didMoveToWindow()
+		updateAnimation()
+	}
+	
+	public override func didMoveToSuperview() {
+		super.didMoveToSuperview()
+		updateAnimation()
+	}
+	
+	public override var alpha: CGFloat {
+		didSet {
+			updateAnimation()
+		}
+	}
+	
+	public override var isHidden: Bool {
+		didSet {
+			updateAnimation()
+		}
+	}
+	
+	
+	// MARK: - Layout
+	
+	public override func layoutSubviews() {
+		super.layoutSubviews()
+		
+		displayView.frame = bounds
+	}
+	
+	public override var intrinsicContentSize: CGSize {
+		return imageSource?.properties(at: displayedIndex)?.imageSize ??
+			CGSize(width: UIViewNoIntrinsicMetric, height: UIViewNoIntrinsicMetric)
+	}
+	
+	public override var contentMode: UIViewContentMode {
+		didSet {
+			displayView.contentMode = contentMode
+		}
+	}
+	
+	
+	// MARK: - Updating
+	
+	func updateImage() {
+		let image = imageSource?.cgImage(at: displayedIndex)
+		self.displayedImage = image
+		
+		self.invalidateIntrinsicContentSize()
+		
+		switch imageSource?.properties(at: displayedIndex)?.orientation ?? 1 {
+		case 2:
+			self.displayView.transform = CGAffineTransform(scaleX: -1, y: 1)
+		case 3:
+			self.displayView.transform = CGAffineTransform(scaleX: -1, y: -1)
+		case 4:
+			self.displayView.transform = CGAffineTransform(scaleX: 1, y: -1)
+		case 5:
+			self.displayView.transform = CGAffineTransform(scaleX: -1, y: 1).rotated(by: .pi / 2)
+		case 6:
+			self.displayView.transform = CGAffineTransform(rotationAngle: .pi / 2)
+		case 7:
+			self.displayView.transform = CGAffineTransform(scaleX: -1, y: 1).rotated(by: -.pi / 2)
+		case 8:
+			self.displayView.transform = CGAffineTransform(rotationAngle: -.pi / 2)
+		default: // 1
+			self.displayView.transform = CGAffineTransform.identity
+		}
+	}
+	
 	
 	// MARK: - Animation
 	
@@ -178,44 +286,5 @@ public class ImageSourceView: UIView {
 	
 	public func restartAnimation() {
 		animationController = AnimationController(view: self)
-	}
-	
-	
-	// MARK: - Initialization
-	
-	deinit {
-		for observer in notificationObservers {
-			notificationCenter.removeObserver(observer)
-		}
-	}
-	
-	public override func didMoveToWindow() {
-		super.didMoveToWindow()
-		updateAnimation()
-	}
-	
-	public override func didMoveToSuperview() {
-		super.didMoveToSuperview()
-		updateAnimation()
-	}
-	
-	public override var alpha: CGFloat {
-		didSet {
-			updateAnimation()
-		}
-	}
-	
-	public override var isHidden: Bool {
-		didSet {
-			updateAnimation()
-		}
-	}
-	
-	
-	// MARK: - Updating
-	
-	func updateImage() {
-		let image = imageSource?.cgImage(at: displayedIndex)
-		self.layer.contents = image
 	}
 }
