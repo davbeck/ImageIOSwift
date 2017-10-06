@@ -123,8 +123,7 @@ public class ImageSourceView: UIView {
 	// MARK: - Updating
 	
 	func updateImage() {
-		let image = imageSource?.cgImage(at: displayedIndex)
-		self.displayedImage = image
+		self.displayedImage = imageSource?.cgImage(at: displayedIndex)
 		
 		self.invalidateIntrinsicContentSize()
 		

@@ -65,6 +65,7 @@ public struct ImageSource {
 		public var shouldCache: Bool = true
 		public var createThumbnailFromImageIfAbsent: Bool = false
 		public var createThumbnailFromImageAlways: Bool = false
+		public var thumbnailMaxPixelSize: CGFloat?
 		
 		public init() {
 			
@@ -77,12 +78,20 @@ public struct ImageSource {
 			options[kCGImageSourceCreateThumbnailFromImageIfAbsent] = createThumbnailFromImageIfAbsent
 			options[kCGImageSourceCreateThumbnailFromImageAlways] = createThumbnailFromImageAlways
 			
+			if let thumbnailMaxPixelSize = thumbnailMaxPixelSize {
+				options[kCGImageSourceThumbnailMaxPixelSize] = thumbnailMaxPixelSize
+			}
+			
 			return options as CFDictionary
 		}
 	}
 	
 	public func cgImage(at index: Int, options: ImageOptions? = nil) -> CGImage? {
 		return CGImageSourceCreateImageAtIndex(cgImageSource, index, options?.rawValue)
+	}
+	
+	public func cgThumbnailImage(at index: Int, options: ImageOptions? = nil) -> CGImage? {
+		return CGImageSourceCreateThumbnailAtIndex(cgImageSource, index, options?.rawValue)
 	}
 	
 	

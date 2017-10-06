@@ -190,8 +190,6 @@ class ImageSourceViewController: UIViewController {
 		guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else { return }
 		
 		imageSource = ImageSource(url: url)
-		
-		imageView.image = UIImage(contentsOfFile: url.path)
 	}
 	
 	@objc func updateInfo() {
@@ -200,9 +198,9 @@ class ImageSourceViewController: UIViewController {
 		} else {
 			imageSizeLabel.text = nil
 		}
-		
+
 		framesLabel.text = imageSource?.count.description
-		
+
 		propertiesLabel.text = imageSource?.properties()?.rawValue.description
 		properties0Label.text = imageSource?.properties(at: 0)?.rawValue.description
 	}

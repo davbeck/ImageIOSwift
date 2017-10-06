@@ -12,6 +12,8 @@ class MetricsViewController: ImageSourceViewController {
 	lazy var sourceTimeLabel = UILabel()
 	lazy var sizeTimeLabel = UILabel()
 	lazy var imageTimeLabel = UILabel()
+	lazy var thumbnailTimeLabel = UILabel()
+	lazy var drawThumbnailTimeLabel = UILabel()
 	lazy var drawTimeLabel = UILabel()
 	lazy var uiImageTimeLabel = UILabel()
 	
@@ -20,6 +22,10 @@ class MetricsViewController: ImageSourceViewController {
 		self.add(infoLabel: sourceTimeLabel, name: "Create Source")
 		sizeTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
 		self.add(infoLabel: sizeTimeLabel, name: "Get Size")
+		thumbnailTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: thumbnailTimeLabel, name: "Create Thumbnail")
+		drawThumbnailTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: drawThumbnailTimeLabel, name: "Draw Thumbnail")
 		imageTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
 		self.add(infoLabel: imageTimeLabel, name: "Create Image")
 		drawTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
@@ -42,6 +48,19 @@ class MetricsViewController: ImageSourceViewController {
 		let sizeDuration = -start.timeIntervalSinceNow
 		
 		start = Date()
+		var options = ImageSource.ImageOptions()
+		options.createThumbnailFromImageAlways = true
+		options.thumbnailMaxPixelSize = 300
+		guard let thumbnail = imageSource?.cgThumbnailImage(at: 0, options: options) else { return }
+		let createThumbnailDuration = -start.timeIntervalSinceNow
+		
+		UIGraphicsBeginImageContextWithOptions(thumbnail.size, true, 1)
+		start = Date()
+		UIGraphicsGetCurrentContext()?.draw(thumbnail, in: CGRect(origin: .zero, size: thumbnail.size))
+		let drawThumbnailDuration = -start.timeIntervalSinceNow
+		UIGraphicsEndImageContext()
+		
+		start = Date()
 		guard let image = imageSource?.cgImage(at: 0) else { return }
 		let createImageDuration = -start.timeIntervalSinceNow
 		
@@ -49,21 +68,21 @@ class MetricsViewController: ImageSourceViewController {
 		_ = imageSource?.cgImage(at: 0)
 		let secondCreateImageDuration = -start.timeIntervalSinceNow
 		
-		UIGraphicsBeginImageContext(size)
+		UIGraphicsBeginImageContextWithOptions(thumbnail.size, true, 1)
 		start = Date()
-		UIGraphicsGetCurrentContext()?.draw(image, in: CGRect(origin: .zero, size: size))
+		UIGraphicsGetCurrentContext()?.draw(image, in: CGRect(origin: .zero, size: thumbnail.size))
 		let drawDuration = -start.timeIntervalSinceNow
 		UIGraphicsEndImageContext()
 		
-		UIGraphicsBeginImageContext(size)
+		UIGraphicsBeginImageContextWithOptions(thumbnail.size, true, 1)
 		start = Date()
-		UIGraphicsGetCurrentContext()?.draw(image, in: CGRect(origin: .zero, size: size))
+		UIGraphicsGetCurrentContext()?.draw(image, in: CGRect(origin: .zero, size: thumbnail.size))
 		let secondDrawDuration = -start.timeIntervalSinceNow
 		UIGraphicsEndImageContext()
 		
-		UIGraphicsBeginImageContext(size)
+		UIGraphicsBeginImageContextWithOptions(thumbnail.size, true, 1)
 		start = Date()
-		UIImage(contentsOfFile: url.path)?.draw(in: CGRect(origin: .zero, size: size))
+		UIImage(contentsOfFile: url.path)?.draw(in: CGRect(origin: .zero, size: thumbnail.size))
 		let uiImageDrawTime = -start.timeIntervalSinceNow
 		UIGraphicsEndImageContext()
 		
@@ -71,6 +90,8 @@ class MetricsViewController: ImageSourceViewController {
 		sourceTimeLabel.text = "\(String(format: "%.4f", createSourceDuration))s"
 		sizeTimeLabel.text = "\(String(format: "%.4f", sizeDuration))s"
 		imageTimeLabel.text = "\(String(format: "%.4f", createImageDuration))s, \(String(format: "%.4f", secondCreateImageDuration))s"
+		thumbnailTimeLabel.text = "\(String(format: "%.4f", createThumbnailDuration))s (\(thumbnail.width)x\(thumbnail.height))"
+		drawThumbnailTimeLabel.text = "\(String(format: "%.4f", drawThumbnailDuration))s"
 		drawTimeLabel.text = "\(String(format: "%.4f", drawDuration))s, \(String(format: "%.4f", secondDrawDuration))s"
 		uiImageTimeLabel.text = "\(String(format: "%.4f", uiImageDrawTime))s"
 		
