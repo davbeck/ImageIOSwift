@@ -30,6 +30,11 @@ class PickerViewController<DetailViewController: ImageSourceViewController>: UIT
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 	}
 	
+	override func viewWillAppear(_ animated: Bool) {
+		clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
+		super.viewWillAppear(animated)
+	}
+	
 	
 	// MARK: - Table view data source
 	

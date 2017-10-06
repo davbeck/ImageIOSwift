@@ -39,7 +39,9 @@ class MasterViewController: UITableViewController {
 			name: "Animated",
 			filenames: [
 				"animated.gif",
+				"transparent.gif",
 				"animated.png",
+				"transparent.png",
 				"starfield_animation.heic",
 				"sea1_animation.heic",
 				],
@@ -73,12 +75,9 @@ class MasterViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		clearsSelectionOnViewWillAppear = true
+		
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
-		super.viewWillAppear(animated)
 	}
 	
 	
