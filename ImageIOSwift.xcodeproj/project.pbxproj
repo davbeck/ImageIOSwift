@@ -25,6 +25,13 @@
 		1158483C1F86E0EE001636BE /* AnimatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158483B1F86E0EE001636BE /* AnimatedViewController.swift */; };
 		115848401F86E116001636BE /* ImageSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158483F1F86E116001636BE /* ImageSourceViewController.swift */; };
 		115848421F86E23F001636BE /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115848411F86E23F001636BE /* PickerViewController.swift */; };
+		1160B9A91F87F1780048E71A /* TIFFProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1160B9A81F87F1780048E71A /* TIFFProperties.swift */; };
+		1160B9AB1F87F19B0048E71A /* JPEGProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1160B9AA1F87F19B0048E71A /* JPEGProperties.swift */; };
+		1160B9AD1F87F1C10048E71A /* PNGProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1160B9AC1F87F1C10048E71A /* PNGProperties.swift */; };
+		1160B9AF1F87F1DD0048E71A /* GIFProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1160B9AE1F87F1DD0048E71A /* GIFProperties.swift */; };
+		1160B9B11F87F4BC0048E71A /* IPTCProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1160B9B01F87F4BC0048E71A /* IPTCProperties.swift */; };
+		1160B9B31F87F5A80048E71A /* UIImageOrientation+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1160B9B21F87F5A80048E71A /* UIImageOrientation+Helpers.swift */; };
+		1160B9B71F87F86A0048E71A /* ImageSource+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1160B9B61F87F86A0048E71A /* ImageSource+UIKit.swift */; };
 		119143871F86F05E0053EA8F /* Portrait_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 119143771F86F05D0053EA8F /* Portrait_4.jpg */; };
 		119143881F86F05E0053EA8F /* Landscape_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 119143781F86F05D0053EA8F /* Landscape_8.jpg */; };
 		119143891F86F05E0053EA8F /* Portrait_8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 119143791F86F05D0053EA8F /* Portrait_8.jpg */; };
@@ -89,6 +96,13 @@
 		1158483B1F86E0EE001636BE /* AnimatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedViewController.swift; sourceTree = "<group>"; };
 		1158483F1F86E116001636BE /* ImageSourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSourceViewController.swift; sourceTree = "<group>"; };
 		115848411F86E23F001636BE /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
+		1160B9A81F87F1780048E71A /* TIFFProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TIFFProperties.swift; sourceTree = "<group>"; };
+		1160B9AA1F87F19B0048E71A /* JPEGProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JPEGProperties.swift; sourceTree = "<group>"; };
+		1160B9AC1F87F1C10048E71A /* PNGProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PNGProperties.swift; sourceTree = "<group>"; };
+		1160B9AE1F87F1DD0048E71A /* GIFProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIFProperties.swift; sourceTree = "<group>"; };
+		1160B9B01F87F4BC0048E71A /* IPTCProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPTCProperties.swift; sourceTree = "<group>"; };
+		1160B9B21F87F5A80048E71A /* UIImageOrientation+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageOrientation+Helpers.swift"; sourceTree = "<group>"; };
+		1160B9B61F87F86A0048E71A /* ImageSource+UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageSource+UIKit.swift"; sourceTree = "<group>"; };
 		119143771F86F05D0053EA8F /* Portrait_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Portrait_4.jpg; path = "ImageIOSwift/ExampleImages/exif-orientation-examples/Portrait_4.jpg"; sourceTree = SOURCE_ROOT; };
 		119143781F86F05D0053EA8F /* Landscape_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Landscape_8.jpg; path = "ImageIOSwift/ExampleImages/exif-orientation-examples/Landscape_8.jpg"; sourceTree = SOURCE_ROOT; };
 		119143791F86F05D0053EA8F /* Portrait_8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Portrait_8.jpg; path = "ImageIOSwift/ExampleImages/exif-orientation-examples/Portrait_8.jpg"; sourceTree = SOURCE_ROOT; };
@@ -168,6 +182,13 @@
 				113A95C51F86900C004C4F38 /* ImageSource.swift */,
 				113A95C71F869111004C4F38 /* ImageSourceView.swift */,
 				115848351F86CA56001636BE /* Properties.swift */,
+				1160B9AE1F87F1DD0048E71A /* GIFProperties.swift */,
+				1160B9AC1F87F1C10048E71A /* PNGProperties.swift */,
+				1160B9AA1F87F19B0048E71A /* JPEGProperties.swift */,
+				1160B9A81F87F1780048E71A /* TIFFProperties.swift */,
+				1160B9B01F87F4BC0048E71A /* IPTCProperties.swift */,
+				1160B9B21F87F5A80048E71A /* UIImageOrientation+Helpers.swift */,
+				1160B9B61F87F86A0048E71A /* ImageSource+UIKit.swift */,
 				1158482F1F86B079001636BE /* CGImageSourceStatus+Helpers.swift */,
 				11DCAD5A1F86E63D00598162 /* CADisplayLink+Callbacks.swift */,
 				1190478B1F86EE6200C0A516 /* ExampleImages */,
@@ -378,15 +399,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1160B9AD1F87F1C10048E71A /* PNGProperties.swift in Sources */,
+				1160B9B31F87F5A80048E71A /* UIImageOrientation+Helpers.swift in Sources */,
 				115848361F86CA57001636BE /* Properties.swift in Sources */,
 				115848401F86E116001636BE /* ImageSourceViewController.swift in Sources */,
 				113A95C61F86900C004C4F38 /* ImageSource.swift in Sources */,
+				1160B9AF1F87F1DD0048E71A /* GIFProperties.swift in Sources */,
 				115848301F86B079001636BE /* CGImageSourceStatus+Helpers.swift in Sources */,
 				115848421F86E23F001636BE /* PickerViewController.swift in Sources */,
+				1160B9A91F87F1780048E71A /* TIFFProperties.swift in Sources */,
+				1160B9B71F87F86A0048E71A /* ImageSource+UIKit.swift in Sources */,
 				113A95A81F868FF6004C4F38 /* ProgressiveLoadViewController.swift in Sources */,
 				113A95A61F868FF6004C4F38 /* MasterViewController.swift in Sources */,
 				1158483C1F86E0EE001636BE /* AnimatedViewController.swift in Sources */,
 				113A95C81F869111004C4F38 /* ImageSourceView.swift in Sources */,
+				1160B9B11F87F4BC0048E71A /* IPTCProperties.swift in Sources */,
+				1160B9AB1F87F19B0048E71A /* JPEGProperties.swift in Sources */,
 				11DCAD5B1F86E63D00598162 /* CADisplayLink+Callbacks.swift in Sources */,
 				113A95A41F868FF6004C4F38 /* AppDelegate.swift in Sources */,
 			);

@@ -19,6 +19,7 @@ class ImageSourceViewController: UIViewController {
 			
 			updateInfo()
 			imageSourceView.imageSource = imageSource
+			imageView.image = imageSource?.image(at: 0)
 			
 			if let newValue = imageSource {
 				NotificationCenter.default.addObserver(self, selector: #selector(updateInfo), name: ImageSource.didUpdateData, object: newValue.cgImageSource)
@@ -46,14 +47,24 @@ class ImageSourceViewController: UIViewController {
 	lazy var scrollView = UIScrollView()
 	
 	lazy var imageSourceView = ImageSourceView()
+	lazy var imageView = UIImageView()
 	
-	lazy var infoStackView = UIStackView()
+	lazy var imagesStackView: UIStackView = UIStackView(arrangedSubviews: [
+		self.imageSourceView,
+		self.imageView,
+	])
+	
+	lazy var infoStackView: UIStackView = UIStackView(arrangedSubviews: [
+		self.imagesStackView
+	])
 	lazy var imageSizeLabel = UILabel()
 	lazy var framesLabel = UILabel()
+	lazy var propertiesLabel = UILabel()
+	lazy var properties0Label = UILabel()
 	
 	private var nameLabels: [UILabel] = []
 	
-	func add(infoLabel: UIView, name: String, at index: Int? = 0) {
+	func add(infoLabel: UIView, name: String) {
 		let nameLabel = UILabel()
 		nameLabel.text = "\(name):"
 		nameLabel.textAlignment = .right
@@ -67,17 +78,47 @@ class ImageSourceViewController: UIViewController {
 		])
 		lineView.axis = .horizontal
 		lineView.spacing = 5
-		
-		if let index = index {
-			infoStackView.insertArrangedSubview(lineView, at: index)
-		} else {
-			infoStackView.addArrangedSubview(lineView)
-		}
+		lineView.alignment = .firstBaseline
+		infoStackView.addArrangedSubview(lineView)
 		
 		if let firstName = nameLabels.first {
 			nameLabel.widthAnchor.constraint(equalTo: firstName.widthAnchor).isActive = true
 		}
 		nameLabels.append(nameLabel)
+	}
+	
+	private func add(label text: String, to view: UIView) {
+		let effect = UIBlurEffect(style: .dark)
+		let background = UIVisualEffectView(effect: effect)
+		background.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(background)
+		
+		let vibrancy = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: effect))
+		vibrancy.translatesAutoresizingMaskIntoConstraints = false
+		background.contentView.addSubview(vibrancy)
+		
+		let label = UILabel()
+		label.translatesAutoresizingMaskIntoConstraints = false
+		label.text = text
+		label.textAlignment = .center
+		label.font = UIFont.preferredFont(forTextStyle: .headline)
+		vibrancy.contentView.addSubview(label)
+		
+		NSLayoutConstraint.activate([
+			background.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			background.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			background.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			
+			vibrancy.leadingAnchor.constraint(equalTo: background.leadingAnchor),
+			vibrancy.trailingAnchor.constraint(equalTo: background.trailingAnchor),
+			vibrancy.topAnchor.constraint(equalTo: background.topAnchor),
+			vibrancy.bottomAnchor.constraint(equalTo: background.bottomAnchor),
+			
+			label.leadingAnchor.constraint(equalTo: background.layoutMarginsGuide.leadingAnchor),
+			label.trailingAnchor.constraint(equalTo: background.layoutMarginsGuide.trailingAnchor),
+			label.topAnchor.constraint(equalTo: background.layoutMarginsGuide.topAnchor),
+			label.bottomAnchor.constraint(equalTo: background.layoutMarginsGuide.bottomAnchor),
+		])
 	}
 	
 	override func viewDidLoad() {
@@ -89,14 +130,23 @@ class ImageSourceViewController: UIViewController {
 		scrollView.alwaysBounceVertical = true
 		view.addSubview(scrollView)
 		
-		imageSourceView.translatesAutoresizingMaskIntoConstraints = false
 		imageSourceView.backgroundColor = .lightGray
 		imageSourceView.contentMode = .scaleAspectFit
-		scrollView.addSubview(imageSourceView)
+		add(label: "ImageSourceView", to: imageSourceView)
+		
+		imageView.backgroundColor = .lightGray
+		imageView.contentMode = .scaleAspectFit
+		add(label: "UIImageView", to: imageView)
+		
+		imagesStackView.axis = .horizontal
+		imagesStackView.spacing = 10
 		
 		infoStackView.translatesAutoresizingMaskIntoConstraints = false
 		infoStackView.axis = .vertical
 		infoStackView.spacing = 5
+		if #available(iOS 11.0, *) {
+			infoStackView.setCustomSpacing(10, after: imagesStackView)
+		}
 		scrollView.addSubview(infoStackView)
 		
 		NSLayoutConstraint.activate([
@@ -106,30 +156,32 @@ class ImageSourceViewController: UIViewController {
 			scrollView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
 			
 			imageSourceView.heightAnchor.constraint(equalTo: imageSourceView.widthAnchor),
-			imageSourceView.leadingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.leadingAnchor),
-			imageSourceView.trailingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.trailingAnchor),
+			imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
 			
-			infoStackView.leadingAnchor.constraint(equalTo: imageSourceView.leadingAnchor),
-			infoStackView.trailingAnchor.constraint(equalTo: imageSourceView.trailingAnchor),
-			infoStackView.topAnchor.constraint(equalTo: imageSourceView.bottomAnchor, constant: 8),
+			infoStackView.leadingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.leadingAnchor),
+			infoStackView.trailingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.trailingAnchor),
 		])
 		
 		if #available(iOS 11.0, *) {
 			NSLayoutConstraint.activate([
 				scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
 				
-				imageSourceView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 5),
+				infoStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 5),
 				infoStackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -5),
 			])
 		} else {
 			NSLayoutConstraint.activate([
-				imageSourceView.topAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.topAnchor),
+				infoStackView.topAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.topAnchor),
 				infoStackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.layoutMarginsGuide.bottomAnchor),
 			])
 		}
 		
-		self.add(infoLabel: imageSizeLabel, name: "Image Size", at: nil)
-		self.add(infoLabel: framesLabel, name: "Frames", at: nil)
+		self.add(infoLabel: imageSizeLabel, name: "Image Size")
+		self.add(infoLabel: framesLabel, name: "Frames")
+		propertiesLabel.numberOfLines = 0
+		self.add(infoLabel: propertiesLabel, name: "Properties")
+		properties0Label.numberOfLines = 0
+		self.add(infoLabel: properties0Label, name: "Properties[0]")
 		
 		loadImageSource()
 	}
@@ -138,6 +190,8 @@ class ImageSourceViewController: UIViewController {
 		guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else { return }
 		
 		imageSource = ImageSource(url: url)
+		
+		imageView.image = UIImage(contentsOfFile: url.path)
 	}
 	
 	@objc func updateInfo() {
@@ -149,11 +203,7 @@ class ImageSourceViewController: UIViewController {
 		
 		framesLabel.text = imageSource?.count.description
 		
-		if let properties = imageSource?.properties() {
-			print("properties: \(properties)")
-		}
-		if let properties = imageSource?.properties(at: 0) {
-			print("properties[0]: \(properties)")
-		}
+		propertiesLabel.text = imageSource?.properties()?.rawValue.description
+		properties0Label.text = imageSource?.properties(at: 0)?.rawValue.description
 	}
 }

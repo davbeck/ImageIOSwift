@@ -215,7 +215,7 @@ public class ImageSourceView: UIView {
 	// MARK: - Updating
 	
 	func updateImage() {
-		let image = imageSource?.image(at: displayedIndex)
+		let image = imageSource?.cgImage(at: displayedIndex)
 		self.layer.contents = image
 	}
 }

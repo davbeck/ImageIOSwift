@@ -45,6 +45,7 @@ class PickerViewController<DetailViewController: ImageSourceViewController>: UIT
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 		
 		cell.textLabel?.text = example.filenames[indexPath.row]
+		cell.accessoryType = .disclosureIndicator
 		
 		return cell
 	}

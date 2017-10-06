@@ -81,7 +81,7 @@ public struct ImageSource {
 		}
 	}
 	
-	public func image(at index: Int, options: ImageOptions? = nil) -> CGImage? {
+	public func cgImage(at index: Int, options: ImageOptions? = nil) -> CGImage? {
 		return CGImageSourceCreateImageAtIndex(cgImageSource, index, options?.rawValue)
 	}
 	
@@ -105,15 +105,15 @@ public struct ImageSource {
 		}
 	}
 	
-	public func properties(options: ImageOptions? = nil) -> Properties? {
+	public func properties(options: ImageOptions? = nil) -> ImageProperties? {
 		guard let rawValue = CGImageSourceCopyProperties(cgImageSource, options?.rawValue) as? [CFString:Any] else { return nil }
 		
-		return Properties(rawValue: rawValue)
+		return ImageProperties(rawValue: rawValue)
 	}
 	
-	public func properties(at index: Int, options: ImageOptions? = nil) -> Properties? {
+	public func properties(at index: Int, options: ImageOptions? = nil) -> ImageProperties? {
 		guard let rawValue = CGImageSourceCopyPropertiesAtIndex(cgImageSource, index, options?.rawValue) as? [CFString:Any] else { return nil }
 		
-		return Properties(rawValue: rawValue)
+		return ImageProperties(rawValue: rawValue)
 	}
 }

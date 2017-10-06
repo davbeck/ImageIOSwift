@@ -19,12 +19,14 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 	lazy var statusLabel = UILabel()
 	
 	override func viewDidLoad() {
+		statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: statusLabel, name: "Status")
+		
 		super.viewDidLoad()
 		
 		imageSourceView.isAnimationEnabled = true
 		
-		statusLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: statusLabel, name: "Status")
+		imageView.removeFromSuperview()
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
