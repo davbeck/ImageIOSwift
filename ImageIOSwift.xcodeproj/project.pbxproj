@@ -18,12 +18,10 @@
 		113A95C81F869111004C4F38 /* ImageSourceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113A95C71F869111004C4F38 /* ImageSourceView.swift */; };
 		1158482B1F869872001636BE /* interlaced.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 115848291F869872001636BE /* interlaced.jpeg */; };
 		1158482C1F869872001636BE /* progressive.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 1158482A1F869872001636BE /* progressive.jpeg */; };
-		1158482E1F86A558001636BE /* ProgressiveLoadPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158482D1F86A558001636BE /* ProgressiveLoadPickerViewController.swift */; };
 		115848301F86B079001636BE /* CGImageSourceStatus+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158482F1F86B079001636BE /* CGImageSourceStatus+Helpers.swift */; };
 		115848331F86BD73001636BE /* animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = 115848311F86BD72001636BE /* animated.gif */; };
 		115848341F86BD73001636BE /* animated.png in Resources */ = {isa = PBXBuildFile; fileRef = 115848321F86BD72001636BE /* animated.png */; };
 		115848361F86CA57001636BE /* Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115848351F86CA56001636BE /* Properties.swift */; };
-		1158483A1F86E0B6001636BE /* AnimatedPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115848391F86E0B6001636BE /* AnimatedPickerViewController.swift */; };
 		1158483C1F86E0EE001636BE /* AnimatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158483B1F86E0EE001636BE /* AnimatedViewController.swift */; };
 		115848401F86E116001636BE /* ImageSourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1158483F1F86E116001636BE /* ImageSourceViewController.swift */; };
 		115848421F86E23F001636BE /* PickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 115848411F86E23F001636BE /* PickerViewController.swift */; };
@@ -43,8 +41,18 @@
 		119143941F86F05E0053EA8F /* Landscape_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 119143841F86F05E0053EA8F /* Landscape_2.jpg */; };
 		119143951F86F05E0053EA8F /* Landscape_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 119143851F86F05E0053EA8F /* Landscape_4.jpg */; };
 		119143961F86F05E0053EA8F /* Portrait_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 119143861F86F05E0053EA8F /* Portrait_3.jpg */; };
-		119143991F86F0A40053EA8F /* OrientationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119143981F86F0A40053EA8F /* OrientationPickerViewController.swift */; };
-		1191439B1F86F16A0053EA8F /* OrientationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1191439A1F86F16A0053EA8F /* OrientationViewController.swift */; };
+		119143AC1F87CAFF0053EA8F /* autumn_1440x960.heic in Resources */ = {isa = PBXBuildFile; fileRef = 1191439F1F87CAFF0053EA8F /* autumn_1440x960.heic */; };
+		119143AD1F87CAFF0053EA8F /* alpha_1440x960.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A01F87CAFF0053EA8F /* alpha_1440x960.heic */; };
+		119143AF1F87CAFF0053EA8F /* bird_burst.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A21F87CAFF0053EA8F /* bird_burst.heic */; };
+		119143B01F87CAFF0053EA8F /* random_collection_1440x960.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A31F87CAFF0053EA8F /* random_collection_1440x960.heic */; };
+		119143B11F87CAFF0053EA8F /* season_collection_1440x960.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A41F87CAFF0053EA8F /* season_collection_1440x960.heic */; };
+		119143B21F87CAFF0053EA8F /* starfield_animation.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A51F87CAFF0053EA8F /* starfield_animation.heic */; };
+		119143B31F87CAFF0053EA8F /* grid_960x640.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A61F87CAFF0053EA8F /* grid_960x640.heic */; };
+		119143B41F87CAFF0053EA8F /* spring_1440x960.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A71F87CAFF0053EA8F /* spring_1440x960.heic */; };
+		119143B51F87CAFF0053EA8F /* dog.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A81F87CAFF0053EA8F /* dog.heic */; };
+		119143B61F87CAFF0053EA8F /* sea1_animation.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143A91F87CAFF0053EA8F /* sea1_animation.heic */; };
+		119143B71F87CAFF0053EA8F /* winter_1440x960.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143AA1F87CAFF0053EA8F /* winter_1440x960.heic */; };
+		119143B81F87CAFF0053EA8F /* yard.heic in Resources */ = {isa = PBXBuildFile; fileRef = 119143AB1F87CAFF0053EA8F /* yard.heic */; };
 		11DCAD5B1F86E63D00598162 /* CADisplayLink+Callbacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DCAD5A1F86E63D00598162 /* CADisplayLink+Callbacks.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,12 +82,10 @@
 		113A95C71F869111004C4F38 /* ImageSourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSourceView.swift; sourceTree = "<group>"; };
 		115848291F869872001636BE /* interlaced.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = interlaced.jpeg; sourceTree = "<group>"; };
 		1158482A1F869872001636BE /* progressive.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = progressive.jpeg; sourceTree = "<group>"; };
-		1158482D1F86A558001636BE /* ProgressiveLoadPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressiveLoadPickerViewController.swift; sourceTree = "<group>"; };
 		1158482F1F86B079001636BE /* CGImageSourceStatus+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGImageSourceStatus+Helpers.swift"; sourceTree = "<group>"; };
 		115848311F86BD72001636BE /* animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = animated.gif; sourceTree = "<group>"; };
 		115848321F86BD72001636BE /* animated.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = animated.png; sourceTree = "<group>"; };
 		115848351F86CA56001636BE /* Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Properties.swift; sourceTree = "<group>"; };
-		115848391F86E0B6001636BE /* AnimatedPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedPickerViewController.swift; sourceTree = "<group>"; };
 		1158483B1F86E0EE001636BE /* AnimatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedViewController.swift; sourceTree = "<group>"; };
 		1158483F1F86E116001636BE /* ImageSourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSourceViewController.swift; sourceTree = "<group>"; };
 		115848411F86E23F001636BE /* PickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerViewController.swift; sourceTree = "<group>"; };
@@ -99,8 +105,18 @@
 		119143841F86F05E0053EA8F /* Landscape_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Landscape_2.jpg; path = "ImageIOSwift/ExampleImages/exif-orientation-examples/Landscape_2.jpg"; sourceTree = SOURCE_ROOT; };
 		119143851F86F05E0053EA8F /* Landscape_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Landscape_4.jpg; path = "ImageIOSwift/ExampleImages/exif-orientation-examples/Landscape_4.jpg"; sourceTree = SOURCE_ROOT; };
 		119143861F86F05E0053EA8F /* Portrait_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Portrait_3.jpg; path = "ImageIOSwift/ExampleImages/exif-orientation-examples/Portrait_3.jpg"; sourceTree = SOURCE_ROOT; };
-		119143981F86F0A40053EA8F /* OrientationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationPickerViewController.swift; sourceTree = "<group>"; };
-		1191439A1F86F16A0053EA8F /* OrientationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationViewController.swift; sourceTree = "<group>"; };
+		1191439F1F87CAFF0053EA8F /* autumn_1440x960.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = autumn_1440x960.heic; sourceTree = "<group>"; };
+		119143A01F87CAFF0053EA8F /* alpha_1440x960.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = alpha_1440x960.heic; sourceTree = "<group>"; };
+		119143A21F87CAFF0053EA8F /* bird_burst.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = bird_burst.heic; sourceTree = "<group>"; };
+		119143A31F87CAFF0053EA8F /* random_collection_1440x960.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = random_collection_1440x960.heic; sourceTree = "<group>"; };
+		119143A41F87CAFF0053EA8F /* season_collection_1440x960.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = season_collection_1440x960.heic; sourceTree = "<group>"; };
+		119143A51F87CAFF0053EA8F /* starfield_animation.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = starfield_animation.heic; sourceTree = "<group>"; };
+		119143A61F87CAFF0053EA8F /* grid_960x640.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = grid_960x640.heic; sourceTree = "<group>"; };
+		119143A71F87CAFF0053EA8F /* spring_1440x960.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = spring_1440x960.heic; sourceTree = "<group>"; };
+		119143A81F87CAFF0053EA8F /* dog.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = dog.heic; sourceTree = "<group>"; };
+		119143A91F87CAFF0053EA8F /* sea1_animation.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = sea1_animation.heic; sourceTree = "<group>"; };
+		119143AA1F87CAFF0053EA8F /* winter_1440x960.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = winter_1440x960.heic; sourceTree = "<group>"; };
+		119143AB1F87CAFF0053EA8F /* yard.heic */ = {isa = PBXFileReference; lastKnownFileType = file; path = yard.heic; sourceTree = "<group>"; };
 		11DCAD5A1F86E63D00598162 /* CADisplayLink+Callbacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CADisplayLink+Callbacks.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,9 +163,8 @@
 				113A95A51F868FF6004C4F38 /* MasterViewController.swift */,
 				115848411F86E23F001636BE /* PickerViewController.swift */,
 				1158483F1F86E116001636BE /* ImageSourceViewController.swift */,
-				1158483E1F86E0FD001636BE /* Progressive */,
-				1158483D1F86E0F4001636BE /* Animated */,
-				119143971F86F07F0053EA8F /* Orientation */,
+				113A95A71F868FF6004C4F38 /* ProgressiveLoadViewController.swift */,
+				1158483B1F86E0EE001636BE /* AnimatedViewController.swift */,
 				113A95C51F86900C004C4F38 /* ImageSource.swift */,
 				113A95C71F869111004C4F38 /* ImageSourceView.swift */,
 				115848351F86CA56001636BE /* Properties.swift */,
@@ -173,24 +188,6 @@
 			path = ImageIOSwiftTests;
 			sourceTree = "<group>";
 		};
-		1158483D1F86E0F4001636BE /* Animated */ = {
-			isa = PBXGroup;
-			children = (
-				115848391F86E0B6001636BE /* AnimatedPickerViewController.swift */,
-				1158483B1F86E0EE001636BE /* AnimatedViewController.swift */,
-			);
-			path = Animated;
-			sourceTree = "<group>";
-		};
-		1158483E1F86E0FD001636BE /* Progressive */ = {
-			isa = PBXGroup;
-			children = (
-				1158482D1F86A558001636BE /* ProgressiveLoadPickerViewController.swift */,
-				113A95A71F868FF6004C4F38 /* ProgressiveLoadViewController.swift */,
-			);
-			path = Progressive;
-			sourceTree = "<group>";
-		};
 		1190478B1F86EE6200C0A516 /* ExampleImages */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +195,7 @@
 				1158482A1F869872001636BE /* progressive.jpeg */,
 				115848311F86BD72001636BE /* animated.gif */,
 				115848321F86BD72001636BE /* animated.png */,
+				1191439E1F87CAFF0053EA8F /* heic */,
 				119143761F86F0460053EA8F /* exif-orientation-examples */,
 			);
 			path = ExampleImages;
@@ -226,13 +224,23 @@
 			path = "exif-orientation-examples";
 			sourceTree = "<group>";
 		};
-		119143971F86F07F0053EA8F /* Orientation */ = {
+		1191439E1F87CAFF0053EA8F /* heic */ = {
 			isa = PBXGroup;
 			children = (
-				119143981F86F0A40053EA8F /* OrientationPickerViewController.swift */,
-				1191439A1F86F16A0053EA8F /* OrientationViewController.swift */,
+				1191439F1F87CAFF0053EA8F /* autumn_1440x960.heic */,
+				119143A01F87CAFF0053EA8F /* alpha_1440x960.heic */,
+				119143A21F87CAFF0053EA8F /* bird_burst.heic */,
+				119143A31F87CAFF0053EA8F /* random_collection_1440x960.heic */,
+				119143A41F87CAFF0053EA8F /* season_collection_1440x960.heic */,
+				119143A51F87CAFF0053EA8F /* starfield_animation.heic */,
+				119143A61F87CAFF0053EA8F /* grid_960x640.heic */,
+				119143A71F87CAFF0053EA8F /* spring_1440x960.heic */,
+				119143A81F87CAFF0053EA8F /* dog.heic */,
+				119143A91F87CAFF0053EA8F /* sea1_animation.heic */,
+				119143AA1F87CAFF0053EA8F /* winter_1440x960.heic */,
+				119143AB1F87CAFF0053EA8F /* yard.heic */,
 			);
-			path = Orientation;
+			path = heic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,26 +326,38 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				119143B81F87CAFF0053EA8F /* yard.heic in Resources */,
 				113A95B01F868FF6004C4F38 /* LaunchScreen.storyboard in Resources */,
+				119143B51F87CAFF0053EA8F /* dog.heic in Resources */,
+				119143AD1F87CAFF0053EA8F /* alpha_1440x960.heic in Resources */,
+				119143B61F87CAFF0053EA8F /* sea1_animation.heic in Resources */,
 				1191438E1F86F05E0053EA8F /* Landscape_1.jpg in Resources */,
 				119143911F86F05E0053EA8F /* Portrait_7.jpg in Resources */,
+				119143B31F87CAFF0053EA8F /* grid_960x640.heic in Resources */,
 				115848341F86BD73001636BE /* animated.png in Resources */,
 				113A95AD1F868FF6004C4F38 /* Assets.xcassets in Resources */,
 				1158482B1F869872001636BE /* interlaced.jpeg in Resources */,
 				119143931F86F05E0053EA8F /* Landscape_6.jpg in Resources */,
+				119143B11F87CAFF0053EA8F /* season_collection_1440x960.heic in Resources */,
 				113A95AB1F868FF6004C4F38 /* Main.storyboard in Resources */,
 				119143921F86F05E0053EA8F /* Portrait_5.jpg in Resources */,
+				119143B41F87CAFF0053EA8F /* spring_1440x960.heic in Resources */,
 				1191438D1F86F05E0053EA8F /* Landscape_7.jpg in Resources */,
 				119143871F86F05E0053EA8F /* Portrait_4.jpg in Resources */,
 				1158482C1F869872001636BE /* progressive.jpeg in Resources */,
 				1191438B1F86F05E0053EA8F /* Portrait_2.jpg in Resources */,
 				119143941F86F05E0053EA8F /* Landscape_2.jpg in Resources */,
+				119143AF1F87CAFF0053EA8F /* bird_burst.heic in Resources */,
+				119143B21F87CAFF0053EA8F /* starfield_animation.heic in Resources */,
 				1191438A1F86F05E0053EA8F /* Portrait_6.jpg in Resources */,
+				119143B71F87CAFF0053EA8F /* winter_1440x960.heic in Resources */,
 				119143901F86F05E0053EA8F /* Landscape_5.jpg in Resources */,
 				1191438F1F86F05E0053EA8F /* Landscape_3.jpg in Resources */,
 				1191438C1F86F05E0053EA8F /* Portrait_1.jpg in Resources */,
+				119143B01F87CAFF0053EA8F /* random_collection_1440x960.heic in Resources */,
 				119143951F86F05E0053EA8F /* Landscape_4.jpg in Resources */,
 				119143891F86F05E0053EA8F /* Portrait_8.jpg in Resources */,
+				119143AC1F87CAFF0053EA8F /* autumn_1440x960.heic in Resources */,
 				119143961F86F05E0053EA8F /* Portrait_3.jpg in Resources */,
 				119143881F86F05E0053EA8F /* Landscape_8.jpg in Resources */,
 				115848331F86BD73001636BE /* animated.gif in Resources */,
@@ -358,14 +378,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1191439B1F86F16A0053EA8F /* OrientationViewController.swift in Sources */,
 				115848361F86CA57001636BE /* Properties.swift in Sources */,
-				1158482E1F86A558001636BE /* ProgressiveLoadPickerViewController.swift in Sources */,
 				115848401F86E116001636BE /* ImageSourceViewController.swift in Sources */,
-				119143991F86F0A40053EA8F /* OrientationPickerViewController.swift in Sources */,
 				113A95C61F86900C004C4F38 /* ImageSource.swift in Sources */,
 				115848301F86B079001636BE /* CGImageSourceStatus+Helpers.swift in Sources */,
-				1158483A1F86E0B6001636BE /* AnimatedPickerViewController.swift in Sources */,
 				115848421F86E23F001636BE /* PickerViewController.swift in Sources */,
 				113A95A81F868FF6004C4F38 /* ProgressiveLoadViewController.swift in Sources */,
 				113A95A61F868FF6004C4F38 /* MasterViewController.swift in Sources */,
@@ -530,7 +546,7 @@
 				INFOPLIST_FILE = ImageIOSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.davidbeck.ImageService;
+				PRODUCT_BUNDLE_IDENTIFIER = co.davidbeck.ImageIOExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -546,7 +562,7 @@
 				INFOPLIST_FILE = ImageIOSwift/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = co.davidbeck.ImageService;
+				PRODUCT_BUNDLE_IDENTIFIER = co.davidbeck.ImageIOExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

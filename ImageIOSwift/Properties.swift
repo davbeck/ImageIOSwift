@@ -37,7 +37,7 @@ extension ImageSource {
 			guard var width = pixelWidth, var height = pixelHeight else { return nil }
 			
 			switch tiff?.orientation ?? 1 {
-			case 5...8: // http://magnushoff.com/jpeg-orientation.html
+			case 6...8: // http://magnushoff.com/jpeg-orientation.html
 				swap(&width, &height)
 			default: break
 			}

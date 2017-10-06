@@ -47,7 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	
 	
 	func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
-		return true
+		guard let secondaryViewController = secondaryViewController as? UINavigationController else { return true }
+		
+		return !(secondaryViewController.viewControllers.first is ImageSourceViewController)
 	}
 }
 

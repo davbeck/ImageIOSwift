@@ -32,6 +32,8 @@ class ImageSourceViewController: UIViewController {
 		super.init(nibName: nil, bundle: nil)
 		
 		self.title = filename
+		
+		self.automaticallyAdjustsScrollViewInsets = false
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -40,6 +42,8 @@ class ImageSourceViewController: UIViewController {
 	
 	
 	// MARK: - View Lifecycle
+	
+	lazy var scrollView = UIScrollView()
 	
 	lazy var imageSourceView = ImageSourceView()
 	
@@ -81,26 +85,48 @@ class ImageSourceViewController: UIViewController {
 		
 		view.backgroundColor = .white
 		
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		scrollView.alwaysBounceVertical = true
+		view.addSubview(scrollView)
+		
 		imageSourceView.translatesAutoresizingMaskIntoConstraints = false
 		imageSourceView.backgroundColor = .lightGray
 		imageSourceView.contentMode = .scaleAspectFit
-		view.addSubview(imageSourceView)
+		scrollView.addSubview(imageSourceView)
 		
 		infoStackView.translatesAutoresizingMaskIntoConstraints = false
 		infoStackView.axis = .vertical
 		infoStackView.spacing = 5
-		view.addSubview(infoStackView)
+		scrollView.addSubview(infoStackView)
 		
 		NSLayoutConstraint.activate([
+			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			scrollView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
+			scrollView.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor),
+			
 			imageSourceView.heightAnchor.constraint(equalTo: imageSourceView.widthAnchor),
-			imageSourceView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-			imageSourceView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-			imageSourceView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20),
+			imageSourceView.leadingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.leadingAnchor),
+			imageSourceView.trailingAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.trailingAnchor),
 			
 			infoStackView.leadingAnchor.constraint(equalTo: imageSourceView.leadingAnchor),
 			infoStackView.trailingAnchor.constraint(equalTo: imageSourceView.trailingAnchor),
 			infoStackView.topAnchor.constraint(equalTo: imageSourceView.bottomAnchor, constant: 8),
 		])
+		
+		if #available(iOS 11.0, *) {
+			NSLayoutConstraint.activate([
+				scrollView.contentLayoutGuide.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+				
+				imageSourceView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 5),
+				infoStackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -5),
+			])
+		} else {
+			NSLayoutConstraint.activate([
+				imageSourceView.topAnchor.constraint(equalTo: scrollView.layoutMarginsGuide.topAnchor),
+				infoStackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.layoutMarginsGuide.bottomAnchor),
+			])
+		}
 		
 		self.add(infoLabel: imageSizeLabel, name: "Image Size", at: nil)
 		self.add(infoLabel: framesLabel, name: "Frames", at: nil)
