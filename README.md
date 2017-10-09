@@ -23,7 +23,9 @@ CG/NS/UIImage can only represent a single animation frame from an animated GIF o
 
 To display an animated image, set `isAnimationEnabled = true` on an `ImageSourceView`. Variable delay times and loop counts will even be taken into account. Implimentation is based off of [Apple's sample code](https://developer.apple.com/library/content/samplecode/UsingPhotosFramework/Listings/Shared_AnimatedImageView_swift.html#//apple_ref/doc/uid/TP40014575-Shared_AnimatedImageView_swift-DontLinkElementID_5) and works similarly to [FLAnimatedImage](https://github.com/Flipboard/FLAnimatedImage), although neither of those support aPNG.
 
-### Progressive loading
+### Incremental loading
+
+![Interlaced JPEG Rendering](Images/Interlaced.gif) ![Progressive JPEG Rendering](Images/Progressive.gif)
 
 Similar to [https://github.com/contentful-labs/Concorde](Concorde) ImageIO actually support incremental loading out of the box. This can be used with progressive JPEGs to show low resolution versions of an image until the rest of the image loads.
 
