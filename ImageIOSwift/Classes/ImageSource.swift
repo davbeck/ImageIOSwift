@@ -55,7 +55,7 @@ public struct ImageSource {
 	///
 	/// - Parameter data: The data representation of the image file.
 	/// - Parameter options: Options to use for the created image source.
-	init?(data: Data, options: CreateOptions? = nil) {
+	public init?(data: Data, options: CreateOptions? = nil) {
 		guard let cgImageSource = CGImageSourceCreateWithData(data as CFData, options?.rawValue) else { return nil }
 		
 		self.init(cgImageSource)
