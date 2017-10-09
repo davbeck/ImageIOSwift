@@ -1,3 +1,3 @@
-[submodule "ImageIOSwift/ExampleImages/exif-orientation-examples"]
-	path = ImageIOSwift/ExampleImages/exif-orientation-examples
+[submodule "Example/Images/exif-orientation-examples"]
+	path = Example/Images/exif-orientation-examples
 	url = https://github.com/recurser/exif-orientation-examples.git

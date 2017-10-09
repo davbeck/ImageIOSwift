@@ -1,0 +1,23 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - ImageIOSwift (0.1.0)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase (~> 2.1.4)
+  - ImageIOSwift (from `../`)
+
+EXTERNAL SOURCES:
+  ImageIOSwift:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
+  ImageIOSwift: acb51010e5b4623aff0d93e15eabcdac8c185990
+
+PODFILE CHECKSUM: 9c2da00f6783de9f6a1b8c23ce789c8bd6da4e81
+
+COCOAPODS: 1.2.1

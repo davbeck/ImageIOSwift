@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'ImageIOSwift_Example' do
+  pod 'ImageIOSwift', :path => '../'
+
+  target 'ImageIOSwift_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase' , '~> 2.1.4'
+  end
+end
