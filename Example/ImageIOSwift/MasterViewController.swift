@@ -7,16 +7,22 @@
 //
 
 import UIKit
+import ImageIOSwift
+
+
+func local(named name: String) -> URL? {
+	return Bundle.main.url(forResource: name, withExtension: nil)
+}
 
 
 struct ExampleList {
 	var name: String
-	var filenames: [String]
+	var sources: [URL?]
 	var detailViewControllerType: ImageSourceViewController.Type
 	
-	init(name: String, filenames: [String], detailViewControllerType: ImageSourceViewController.Type = ImageSourceViewController.self) {
+	init(name: String, sources: [URL?], detailViewControllerType: ImageSourceViewController.Type = ImageSourceViewController.self) {
 		self.name = name
-		self.filenames = filenames
+		self.sources = sources
 		self.detailViewControllerType = detailViewControllerType
 	}
 }
@@ -26,68 +32,72 @@ class MasterViewController: UITableViewController {
 	let examples = [
 		ExampleList(
 			name: "Incremental Load",
-			filenames: [
-				"interlaced.jpeg",
-				"progressive.jpeg",
-				"spring_1440x960.heic",
-				"animated.gif",
-				"animated.png",
+			sources: [
+				local(named: "interlaced.jpeg"),
+				URL(string: "http://pooyak.com/p/progjpeg/jpegload.cgi?o=0"),
+				local(named: "progressive.jpeg"),
+				URL(string: "http://pooyak.com/p/progjpeg/jpegload.cgi?o=1"),
+				local(named: "spring_1440x960.heic"),
+				local(named: "animated.gif"),
+				URL(string: "http://littlesvr.ca/apng/images/GenevaDrive.gif"),
+				local(named: "animated.png"),
+				URL(string: "http://littlesvr.ca/apng/images/GenevaDrive.png"),
 			],
 			detailViewControllerType: ProgressiveLoadViewController.self
 		),
 		ExampleList(
 			name: "Animated",
-			filenames: [
-				"animated.gif",
-				"transparent.gif",
-				"animated.png",
-				"transparent.png",
-				"starfield_animation.heic",
-				"sea1_animation.heic",
+			sources: [
+				local(named: "animated.gif"),
+				local(named: "transparent.gif"),
+				local(named: "animated.png"),
+				local(named: "transparent.png"),
+				local(named: "starfield_animation.heic"),
+				local(named: "sea1_animation.heic"),
 				],
 			detailViewControllerType: AnimatedViewController.self
 		),
 		ExampleList(
 			name: "Orientations",
-			filenames: (1...8).map({ "Landscape_\($0).jpg" }) +
-				(1...8).map({ "Portrait_\($0).jpg" })
+			sources: (1...8).map({ local(named: "Landscape_\($0).jpg") }) +
+				(1...8).map({ local(named: "Portrait_\($0).jpg") })
 		),
 		ExampleList(
 			name: "HEIC",
-			filenames: [
-				"spring_1440x960.heic",
-				"autumn_1440x960.heic",
-				"winter_1440x960.heic",
-				"dog.heic",
-				"yard.heic",
-				"season_collection_1440x960.heic",
-				"random_collection_1440x960.heic",
-				"alpha_1440x960.heic",
-				"bird_burst.heic",
-				"grid_960x640.heic",
-				"starfield_animation.heic",
-				"sea1_animation.heic",
+			sources: [
+				local(named: "spring_1440x960.heic"),
+				local(named: "autumn_1440x960.heic"),
+				local(named: "winter_1440x960.heic"),
+				local(named: "dog.heic"),
+				local(named: "yard.heic"),
+				local(named: "season_collection_1440x960.heic"),
+				local(named: "random_collection_1440x960.heic"),
+				local(named: "alpha_1440x960.heic"),
+				local(named: "bird_burst.heic"),
+				local(named: "grid_960x640.heic"),
+				local(named: "starfield_animation.heic"),
+				local(named: "sea1_animation.heic"),
 				]
 		),
 		ExampleList(
 			name: "Performance",
-			filenames: [
-				"interlaced.jpeg",
-				"progressive.jpeg",
-				"animated.gif",
-				"animated.png",
-				"spring_1440x960.heic",
-				"autumn_1440x960.heic",
-				"winter_1440x960.heic",
-				"dog.heic",
-				"yard.heic",
-				"season_collection_1440x960.heic",
-				"random_collection_1440x960.heic",
-				"alpha_1440x960.heic",
-				"bird_burst.heic",
-				"grid_960x640.heic",
-				"starfield_animation.heic",
-				"sea1_animation.heic",
+			sources: [
+				local(named: "interlaced.jpeg"),
+				local(named: "progressive.jpeg"),
+				local(named: "animated.gif"),
+				local(named: "animated.png"),
+				local(named: "spring_1440x960.heic"),
+				local(named: "autumn_1440x960.heic"),
+				local(named: "winter_1440x960.heic"),
+				local(named: "dog.heic"),
+				local(named: "yard.heic"),
+				local(named: "season_collection_1440x960.heic"),
+				local(named: "random_collection_1440x960.heic"),
+				local(named: "alpha_1440x960.heic"),
+				local(named: "bird_burst.heic"),
+				local(named: "grid_960x640.heic"),
+				local(named: "starfield_animation.heic"),
+				local(named: "sea1_animation.heic"),
 			],
 			detailViewControllerType: MetricsViewController.self
 		),

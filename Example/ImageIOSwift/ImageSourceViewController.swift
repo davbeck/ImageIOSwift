@@ -11,7 +11,7 @@ import ImageIOSwift
 
 
 class ImageSourceViewController: UIViewController {
-	let filename: String
+	let url: URL
 	
 	var imageSource: ImageSource? {
 		didSet {
@@ -24,17 +24,17 @@ class ImageSourceViewController: UIViewController {
 			imageView.image = imageSource?.image(at: 0)
 			
 			if let newValue = imageSource {
-				NotificationCenter.default.addObserver(self, selector: #selector(updateInfo), name: ImageSource.didUpdateData, object: newValue.cgImageSource)
+				NotificationCenter.default.addObserver(self, selector: #selector(didUpdateData), name: ImageSource.didUpdateData, object: newValue.cgImageSource)
 			}
 		}
 	}
 	
-	required init(filename: String) {
-		self.filename = filename
+	required init(url: URL) {
+		self.url = url
 		
 		super.init(nibName: nil, bundle: nil)
 		
-		self.title = filename
+		self.title = url.lastPathComponent
 		
 		self.automaticallyAdjustsScrollViewInsets = false
 	}
@@ -189,12 +189,21 @@ class ImageSourceViewController: UIViewController {
 	}
 	
 	func loadImageSource() {
-		guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else { return }
-		
-		imageSource = ImageSource(url: url)
+		if url.isFileURL {
+			imageSource = ImageSource(url: url)
+		} else {
+			let task = ImageSourceDownloader.shared.download(url)
+			imageSource = task.imageSource
+		}
 	}
 	
-	@objc func updateInfo() {
+	@objc func didUpdateData() {
+		DispatchQueue.main.async {
+			self.updateInfo()
+		}
+	}
+	
+	func updateInfo() {
 		if let size = imageSource?.properties(at: 0)?.imageSize {
 			imageSizeLabel.text = "\(Int(size.width))x\(Int(size.height))"
 		} else {

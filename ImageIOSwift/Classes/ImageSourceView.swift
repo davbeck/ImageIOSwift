@@ -266,17 +266,13 @@ public class ImageSourceView: UIView {
 		guard let imageSource = imageSource else { return false }
 		
 		let isShown = window != nil && superview != nil && !isHidden && alpha > 0.0
-		return isShown && isAnimationEnabled && imageSource.count > 1
+		return isShown && isAnimationEnabled && imageSource.count > 1 && imageSource.status() == .complete
 	}
 	
 	private func updateAnimation() {
-		if let imageSource = imageSource, shouldAnimate() {
-			if imageSource.status() == .complete {
-				if animationController == nil {
-					animationController = AnimationController(view: self)
-				}
-			} else {
-				self.displayedIndex = imageSource.count - 1
+		if shouldAnimate() {
+			if animationController == nil {
+				animationController = AnimationController(view: self)
 			}
 		} else {
 			animationController = nil

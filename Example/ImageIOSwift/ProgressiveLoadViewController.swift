@@ -34,7 +34,7 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		if imageSource?.status() != .complete {
+		if imageSource?.status() != .complete && url.isFileURL {
 			incrementTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(incrementImage), userInfo: nil, repeats: true)
 		}
 	}
@@ -45,13 +45,29 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 		incrementTimer = nil
 	}
 	
+	private var progressObserver: NSKeyValueObservation?
+	
 	override func loadImageSource() {
-		guard
-			let url = Bundle.main.url(forResource: filename, withExtension: nil),
-			let data = try? Data(contentsOf: url)
-			else {
-				print("failed to load image source")
-				return
+		guard url.isFileURL else {
+			let task = ImageSourceDownloader.shared.download(url)
+			imageSource = task.imageSource
+			
+			if #available(iOS 11.0, *) {
+				progressObserver = task.sessionTask.progress.observe(\.fractionCompleted, changeHandler: { [weak self] (progress, _) in
+					DispatchQueue.main.async {
+						let percent = Int(round(progress.fractionCompleted * 100))
+						self?.statusLabel.text = "\(task.imageSource.status()) (\(percent)%)"
+					}
+				})
+			}
+			
+			return
+		}
+		
+		
+		guard let data = try? Data(contentsOf: url) else {
+			print("failed to load image source")
+			return
 		}
 		self.data = data
 		

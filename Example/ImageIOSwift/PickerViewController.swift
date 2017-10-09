@@ -43,22 +43,28 @@ class PickerViewController<DetailViewController: ImageSourceViewController>: UIT
 	}
 	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return example.filenames.count
+		return example.sources.count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 		
-		cell.textLabel?.text = example.filenames[indexPath.row]
+		let url = example.sources[indexPath.row]
+		if url?.isFileURL ?? false {
+			cell.textLabel?.text = url?.lastPathComponent
+		} else {
+			cell.textLabel?.text = url?.absoluteString
+		}
+		cell.textLabel?.lineBreakMode = .byTruncatingMiddle
 		cell.accessoryType = .disclosureIndicator
 		
 		return cell
 	}
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let option = example.filenames[indexPath.row]
+		guard let option = example.sources[indexPath.row] else { return }
 		
-		let viewController = example.detailViewControllerType.init(filename: option)
+		let viewController = example.detailViewControllerType.init(url: option)
 		let navigationController = UINavigationController(rootViewController: viewController)
 		
 		self.showDetailViewController(navigationController, sender: nil)

@@ -39,7 +39,7 @@ class MetricsViewController: ImageSourceViewController {
 	}
 	
 	override func loadImageSource() {
-		guard let url = Bundle.main.url(forResource: filename, withExtension: nil) else { return }
+		// TODO: add http based incremental load handling
 		
 		var start = Date()
 		let imageSource = ImageSource(url: url)
