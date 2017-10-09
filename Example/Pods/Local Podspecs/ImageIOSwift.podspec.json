@@ -2,21 +2,28 @@
   "name": "ImageIOSwift",
   "version": "0.1.0",
   "summary": "A short description of ImageIOSwift.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/thecitydeployer/ImageIOSwift",
+  "description": "ImageIO is an Apple framework that provides low level access to image files and is what powers UIImage and other image related operations on iOS and macOS. However, in part because it is a C/Core Foundation framework, using it can be difficult.\n\nImageIO.Swift is a lightweight wrapper around the framework that makes it much easier to access the vast power that ImageIO provides.\n\nWhile there are alternatives that provide many of the same features, and many of them use very similar implimentations based on `ImageIO`, this project provides a unified interface for all uses of ImageIO. So for instance you can use the same view and image processing code for animated images, progressive jpegs, and any other format that ImageIO supports.",
+  "homepage": "https://github.com/davbeck/ImageIOSwift",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": {
-    "thecitydeployer": "code@davidbeck.co"
+    "davbeck": "code@davidbeck.co"
   },
   "source": {
-    "git": "https://github.com/thecitydeployer/ImageIOSwift.git",
+    "git": "https://github.com/davbeck/ImageIOSwift.git",
     "tag": "0.1.0"
   },
+  "social_media_url": "https://twitter.com/davbeck",
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0",
+    "osx": "10.8"
   },
-  "source_files": "ImageIOSwift/Classes/**/*"
+  "source_files": "ImageIOSwift/*.swift",
+  "ios": {
+    "source_files": "ImageIOSwift/ios/*.swift",
+    "frameworks": "UIKit"
+  },
+  "frameworks": "ImageIO"
 }

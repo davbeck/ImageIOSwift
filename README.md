@@ -27,7 +27,7 @@ To display an animated image, set `isAnimationEnabled = true` on an `ImageSource
 
 Similar to [https://github.com/contentful-labs/Concorde](Concorde) ImageIO actually support incremental loading out of the box. This can be used with progressive JPEGs to show low resolution versions of an image until the rest of the image loads.
 
-Additionally, animated images can load individual frames incrementally as well. If animation is enabled, `ImageSourceView` will show the last frame loaded until the entire image loads, at which time the animation will begin normally.
+Additionally, animated images can load individual frames incrementally as well. If animation is enabled, `ImageSourceView` will show the first frame loaded until the entire image loads, at which time the animation will begin normally.
 
 ```swift
 let imageSource = ImageSource.incremental()

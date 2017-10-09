@@ -3,32 +3,26 @@ Pod::Spec.new do |s|
   s.version          = '0.1.0'
   s.summary          = 'A short description of ImageIOSwift.'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+  ImageIO is an Apple framework that provides low level access to image files and is what powers UIImage and other image related operations on iOS and macOS. However, in part because it is a C/Core Foundation framework, using it can be difficult.
+
+  ImageIO.Swift is a lightweight wrapper around the framework that makes it much easier to access the vast power that ImageIO provides.
+
+  While there are alternatives that provide many of the same features, and many of them use very similar implimentations based on `ImageIO`, this project provides a unified interface for all uses of ImageIO. So for instance you can use the same view and image processing code for animated images, progressive jpegs, and any other format that ImageIO supports.
                        DESC
 
-  s.homepage         = 'https://github.com/thecitydeployer/ImageIOSwift'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'https://github.com/davbeck/ImageIOSwift'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'thecitydeployer' => 'code@davidbeck.co' }
-  s.source           = { :git => 'https://github.com/thecitydeployer/ImageIOSwift.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { 'davbeck' => 'code@davidbeck.co' }
+  s.source           = { :git => 'https://github.com/davbeck/ImageIOSwift.git', :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/davbeck'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
+  s.osx.deployment_target  = '10.8'
 
-  s.source_files = 'ImageIOSwift/Classes/**/*'
-  
-  # s.resource_bundles = {
-  #   'ImageIOSwift' => ['ImageIOSwift/Assets/*.png']
-  # }
+  s.source_files = 'ImageIOSwift/*.swift'
+  s.ios.source_files   = 'ImageIOSwift/ios/*.swift'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'ImageIO'
+  s.ios.framework  = 'UIKit'
 end
