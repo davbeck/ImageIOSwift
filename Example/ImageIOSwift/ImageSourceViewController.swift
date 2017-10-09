@@ -209,9 +209,9 @@ class ImageSourceViewController: UIViewController {
 		} else {
 			imageSizeLabel.text = nil
 		}
-
+		
 		framesLabel.text = imageSource?.count.description
-
+		
 		propertiesLabel.text = imageSource?.properties()?.rawValue.description
 		properties0Label.text = imageSource?.properties(at: 0)?.rawValue.description
 	}

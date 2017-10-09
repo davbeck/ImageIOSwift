@@ -15,10 +15,13 @@ public class ImageSourceView: UIView {
 	
 	public var imageSource: ImageSource? {
 		didSet {
+			guard imageSource != oldValue else { return }
+			
 			for observer in notificationObservers {
 				notificationCenter.removeObserver(observer)
 			}
 			
+			task = nil
 			animationController = nil
 			updateAnimation()
 			updateImage()
@@ -49,7 +52,6 @@ public class ImageSourceView: UIView {
 	
 	// MARK: - Initialization
 	
-	
 	/// Used to display the current CGImage
 	///
 	/// While you could set the CGImage directly on the view's primary layer, any transformations done to the view would interfere with the transformations set for the images orientation.
@@ -75,6 +77,10 @@ public class ImageSourceView: UIView {
 		for observer in notificationObservers {
 			notificationCenter.removeObserver(observer)
 		}
+		
+		task?.cancel()
+		
+		animationController?.invalidate()
 	}
 	
 	public override func didMoveToWindow() {
@@ -144,6 +150,27 @@ public class ImageSourceView: UIView {
 			self.displayView.transform = CGAffineTransform(rotationAngle: -.pi / 2)
 		default: // 1
 			self.displayView.transform = CGAffineTransform.identity
+		}
+	}
+	
+	
+	// MARK: - URL Loading
+	
+	var task: ImageSourceDownloader.Task? {
+		didSet {
+			guard task !== oldValue else { return }
+			oldValue?.cancel()
+		}
+	}
+	
+	public func load(_ url: URL, with downloader: ImageSourceDownloader = .shared) {
+		if url.isFileURL || url.scheme == "data" {
+			imageSource = ImageSource(url: url)
+			task = nil
+		} else {
+			let task = downloader.download(url)
+			imageSource = task.imageSource
+			self.task = task
 		}
 	}
 	

@@ -13,6 +13,7 @@ import ImageIOSwift
 class ProgressiveLoadViewController: ImageSourceViewController {
 	deinit {
 		incrementTimer = nil
+		task?.cancel()
 	}
 	
 	
@@ -45,12 +46,14 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 		incrementTimer = nil
 	}
 	
+	private var task: ImageSourceDownloader.Task?
 	private var progressObserver: NSKeyValueObservation?
 	
 	override func loadImageSource() {
 		guard url.isFileURL else {
 			let task = ImageSourceDownloader.shared.download(url)
 			imageSource = task.imageSource
+			self.task = task
 			
 			if #available(iOS 11.0, *) {
 				progressObserver = task.sessionTask.progress.observe(\.fractionCompleted, changeHandler: { [weak self] (progress, _) in

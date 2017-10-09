@@ -96,7 +96,10 @@ public struct ImageSource {
 	public func update(_ data: Data, isFinal: Bool) {
 		CGImageSourceUpdateData(cgImageSource, data as CFData, isFinal)
 		
-		NotificationCenter.default.post(name: ImageSource.didUpdateData, object: cgImageSource)
+		DispatchQueue.global().async {
+			// avoid deadlock
+			NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self.cgImageSource)
+		}
 	}
 	
 	
@@ -195,5 +198,12 @@ public struct ImageSource {
 		guard let rawValue = CGImageSourceCopyPropertiesAtIndex(cgImageSource, index, options?.rawValue) as? [CFString:Any] else { return nil }
 		
 		return ImageProperties(rawValue: rawValue)
+	}
+}
+
+
+extension ImageSource: Equatable {
+	public static func ==(lhs: ImageSource, rhs: ImageSource) -> Bool {
+		return lhs.cgImageSource == rhs.cgImageSource
 	}
 }
