@@ -10,11 +10,11 @@
 import UIKit
 
 
-public class ImageSourceView: UIView {
+open class ImageSourceView: UIView {
 	private let notificationCenter = NotificationCenter.default
 	private var notificationObservers: [NSObjectProtocol] = []
 	
-	public var imageSource: ImageSource? {
+	open var imageSource: ImageSource? {
 		didSet {
 			guard imageSource != oldValue else { return }
 			
@@ -36,7 +36,7 @@ public class ImageSourceView: UIView {
 		}
 	}
 	
-	private var displayedIndex: Int = 0 {
+	open var displayedIndex: Int = 0 {
 		didSet {
 			guard displayedIndex != oldValue else { return }
 			
@@ -84,23 +84,23 @@ public class ImageSourceView: UIView {
 		animationController?.invalidate()
 	}
 	
-	public override func didMoveToWindow() {
+	open override func didMoveToWindow() {
 		super.didMoveToWindow()
 		updateAnimation()
 	}
 	
-	public override func didMoveToSuperview() {
+	open override func didMoveToSuperview() {
 		super.didMoveToSuperview()
 		updateAnimation()
 	}
 	
-	public override var alpha: CGFloat {
+	open override var alpha: CGFloat {
 		didSet {
 			updateAnimation()
 		}
 	}
 	
-	public override var isHidden: Bool {
+	open override var isHidden: Bool {
 		didSet {
 			updateAnimation()
 		}
@@ -109,18 +109,18 @@ public class ImageSourceView: UIView {
 	
 	// MARK: - Layout
 	
-	public override func layoutSubviews() {
+	open override func layoutSubviews() {
 		super.layoutSubviews()
 		
 		displayView.frame = bounds
 	}
 	
-	public override var intrinsicContentSize: CGSize {
+	open override var intrinsicContentSize: CGSize {
 		return imageSource?.properties(at: displayedIndex)?.imageSize ??
 			CGSize(width: UIViewNoIntrinsicMetric, height: UIViewNoIntrinsicMetric)
 	}
 	
-	public override var contentMode: UIViewContentMode {
+	open override var contentMode: UIViewContentMode {
 		didSet {
 			displayView.contentMode = contentMode
 		}
@@ -129,7 +129,7 @@ public class ImageSourceView: UIView {
 	
 	// MARK: - Updating
 	
-	func updateImage() {
+	private func updateImage() {
 		self.displayedImage = imageSource?.cgImage(at: displayedIndex)
 		
 		self.invalidateIntrinsicContentSize()
@@ -157,14 +157,14 @@ public class ImageSourceView: UIView {
 	
 	// MARK: - URL Loading
 	
-	var task: ImageSourceDownloader.Task? {
+	public private(set) var task: ImageSourceDownloader.Task? {
 		didSet {
 			guard task !== oldValue else { return }
 			oldValue?.cancel()
 		}
 	}
 	
-	public func load(_ url: URL, with downloader: ImageSourceDownloader = .shared) {
+	open func load(_ url: URL, with downloader: ImageSourceDownloader = .shared) {
 		if url.isFileURL || url.scheme == "data" {
 			imageSource = ImageSource(url: url)
 			task = nil
@@ -290,7 +290,7 @@ public class ImageSourceView: UIView {
 		}
 	}
 	
-	private func shouldAnimate() -> Bool {
+	open func shouldAnimate() -> Bool {
 		guard let imageSource = imageSource else { return false }
 		
 		let isShown = window != nil && superview != nil && !isHidden && alpha > 0.0
