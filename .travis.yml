@@ -6,9 +6,13 @@ osx_image: xcode9
 language: objective-c
 # cache: cocoapods
 # podfile: Example/Podfile
-# before_install:
-# - gem install cocoapods # Since Travis is not always on latest version
-# - pod install --project-directory=Example
+before_install:
+- gem install scan
+env:
+  - DEVICE="platform=iOS Simulator,name=iPhone 6,OS=9.3"
+  - DEVICE="platform=iOS Simulator,name=iPhone 6,OS=10.2"
+  - DEVICE="platform=iOS Simulator,name=iPhone 6,OS=11.1"
 script:
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -workspace Example/ImageIOSwift.xcworkspace -scheme ImageIOSwift-Example -sdk iphonesimulator9.3 ONLY_ACTIVE_ARCH=NO | xcpretty
+- fastlane scan --workspace "Example/ImageIOSwift.xcworkspace" --scheme "ImageIOSwift-Example" -d $DEVICE
 - pod lib lint
+- carthage build --no-skip-current
