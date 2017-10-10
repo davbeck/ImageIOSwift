@@ -11,8 +11,8 @@ before_install:
 env:
   - DEVICE="platform=iOS Simulator,name=iPhone 6,OS=9.3"
   - DEVICE="platform=iOS Simulator,name=iPhone 6,OS=10.2"
-  - DEVICE="platform=iOS Simulator,name=iPhone 6,OS=11.1"
+  - DEVICE="platform=iOS Simulator,name=iPhone 6,OS=11.0"
 script:
-- fastlane scan --workspace "Example/ImageIOSwift.xcworkspace" --scheme "ImageIOSwift-Example" -d $DEVICE
+- fastlane scan --workspace "Example/ImageIOSwift.xcworkspace" --scheme "ImageIOSwift-Example" -d "$DEVICE"
 - pod lib lint
 - carthage build --no-skip-current
