@@ -35,3 +35,38 @@ extension CGImageSourceStatus: CustomStringConvertible {
 		}
 	}
 }
+
+
+extension ImageSource {
+	public struct Error: Swift.Error, LocalizedError, CustomStringConvertible {
+		public let status: CGImageSourceStatus
+		
+		public init?(_ status: CGImageSourceStatus) {
+			switch status {
+			case .statusReadingHeader, .statusIncomplete, .statusComplete:
+				return nil
+			default:
+				self.status = status
+			}
+		}
+		
+		public var description: String {
+			return status.description
+		}
+		
+		public var errorDescription: String? {
+			switch status {
+			case .statusUnexpectedEOF:
+				return NSLocalizedString("Unexpectedly found the end of the file.", comment: "Error description")
+			case .statusInvalidData:
+				return NSLocalizedString("Invalid image file.", comment: "Error description")
+			case .statusUnknownType:
+				return NSLocalizedString("Unsupported image file type.", comment: "Error description")
+			case .statusReadingHeader, .statusIncomplete:
+				return NSLocalizedString("Still loading image.", comment: "Error description")
+			case .statusComplete:
+				return nil
+			}
+		}
+	}
+}

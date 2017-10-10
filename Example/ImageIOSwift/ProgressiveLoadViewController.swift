@@ -35,7 +35,7 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		if imageSource?.status() != .complete && url.isFileURL {
+		if imageSource?.status != .complete && url.isFileURL {
 			incrementTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(incrementImage), userInfo: nil, repeats: true)
 		}
 	}
@@ -59,7 +59,7 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 				progressObserver = task.sessionTask.progress.observe(\.fractionCompleted, changeHandler: { [weak self] (progress, _) in
 					DispatchQueue.main.async {
 						let percent = Int(round(progress.fractionCompleted * 100))
-						self?.statusLabel.text = "\(task.imageSource.status()) (\(percent)%)"
+						self?.statusLabel.text = "\(task.imageSource.status) (\(percent)%)"
 					}
 				})
 			}
@@ -101,7 +101,7 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 		imageSource.update(Data(chunk), isFinal: chunk.count == data.count)
 		
 		let percent = Int(round(Double(chunk.count) / Double(data.count) * 100))
-		self.statusLabel.text = "\(imageSource.status()) (\(percent)%)"
+		self.statusLabel.text = "\(imageSource.status) (\(percent)%)"
 	}
 }
 

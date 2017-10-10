@@ -164,12 +164,14 @@ open class ImageSourceView: UIView {
 		}
 	}
 	
-	open func load(_ url: URL, with downloader: ImageSourceDownloader = .shared) {
+	open func load(_ url: URL, with downloader: ImageSourceDownloader = .shared, completionHandler: ((Data?, URLResponse?, Error?) -> Void)? = nil) {
 		if url.isFileURL || url.scheme == "data" {
 			imageSource = ImageSource(url: url)
 			task = nil
+			
+			completionHandler?(nil, nil, imageSource?.error)
 		} else {
-			let task = downloader.download(url)
+			let task = downloader.download(url, completionHandler: completionHandler)
 			imageSource = task.imageSource
 			self.task = task
 		}
@@ -294,7 +296,7 @@ open class ImageSourceView: UIView {
 		guard let imageSource = imageSource else { return false }
 		
 		let isShown = window != nil && superview != nil && !isHidden && alpha > 0.0
-		return isShown && isAnimationEnabled && imageSource.count > 1 && imageSource.status() == .complete
+		return isShown && isAnimationEnabled && imageSource.count > 1 && imageSource.status == .complete
 	}
 	
 	private func updateAnimation() {

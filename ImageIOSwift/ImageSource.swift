@@ -170,13 +170,15 @@ public struct ImageSource {
 	
 	// MARK: - Metadata
 	
-	/// Return the status of an image source.
+	/// The status of an image source.
 	///
 	/// The status is particularly informative for incremental image sources, but may also be used by clients that provide non-incremental data.
-	///
-	/// - Returns: Returns the current status of the image source.
-	public func status() -> CGImageSourceStatus {
+	public var status: CGImageSourceStatus {
 		return CGImageSourceGetStatus(cgImageSource)
+	}
+	
+	public var error: Error? {
+		return Error(status)
 	}
 	
 	/// Returns the current status of an image that is at a specified location in an image source.
@@ -187,6 +189,10 @@ public struct ImageSource {
 	/// - Returns: Returns the current status of the image source.
 	public func status(at index: Int) -> CGImageSourceStatus {
 		return CGImageSourceGetStatusAtIndex(cgImageSource, index)
+	}
+	
+	public func error(at index: Int) -> Error? {
+		return Error(status(at: index))
 	}
 	
 	/// Returns the number of images (not including thumbnails) in the image source.

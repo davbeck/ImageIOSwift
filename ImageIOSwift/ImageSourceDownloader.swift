@@ -80,7 +80,7 @@ public class ImageSourceDownloader: NSObject {
 			imageSource.update(data, isFinal: true)
 			
 			for task in tasks {
-				task.completionHandler?(data, sessionTask.response, error)
+				task.completionHandler?(data, sessionTask.response, error ?? imageSource.error)
 			}
 		}
 		
