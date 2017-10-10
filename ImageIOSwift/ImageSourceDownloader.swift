@@ -52,7 +52,7 @@ public class ImageSourceDownloader: NSObject {
 		/// The image data that has been loaded so far.
 		var data: Data = Data() {
 			didSet {
-				if #available(iOS 10.0, *) {
+				if #available(iOS 10.0, macOS 10.12, *) {
 					dispatchPrecondition(condition: .onQueue(queue))
 				}
 				
@@ -73,7 +73,7 @@ public class ImageSourceDownloader: NSObject {
 		///
 		/// - Parameter error: An error, or nil if the request was successful.
 		fileprivate func complete(with error: Error?) {
-			if #available(iOS 10.0, *) {
+			if #available(iOS 10.0, macOS 10.12, *) {
 				dispatchPrecondition(condition: .onQueue(queue))
 			}
 			
