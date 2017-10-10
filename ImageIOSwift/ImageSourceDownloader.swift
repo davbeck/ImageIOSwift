@@ -34,6 +34,8 @@ public class ImageSourceDownloader: NSObject {
 	
 	// MARK: - Downloading
 	
+	public typealias CompletionHandler = (ImageSource, Data?, URLResponse?, Error?) -> Void
+	
 	/// A central request for a particular url.
 	///
 	/// While Task tracks a single request, multiple requests for the same url will be uniqued so that they aren't requested multiple times. When a task is cancelled, it gets removed from the download task, and only when all subtasks have been cancelled is the actual download request cancelled.
@@ -80,7 +82,7 @@ public class ImageSourceDownloader: NSObject {
 			imageSource.update(data, isFinal: true)
 			
 			for task in tasks {
-				task.completionHandler?(data, sessionTask.response, error ?? imageSource.error)
+				task.completionHandler?(imageSource, data, sessionTask.response, error ?? imageSource.error)
 			}
 		}
 		
@@ -93,7 +95,7 @@ public class ImageSourceDownloader: NSObject {
 				self.tasks.remove(at: index)
 				
 				let error = CocoaError(.userCancelled)
-				task.completionHandler?(nil, nil, error)
+				task.completionHandler?(task.imageSource, nil, nil, error)
 				
 				if self.tasks.isEmpty {
 					self.sessionTask.cancel()
@@ -118,9 +120,9 @@ public class ImageSourceDownloader: NSObject {
 		/// The image source is created immediately when the download begins. You can display this immediately, and metadata like size, as well as the actual image, will be loaded as the data becomes available.
 		public let imageSource: ImageSource
 		
-		fileprivate var completionHandler: ((Data?, URLResponse?, Error?) -> Void)?
+		fileprivate var completionHandler: CompletionHandler?
 		
-		fileprivate init(downloadTask: DownloadTask, completionHandler: ((Data?, URLResponse?, Error?) -> Void)?) {
+		fileprivate init(downloadTask: DownloadTask, completionHandler: CompletionHandler?) {
 			self.downloadTask = downloadTask
 			// keep a strong reference in case downloadTask goes away
 			self.sessionTask = downloadTask.sessionTask
@@ -152,7 +154,7 @@ public class ImageSourceDownloader: NSObject {
 	///   - url: The remote URL to download from.
 	///   - completionHandler: Called when the download completes.
 	/// - Returns: A task for the request. You can use the task's image source immediately to display an incrementally loaded image.
-	public func download(_ url: URL, completionHandler: ((Data?, URLResponse?, Error?) -> Void)? = nil) -> Task {
+	public func download(_ url: URL, completionHandler: CompletionHandler? = nil) -> Task {
 		let request = URLRequest(url: url)
 		return self.download(request, completionHandler: completionHandler)
 	}
@@ -167,7 +169,7 @@ public class ImageSourceDownloader: NSObject {
 	///   - request: The request used to download the image.
 	///   - completionHandler: Called when the download completes.
 	/// - Returns: A task for the request. You can use the task's image source immediately to display an incrementally loaded image.
-	public func download(_ request: URLRequest, completionHandler: ((Data?, URLResponse?, Error?) -> Void)? = nil) -> Task {
+	public func download(_ request: URLRequest, completionHandler: CompletionHandler? = nil) -> Task {
 		return queue.sync() {
 			let downloadTask: DownloadTask
 			if let existing = tasks[request] {

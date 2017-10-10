@@ -164,12 +164,12 @@ open class ImageSourceView: UIView {
 		}
 	}
 	
-	open func load(_ url: URL, with downloader: ImageSourceDownloader = .shared, completionHandler: ((Data?, URLResponse?, Error?) -> Void)? = nil) {
+	open func load(_ url: URL, with downloader: ImageSourceDownloader = .shared, completionHandler: ((ImageSource?, Data?, URLResponse?, Error?) -> Void)? = nil) {
 		if url.isFileURL || url.scheme == "data" {
 			imageSource = ImageSource(url: url)
 			task = nil
 			
-			completionHandler?(nil, nil, imageSource?.error)
+			completionHandler?(imageSource, nil, nil, imageSource?.error)
 		} else {
 			let task = downloader.download(url, completionHandler: completionHandler)
 			imageSource = task.imageSource
