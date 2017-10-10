@@ -87,6 +87,11 @@ public struct ImageSource {
 	/// - Note: This will not work with updates that are applied directly to the underlying `CGImageSource`.
 	public static let didUpdateData = Notification.Name(rawValue: "ImageIOSwift.ImageSource.didUpdateData")
 	
+	/// Notifies that an incremental image source has completely loaded.
+	///
+	/// - Note: This will not work with updates that are applied directly to the underlying `CGImageSource`.
+	public static let didFinalizeData = Notification.Name(rawValue: "ImageIOSwift.ImageSource.didFinalizeData")
+	
 	/// Update an incremental image source with more data
 	///
 	/// When more data is available for an image, call this with *all of the available data so far*.
@@ -100,6 +105,10 @@ public struct ImageSource {
 		DispatchQueue.global().async {
 			// avoid deadlock
 			NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self.cgImageSource)
+			
+			if isFinal {
+				NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self.cgImageSource)
+			}
 		}
 	}
 	
