@@ -204,6 +204,13 @@ public struct ImageSource {
 		return CGImageSourceGetCount(cgImageSource)
 	}
 	
+	/// The uniform type identifier of the image.
+	///
+	/// The uniform type identifier (UTI) of the source container can be different from the type of the images in the container. For example, the .icns format supports embedded JPEG2000. The type of the source container is "com.apple.icns" but type of the images is JPEG2000.
+	public var typeIdentifier: String? {
+		return CGImageSourceGetType(cgImageSource) as String?
+	}
+	
 	public func properties(options: ImageOptions? = nil) -> ImageProperties? {
 		guard let rawValue = CGImageSourceCopyProperties(cgImageSource, options?.rawValue) as? [CFString:Any] else { return nil }
 		
