@@ -6,6 +6,7 @@
 //  Copyright © 2017 David Beck. All rights reserved.
 //
 
+#if os(iOS)
 import QuartzCore
 
 
@@ -27,3 +28,4 @@ extension CADisplayLink {
 		self.init(target: proxy, selector: #selector(Proxy.fire))
 	}
 }
+#endif

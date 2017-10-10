@@ -6,6 +6,7 @@
 //  Copyright © 2017 David Beck. All rights reserved.
 //
 
+#if os(iOS)
 import UIKit
 
 
@@ -31,3 +32,4 @@ extension UIImageOrientation {
 		}
 	}
 }
+#endif

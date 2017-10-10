@@ -6,6 +6,7 @@
 //  Copyright © 2017 David Beck. All rights reserved.
 //
 
+#if os(iOS)
 import UIKit
 
 
@@ -310,3 +311,4 @@ public class ImageSourceView: UIView {
 		animationController = AnimationController(view: self)
 	}
 }
+#endif
