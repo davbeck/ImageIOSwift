@@ -56,7 +56,7 @@ class ProgressiveLoadViewController: ImageSourceViewController {
 			self.task = task
 			
 			if #available(iOS 11.0, *) {
-				progressObserver = task.sessionTask.progress.observe(\.fractionCompleted, changeHandler: { [weak self] (progress, _) in
+				progressObserver = task.sessionTask?.progress.observe(\.fractionCompleted, changeHandler: { [weak self] (progress, _) in
 					DispatchQueue.main.async {
 						let percent = Int(round(progress.fractionCompleted * 100))
 						self?.statusLabel.text = "\(task.imageSource.status) (\(percent)%)"

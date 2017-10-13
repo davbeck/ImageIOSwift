@@ -14,25 +14,34 @@ open class ImageSourceView: UIView {
 	private let notificationCenter = NotificationCenter.default
 	private var notificationObservers: [NSObjectProtocol] = []
 	
-	open var imageSource: ImageSource? {
+	private var _imageSource: ImageSource? {
 		didSet {
-			guard imageSource != oldValue else { return }
+			guard _imageSource != oldValue else { return }
 			
 			for observer in notificationObservers {
 				notificationCenter.removeObserver(observer)
 			}
 			
-			task = nil
 			animationController = nil
 			updateAnimation()
 			updateImage()
 			
-			if let imageSource = imageSource {
+			if let imageSource = _imageSource {
 				notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource.cgImageSource, queue: .main, using: { [weak self] (notification) in
 					self?.updateImage()
 					self?.updateAnimation()
 				}))
 			}
+		}
+	}
+	
+	open var imageSource: ImageSource? {
+		get {
+			return _imageSource
+		}
+		set {
+			task = nil
+			self._imageSource = newValue
 		}
 	}
 	
@@ -157,24 +166,17 @@ open class ImageSourceView: UIView {
 	
 	// MARK: - URL Loading
 	
-	public private(set) var task: ImageSourceDownloader.Task? {
+	public var task: ImageSourceDownloader.Task? {
 		didSet {
 			guard task !== oldValue else { return }
 			oldValue?.cancel()
+			
+			_imageSource = task?.imageSource
 		}
 	}
 	
 	open func load(_ url: URL, with downloader: ImageSourceDownloader = .shared, completionHandler: ((ImageSource?, Data?, URLResponse?, Error?) -> Void)? = nil) {
-		if url.isFileURL || url.scheme == "data" {
-			imageSource = ImageSource(url: url)
-			task = nil
-			
-			completionHandler?(imageSource, nil, nil, imageSource?.error)
-		} else {
-			let task = downloader.download(url, completionHandler: completionHandler)
-			imageSource = task.imageSource
-			self.task = task
-		}
+		self.task = downloader.download(url, completionHandler: completionHandler)
 	}
 	
 	

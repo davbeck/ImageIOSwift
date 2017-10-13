@@ -113,7 +113,9 @@ public class ImageSourceDownloader: NSObject {
 		/// The underlying task used to download the file.
 		///
 		/// You should not cancel the session task directly because other requests may be sharing it. Instead, use `cancel()` which will cancel the session task if there are not other requests using it.
-		public let sessionTask: URLSessionTask
+		public var sessionTask: URLSessionTask? {
+			return downloadTask?.sessionTask
+		}
 		
 		/// The image source that is being loaded incrementally.
 		///
@@ -125,10 +127,15 @@ public class ImageSourceDownloader: NSObject {
 		fileprivate init(downloadTask: DownloadTask, completionHandler: CompletionHandler?) {
 			self.downloadTask = downloadTask
 			// keep a strong reference in case downloadTask goes away
-			self.sessionTask = downloadTask.sessionTask
 			self.imageSource = downloadTask.imageSource
 			
 			self.completionHandler = completionHandler
+		}
+		
+		fileprivate init(imageSource: ImageSource) {
+			self.downloadTask = nil
+			self.imageSource = imageSource
+			self.completionHandler = nil
 		}
 		
 		/// Cancels the request.
@@ -155,8 +162,24 @@ public class ImageSourceDownloader: NSObject {
 	///   - completionHandler: Called when the download completes.
 	/// - Returns: A task for the request. You can use the task's image source immediately to display an incrementally loaded image.
 	public func download(_ url: URL, completionHandler: CompletionHandler? = nil) -> Task {
-		let request = URLRequest(url: url)
-		return self.download(request, completionHandler: completionHandler)
+		if url.isFileURL || url.scheme == "data" {
+			let imageSource: ImageSource
+			if let urlSource = ImageSource(url: url) {
+				imageSource = urlSource
+			} else {
+				// create an invalid image source to return instead of nil
+				imageSource = ImageSource.incremental()
+				imageSource.update(Data(), isFinal: true)
+			}
+			let task = Task(imageSource: imageSource)
+			
+			completionHandler?(imageSource, nil, nil, imageSource.error)
+			
+			return task
+		} else {
+			let request = URLRequest(url: url)
+			return self.download(request, completionHandler: completionHandler)
+		}
 	}
 	
 	/// Download a remote image.
