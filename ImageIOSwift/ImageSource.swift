@@ -140,18 +140,28 @@ public struct ImageSource {
 			return options as CFDictionary
 		}
 	}
-	
-	/// Create an image from the image source
-	///
-	/// This method is fairly cheap to call because the returned CGImage is lazily loaded when it is first drawn.
-	///
-	/// - Parameters:
-	///   - index: The frame of the image to generate (defaults to 0)
-	///   - options: Any options to include when creating the image
-	/// - Returns: A CGImage or nil if the underlying file doesn't include an image at that index or has invalide or incomplete data
-	public func cgImage(at index: Int = 0, options: ImageOptions? = nil) -> CGImage? {
-		return CGImageSourceCreateImageAtIndex(cgImageSource, index, options?.rawValue)
-	}
+    
+    private let imageCache = NSCache<NSNumber, CGImage>()
+    
+    /// Create an image from the image source
+    ///
+    /// This method is fairly cheap to call because the returned CGImage is lazily loaded when it is first drawn.
+    ///
+    /// - Parameters:
+    ///   - index: The frame of the image to generate (defaults to 0)
+    ///   - options: Any options to include when creating the image
+    /// - Returns: A CGImage or nil if the underlying file doesn't include an image at that index or has invalide or incomplete data
+    public func cgImage(at index: Int = 0, options: ImageOptions? = nil) -> CGImage? {
+        let key = NSNumber(value: index)
+        
+        if let cachedImage = imageCache.object(forKey: key) {
+            return cachedImage
+        }
+        
+        guard let image = CGImageSourceCreateImageAtIndex(cgImageSource, index, options?.rawValue) else { return nil }
+        imageCache.setObject(image, forKey: key)
+        return image
+    }
 	
 	/// Create a thumbnail from the image source
 	///
