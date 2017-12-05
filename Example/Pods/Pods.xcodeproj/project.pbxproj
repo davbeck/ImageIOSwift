@@ -295,6 +295,7 @@
 				C75753090E5AF34A2DD630935D67E357 /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		929FABEEBD7569895D1885228B853EDC /* Development Pods */ = {
 			isa = PBXGroup;
