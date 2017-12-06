@@ -252,9 +252,14 @@ extension ImageSourceDownloader: URLSessionDataDelegate {
 			let downloadTask = tasks[request]
 		else { return }
 		
-		if error == nil, let request = sessionTask.originalRequest, let task = downloadTask.tasks.first {
+		if
+			error == nil && downloadTask.imageSource.status == .complete,
+			let request = sessionTask.originalRequest,
+			let task = downloadTask.tasks.first
+		{
 			cachedTasks.setObject(task, forKey: request as NSURLRequest)
 		}
+		
 		tasks[request] = nil
 		downloadTask.complete(with: error)
 	}
