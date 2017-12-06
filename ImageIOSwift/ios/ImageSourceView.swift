@@ -23,7 +23,7 @@ open class ImageSourceView: UIView {
 			}
 			
 			animationController = nil
-            displayedIndex = 0
+			displayedIndex = 0
 			updateAnimation()
 			updateImage()
 			
