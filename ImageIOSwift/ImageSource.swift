@@ -101,6 +101,7 @@ public struct ImageSource {
 	///   - isFinal: Set this to true when the file has been completely loaded.
 	public func update(_ data: Data, isFinal: Bool) {
 		CGImageSourceUpdateData(cgImageSource, data as CFData, isFinal)
+		imageCache.removeAllObjects()
 		
 		DispatchQueue.global().async {
 			// avoid deadlock
