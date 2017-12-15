@@ -103,13 +103,10 @@ public struct ImageSource {
 		CGImageSourceUpdateData(cgImageSource, data as CFData, isFinal)
 		imageCache.removeAllObjects()
 		
-		DispatchQueue.global().async {
-			// avoid deadlock
-			NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self.cgImageSource)
-			
-			if isFinal {
-				NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self.cgImageSource)
-			}
+		NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self.cgImageSource)
+		
+		if isFinal {
+			NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self.cgImageSource)
 		}
 	}
 	

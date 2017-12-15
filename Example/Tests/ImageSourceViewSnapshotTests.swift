@@ -60,4 +60,25 @@ class ImageSourceViewSnapshotTests: FBSnapshotTestCase {
 			FBSnapshotVerifyView(view, identifier: "\(mode)")
 		}
 	}
+	
+	func testIncrementalLoad() throws {
+		let view = ImageSourceView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+		view.backgroundColor = .lightGray
+		
+		guard let url = local(named: "progressive.jpeg") else { XCTFail(); return }
+		let data = try Data(contentsOf: url)
+		
+		let imageSource = ImageSource.incremental()
+		view.imageSource = imageSource
+		FBSnapshotVerifyView(view, identifier: "0%")
+		
+		imageSource.update(data.prefix(data.count / 10), isFinal: false)
+		FBSnapshotVerifyView(view, identifier: "10%")
+		
+		imageSource.update(data.prefix(data.count / 4), isFinal: false)
+		FBSnapshotVerifyView(view, identifier: "50%")
+		
+		imageSource.update(data, isFinal: false)
+		FBSnapshotVerifyView(view, identifier: "100%")
+	}
 }

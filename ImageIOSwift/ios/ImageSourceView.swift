@@ -28,9 +28,16 @@ open class ImageSourceView: UIView {
 			updateImage()
 			
 			if let imageSource = _imageSource {
-				notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource.cgImageSource, queue: .main, using: { [weak self] (notification) in
-					self?.updateImage()
-					self?.updateAnimation()
+				notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource.cgImageSource, queue: nil, using: { [weak self] (notification) in
+					if Thread.isMainThread {
+						self?.updateImage()
+						self?.updateAnimation()
+					} else {
+						DispatchQueue.main.async { // must be async
+							self?.updateImage()
+							self?.updateAnimation()
+						}
+					}
 				}))
 			}
 		}
