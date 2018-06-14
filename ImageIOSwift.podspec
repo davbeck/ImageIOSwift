@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ImageIOSwift'
-  s.version          = '0.3.1'
+  s.version          = '0.4.0'
   s.summary          = 'Swift wrapper around ImageIO.'
 
   s.description      = <<-DESC
@@ -19,6 +19,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target  = '10.10'
+  s.static_framework = true
 
   s.source_files = 'ImageIOSwift/*.swift'
   s.ios.source_files   = 'ImageIOSwift/ios/*.swift'
