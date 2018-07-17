@@ -61,9 +61,16 @@ open class ImageSourceView: UIView {
 		}
 	}
 	
-	private var displayedImage: CGImage? {
-		didSet {
-			displayView.layer.contents = displayedImage
+	@objc open private(set) dynamic var displayedImage: CGImage? {
+		get {
+			return displayView.layer.contents as! CGImage?
+		}
+		set {
+			if displayedImage != newValue {
+				willChangeValue(for: \.displayedImage)
+				displayView.layer.contents = newValue
+				didChangeValue(for: \.displayedImage)
+			}
 		}
 	}
 	
