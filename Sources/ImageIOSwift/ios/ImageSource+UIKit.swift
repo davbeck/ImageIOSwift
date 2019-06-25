@@ -6,7 +6,7 @@
 //  Copyright © 2017 David Beck. All rights reserved.
 //
 
-#if os(iOS)
+#if canImport(UIKit)
 import UIKit
 
 

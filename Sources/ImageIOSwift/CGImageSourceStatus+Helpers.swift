@@ -7,6 +7,7 @@
 //
 
 import ImageIO
+import Foundation
 
 
 extension CGImageSourceStatus: CustomStringConvertible {
