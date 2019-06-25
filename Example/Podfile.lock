@@ -4,20 +4,24 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - ImageIOSwift (0.1.0)
+  - ImageIOSwift (0.5.0)
 
 DEPENDENCIES:
   - FBSnapshotTestCase (~> 2.1.4)
   - ImageIOSwift (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FBSnapshotTestCase
 
 EXTERNAL SOURCES:
   ImageIOSwift:
     :path: "../"
 
 SPEC CHECKSUMS:
-  FBSnapshotTestCase: '094f9f314decbabe373b87cc339bea235a63e07a'
-  ImageIOSwift: 8f37a6f9279028ce09825e5c841ad472dab9d51f
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  ImageIOSwift: e3e9f003681d8ea544660af3bddee4800fede3cc
 
 PODFILE CHECKSUM: 2c5ada80341fcd6c217d3e7f26bf02206e0cee02
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.7.2
