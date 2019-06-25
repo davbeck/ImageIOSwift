@@ -60,8 +60,23 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-ImageIOSwift is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+### [Swift Package Manager](https://swift.org/package-manager/)
+
+In Xcode 11 you can add ImageIOSwift as a package in your project settings using the Github URL of the project.
+
+On macOS, you can use is on the command line by adding the following to your Package.swift:
+
+```swift
+dependencies: [
+	.package(url: "https://github.com/davbeck/ImageIOSwift.git", from: "0.5.0"),
+],
+```
+
+Note that because ImageIO is not available on Linux (or any non-Apple platform) that this package cannot be used there.
+
+### [CocoaPods](http://cocoapods.org)
+
+Add the following line to your Podfile:
 
 ```ruby
 pod 'ImageIOSwift'
