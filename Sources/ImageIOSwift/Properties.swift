@@ -48,6 +48,27 @@ public struct ImageProperties {
 		return rawValue[kCGImagePropertyOrientation] as? Int ?? tiff?.orientation ?? iptc?.orientation ?? 1
 	}
 	
+	public var transform: CGAffineTransform {
+		switch self.orientation {
+		case 2:
+			return CGAffineTransform(scaleX: -1, y: 1)
+		case 3:
+			return CGAffineTransform(scaleX: -1, y: -1)
+		case 4:
+			return CGAffineTransform(scaleX: 1, y: -1)
+		case 5:
+			return CGAffineTransform(scaleX: -1, y: 1).rotated(by: .pi / 2)
+		case 6:
+			return CGAffineTransform(rotationAngle: .pi / 2)
+		case 7:
+			return CGAffineTransform(scaleX: -1, y: 1).rotated(by: -.pi / 2)
+		case 8:
+			return CGAffineTransform(rotationAngle: -.pi / 2)
+		default: // 1
+			return CGAffineTransform.identity
+		}
+	}
+	
 	
 	// MARK: - Aggregate
 	
@@ -80,5 +101,35 @@ public struct ImageProperties {
 	}
 }
 
+
+extension ImageSource {
+	public var totalDuration: Double {
+		return (0..<count).reduce(0, { $0 + (self.properties(at: $1).delayTime ?? 0) })
+	}
+	
+	public func animationFrame(at timestamp: TimeInterval) -> Int {
+		guard self.count > 1 && !self.totalDuration.isZero else { return 0 }
+		
+		let loopCount = self.properties().loopCount
+		let previousLoops = floor(timestamp / self.totalDuration)
+		if loopCount != 0 && Int(previousLoops) >= loopCount {
+			return self.count - 1
+		}
+		
+		let normalizedTimestamp = timestamp - (previousLoops * self.totalDuration)
+		
+		var offset: TimeInterval = 0
+		var frame: Int = 0
+		while frame < count {
+			let delay = self.properties(at: frame).delayTime ?? 0
+			if offset + delay >= normalizedTimestamp {
+				return frame
+			}
+			
+			offset += delay
+			frame += 1
+		}
+		
+		return frame
 	}
 }

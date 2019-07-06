@@ -158,24 +158,7 @@ open class ImageSourceView: UIView {
 		
 		self.invalidateIntrinsicContentSize()
 		
-		switch imageSource?.properties(at: displayedIndex).orientation ?? 1 {
-		case 2:
-			self.displayView.transform = CGAffineTransform(scaleX: -1, y: 1)
-		case 3:
-			self.displayView.transform = CGAffineTransform(scaleX: -1, y: -1)
-		case 4:
-			self.displayView.transform = CGAffineTransform(scaleX: 1, y: -1)
-		case 5:
-			self.displayView.transform = CGAffineTransform(scaleX: -1, y: 1).rotated(by: .pi / 2)
-		case 6:
-			self.displayView.transform = CGAffineTransform(rotationAngle: .pi / 2)
-		case 7:
-			self.displayView.transform = CGAffineTransform(scaleX: -1, y: 1).rotated(by: -.pi / 2)
-		case 8:
-			self.displayView.transform = CGAffineTransform(rotationAngle: -.pi / 2)
-		default: // 1
-			self.displayView.transform = CGAffineTransform.identity
-		}
+		self.displayView.transform = imageSource?.properties(at: displayedIndex).transform ?? CGAffineTransform.identity
 	}
 	
 	
