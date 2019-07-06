@@ -219,15 +219,13 @@ public class ImageSource {
 		return CGImageSourceGetType(cgImageSource) as String?
 	}
 	
-	public func properties(options: ImageOptions? = nil) -> ImageProperties? {
-		guard let rawValue = CGImageSourceCopyProperties(cgImageSource, options?.rawValue) as? [CFString:Any] else { return nil }
-		
+	public func properties(options: ImageOptions? = nil) -> ImageProperties {
+		let rawValue = CGImageSourceCopyProperties(cgImageSource, options?.rawValue) as? [CFString:Any] ?? [:]
 		return ImageProperties(rawValue: rawValue)
 	}
 	
-	public func properties(at index: Int, options: ImageOptions? = nil) -> ImageProperties? {
-		guard let rawValue = CGImageSourceCopyPropertiesAtIndex(cgImageSource, index, options?.rawValue) as? [CFString:Any] else { return nil }
-		
+	public func properties(at index: Int, options: ImageOptions? = nil) -> ImageProperties {
+		let rawValue = CGImageSourceCopyPropertiesAtIndex(cgImageSource, index, options?.rawValue) as? [CFString:Any] ?? [:]
 		return ImageProperties(rawValue: rawValue)
 	}
 }

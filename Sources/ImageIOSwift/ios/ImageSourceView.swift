@@ -140,7 +140,7 @@ open class ImageSourceView: UIView {
 	}
 	
 	open override var intrinsicContentSize: CGSize {
-		return imageSource?.properties(at: displayedIndex)?.imageSize ??
+		return imageSource?.properties(at: displayedIndex).imageSize ??
 			CGSize(width: UIViewNoIntrinsicMetric, height: UIViewNoIntrinsicMetric)
 	}
 	
@@ -158,7 +158,7 @@ open class ImageSourceView: UIView {
 		
 		self.invalidateIntrinsicContentSize()
 		
-		switch imageSource?.properties(at: displayedIndex)?.orientation ?? 1 {
+		switch imageSource?.properties(at: displayedIndex).orientation ?? 1 {
 		case 2:
 			self.displayView.transform = CGAffineTransform(scaleX: -1, y: 1)
 		case 3:
@@ -232,7 +232,7 @@ open class ImageSourceView: UIView {
 		func reset() {
 			hasStartedAnimating = false
 			hasFinishedAnimating = false
-			if let count = view?.imageSource?.properties()?.loopCount {
+			if let count = view?.imageSource?.properties().loopCount {
 				isInfiniteLoop = count == 0
 				remainingLoopCount = count
 			} else {
@@ -259,7 +259,7 @@ open class ImageSourceView: UIView {
 				hasStartedAnimating = true
 			}
 			
-			let currentDelayTime = image.properties(at: view.displayedIndex)?.delayTime ?? 0
+			let currentDelayTime = image.properties(at: view.displayedIndex).delayTime ?? 0
 			elapsedTime += timestamp - previousTime
 			previousTime = timestamp
 			
