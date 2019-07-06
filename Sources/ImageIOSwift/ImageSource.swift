@@ -13,7 +13,7 @@ import ImageIO
 /// An interface to an image file including metadata
 ///
 /// You can think of `CG/NS/UIImage` as a single frame of pixels. `ImageSource` sits a level below that, providing access to almost anything an image *file* provides, including metadata and multiple representations. For instance, animated images have multiple image frames as well as timing metadata.
-public struct ImageSource {
+public class ImageSource {
 	/// The underlying image source
 	public let cgImageSource: CGImageSource
 	
@@ -44,7 +44,7 @@ public struct ImageSource {
 	///
 	/// - Parameter url: The url to load the image file from.
 	/// - Parameter options: Options to use for the created image source.
-	public init?(url: URL, options: CreateOptions? = nil) {
+	public convenience init?(url: URL, options: CreateOptions? = nil) {
 		guard let cgImageSource = CGImageSourceCreateWithURL(url as CFURL, options?.rawValue) else { return nil }
 		
 		self.init(cgImageSource)
@@ -56,7 +56,7 @@ public struct ImageSource {
 	///
 	/// - Parameter data: The data representation of the image file.
 	/// - Parameter options: Options to use for the created image source.
-	public init?(data: Data, options: CreateOptions? = nil) {
+	public convenience init?(data: Data, options: CreateOptions? = nil) {
 		guard let cgImageSource = CGImageSourceCreateWithData(data as CFData, options?.rawValue) else { return nil }
 		
 		self.init(cgImageSource)
@@ -103,10 +103,10 @@ public struct ImageSource {
 		CGImageSourceUpdateData(cgImageSource, data as CFData, isFinal)
 		imageCache.removeAllObjects()
 		
-		NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self.cgImageSource)
+		NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self)
 		
 		if isFinal {
-			NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self.cgImageSource)
+			NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self)
 		}
 	}
 	

@@ -28,7 +28,7 @@ open class ImageSourceView: UIView {
 			updateImage()
 			
 			if let imageSource = _imageSource {
-				notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource.cgImageSource, queue: nil, using: { [weak self] (notification) in
+				notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource, queue: nil, using: { [weak self] (notification) in
 					if Thread.isMainThread {
 						self?.updateImage()
 						self?.updateAnimation()

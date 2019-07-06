@@ -24,7 +24,7 @@ class ImageSourceViewController: UIViewController {
 			imageView.image = imageSource?.image(at: 0)
 			
 			if let newValue = imageSource {
-				NotificationCenter.default.addObserver(self, selector: #selector(didUpdateData), name: ImageSource.didUpdateData, object: newValue.cgImageSource)
+				NotificationCenter.default.addObserver(self, selector: #selector(didUpdateData), name: ImageSource.didUpdateData, object: newValue)
 			}
 		}
 	}
