@@ -52,18 +52,33 @@ public struct ImageProperties {
 	// MARK: - Aggregate
 	
 	public var loopCount: Int {
-		return gif?.loopCount ?? png?.loopCount ?? 1
+		if #available(iOS 13.0, *) {
+			return heic?.loopCount ?? gif?.loopCount ?? png?.loopCount ?? 1
+		} else {
+			return gif?.loopCount ?? png?.loopCount ?? 1
+		}
 	}
 	
 	public var clampedDelayTime: Double? {
-		return gif?.clampedDelayTime ?? png?.clampedDelayTime
+		if #available(iOS 13.0, *) {
+			return heic?.clampedDelayTime ?? gif?.clampedDelayTime ?? png?.clampedDelayTime
+		} else {
+			return gif?.clampedDelayTime ?? png?.clampedDelayTime
+		}
 	}
 	
 	public var unclampedDelayTime: Double? {
-		return gif?.unclampedDelayTime ?? png?.unclampedDelayTime
+		if #available(iOS 13.0, *) {
+			return heic?.unclampedDelayTime ?? gif?.unclampedDelayTime ?? png?.unclampedDelayTime
+		} else {
+			return gif?.unclampedDelayTime ?? png?.unclampedDelayTime
+		}
 	}
 	
 	public var delayTime: Double? {
-		return gif?.delayTime ?? png?.delayTime
+		return unclampedDelayTime ?? clampedDelayTime
+	}
+}
+
 	}
 }
