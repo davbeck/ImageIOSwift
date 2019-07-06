@@ -46,7 +46,7 @@ class MetricsViewController: ImageSourceViewController {
 		let createSourceDuration = -start.timeIntervalSinceNow
 		
 		start = Date()
-		guard let size = imageSource?.properties(at: 0)?.imageSize else { return }
+		guard let size = imageSource?.properties(at: 0).imageSize else { return }
 		let sizeDuration = -start.timeIntervalSinceNow
 		
 		start = Date()

@@ -12,7 +12,7 @@ class SizeTests: XCTestCase {
 				let expectedSize = UIImage(contentsOfFile: url.path)?.size
 				
 				let source = ImageSource(url: url)
-				XCTAssertEqual(source?.properties(at: 0)?.imageSize, expectedSize, "\(name) \(orientation) properties")
+				XCTAssertEqual(source?.properties(at: 0).imageSize, expectedSize, "\(name) \(orientation) properties")
 				XCTAssertEqual(source?.image(at: 0)?.size, expectedSize, "\(name) \(orientation) image")
 			}
 		}

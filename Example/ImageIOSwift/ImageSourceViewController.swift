@@ -204,7 +204,7 @@ class ImageSourceViewController: UIViewController {
 	}
 	
 	func updateInfo() {
-		if let size = imageSource?.properties(at: 0)?.imageSize {
+		if let size = imageSource?.properties(at: 0).imageSize {
 			imageSizeLabel.text = "\(Int(size.width))x\(Int(size.height))"
 		} else {
 			imageSizeLabel.text = nil
@@ -212,7 +212,7 @@ class ImageSourceViewController: UIViewController {
 		
 		framesLabel.text = imageSource?.count.description
 		
-		propertiesLabel.text = imageSource?.properties()?.rawValue.description
-		properties0Label.text = imageSource?.properties(at: 0)?.rawValue.description
+		propertiesLabel.text = imageSource?.properties().rawValue.description
+		properties0Label.text = imageSource?.properties(at: 0).rawValue.description
 	}
 }
