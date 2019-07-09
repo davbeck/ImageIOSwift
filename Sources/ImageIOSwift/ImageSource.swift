@@ -228,6 +228,13 @@ public class ImageSource {
 		let rawValue = CGImageSourceCopyPropertiesAtIndex(cgImageSource, index, options?.rawValue) as? [CFString:Any] ?? [:]
 		return ImageProperties(rawValue: rawValue)
 	}
+	
+	
+	public static let invalid: ImageSource = {
+		let imageSource = ImageSource.incremental()
+		imageSource.update(Data(), isFinal: true)
+		return imageSource
+	}()
 }
 
 
