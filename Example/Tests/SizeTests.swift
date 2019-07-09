@@ -1,6 +1,7 @@
 import UIKit
 import XCTest
 import ImageIOSwift
+import ImageIOUIKit
 
 class SizeTests: XCTestCase {
     // MARK: - Tests
@@ -13,7 +14,7 @@ class SizeTests: XCTestCase {
 				
 				let source = ImageSource(url: url)
 				XCTAssertEqual(source?.properties(at: 0).imageSize, expectedSize, "\(name) \(orientation) properties")
-				XCTAssertEqual(source?.image(at: 0)?.size, expectedSize, "\(name) \(orientation) image")
+				XCTAssertEqual(source?.cgImage(at: 0)?.size, expectedSize, "\(name) \(orientation) image")
 			}
 		}
     }

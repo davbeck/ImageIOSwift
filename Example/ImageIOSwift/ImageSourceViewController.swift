@@ -8,6 +8,7 @@
 
 import UIKit
 import ImageIOSwift
+import ImageIOUIKit
 
 
 class ImageSourceViewController: UIViewController {

@@ -1,6 +1,7 @@
 import XCTest
 import FBSnapshotTestCase
 import ImageIOSwift
+import ImageIOUIKit
 
 
 class ImageSourceViewSnapshotTests: FBSnapshotTestCase {

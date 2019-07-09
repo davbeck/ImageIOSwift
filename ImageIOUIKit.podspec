@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name             = 'ImageIOSwift'
+  s.name             = 'ImageIOUIKit'
   s.version          = '1.0.0'
-  s.summary          = 'Swift wrapper around ImageIO.'
+  s.summary          = 'UIKit integration for ImageIO.'
 
   s.description      = <<-DESC
   ImageIO is an Apple framework that provides low level access to image files and is what powers UIImage and other image related operations on iOS and macOS. However, in part because it is a C/Core Foundation framework, using it can be difficult.
@@ -19,10 +19,11 @@ Pod::Spec.new do |s|
 
 	s.swift_version = '4.0'
   s.ios.deployment_target = '9.0'
-  s.osx.deployment_target  = '10.10'
   s.static_framework = true
 
-  s.source_files = 'Sources/ImageIOSwift/*.swift'
+  s.source_files = 'Sources/ImageIOUIKit/*.swift'
 
-  s.frameworks = 'ImageIO'
+  s.framework  = 'UIKit'
+	
+	s.dependency 'ImageIOSwift', '~> 1.0'
 end

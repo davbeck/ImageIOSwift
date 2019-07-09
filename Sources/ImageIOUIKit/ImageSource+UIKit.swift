@@ -7,6 +7,7 @@
 //
 
 #if canImport(UIKit)
+import ImageIOSwift
 import UIKit
 
 

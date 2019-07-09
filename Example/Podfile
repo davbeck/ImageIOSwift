@@ -3,6 +3,7 @@ use_frameworks!
 
 target 'ImageIOSwift_Example' do
   pod 'ImageIOSwift', :path => '../'
+  pod 'ImageIOUIKit', :path => '../'
 
   target 'ImageIOSwift_Tests' do
     inherit! :search_paths
