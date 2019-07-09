@@ -33,6 +33,8 @@ extension CGImageSourceStatus: CustomStringConvertible {
 			return "Incomplete"
 		case .statusComplete:
 			return "Complete"
+		@unknown default:
+			return "UnknownStatus(\(rawValue))"
 		}
 	}
 }
@@ -66,6 +68,8 @@ extension ImageSource {
 			case .statusReadingHeader, .statusIncomplete:
 				return NSLocalizedString("Still loading image.", comment: "Error description")
 			case .statusComplete:
+				return nil
+			@unknown default:
 				return nil
 			}
 		}

@@ -40,7 +40,7 @@ class ImageSourceViewSnapshotTests: FBSnapshotTestCase {
 		
 		view.imageSource = ImageSource(url: url)
 		
-		let modes: [UIViewContentMode] = [
+		let modes: [UIView.ContentMode] = [
 			.scaleToFill,
 			.scaleAspectFit,
 			.scaleAspectFill,

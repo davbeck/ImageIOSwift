@@ -98,7 +98,7 @@ public class ImageSourceDownloader: NSObject {
 		/// - Parameter task: The task to cancel.
 		fileprivate func cancel(_ task: Task) {
 			queue.async {
-				guard let index = self.tasks.index(where: { $0.value === task }) else { return }
+				guard let index = self.tasks.firstIndex(where: { $0.value === task }) else { return }
 				self.tasks.remove(at: index)
 				
 				let error = CocoaError(.userCancelled)

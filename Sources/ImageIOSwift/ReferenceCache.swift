@@ -22,7 +22,7 @@ class ReferenceCache<Key: Equatable, Value: AnyObject> {
 	
 	init() {
 		#if canImport(UIKit)
-		NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMemoryWarning), name: .UIApplicationDidReceiveMemoryWarning, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
 		#endif
 	}
 

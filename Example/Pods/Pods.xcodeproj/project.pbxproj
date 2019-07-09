@@ -850,38 +850,6 @@
 			};
 			name = Debug;
 		};
-		11CB25CD3455E9455D28EBAC97CE67B9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2109796F14C715D1E9F79175F0467610 /* ImageIOSwift.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ImageIOSwift/ImageIOSwift-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ImageIOSwift/ImageIOSwift-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/ImageIOSwift/ImageIOSwift.modulemap";
-				PRODUCT_MODULE_NAME = ImageIOSwift;
-				PRODUCT_NAME = ImageIOSwift;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		223BE38B5EE291B09A1F8D03D16C0F9E /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9B2CAB8F395AFBC7DD4E46D46ACCD2F9 /* Pods-ImageIOSwift_Example.release.xcconfig */;
@@ -916,38 +884,6 @@
 			};
 			name = Release;
 		};
-		4663EEA3BEDD3EF65A8CF1F1499EB0B8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 407F7020C2DA7D96CF4EDE97C51527EA /* ImageIOUIKit.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ImageIOUIKit/ImageIOUIKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit.modulemap";
-				PRODUCT_MODULE_NAME = ImageIOUIKit;
-				PRODUCT_NAME = ImageIOUIKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		6981B49048575F8238B3C5B905C918E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 418E0471655A8CDB5EB2C290498D2FD3 /* FBSnapshotTestCase.xcconfig */;
@@ -969,39 +905,6 @@
 				MODULEMAP_FILE = "Target Support Files/FBSnapshotTestCase/FBSnapshotTestCase.modulemap";
 				PRODUCT_MODULE_NAME = FBSnapshotTestCase;
 				PRODUCT_NAME = FBSnapshotTestCase;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		777EA46EF0D6B991764084916DBD3566 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 407F7020C2DA7D96CF4EDE97C51527EA /* ImageIOUIKit.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/ImageIOUIKit/ImageIOUIKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit.modulemap";
-				PRODUCT_MODULE_NAME = ImageIOUIKit;
-				PRODUCT_NAME = ImageIOUIKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -1137,7 +1040,7 @@
 			};
 			name = Debug;
 		};
-		CCEB965C330C549A9BE4CE7E1196F483 /* Release */ = {
+		937029FDF90FB40EA2CB0A5FFE06FEF8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2109796F14C715D1E9F79175F0467610 /* ImageIOSwift.xcconfig */;
 			buildSettings = {
@@ -1162,13 +1065,77 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		B34FD3B28E874F2C968B6B9DA135F549 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2109796F14C715D1E9F79175F0467610 /* ImageIOSwift.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ImageIOSwift/ImageIOSwift-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ImageIOSwift/ImageIOSwift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/ImageIOSwift/ImageIOSwift.modulemap";
+				PRODUCT_MODULE_NAME = ImageIOSwift;
+				PRODUCT_NAME = ImageIOSwift;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B84AD1BEDFFD5ECD6F7FA9E0417C473E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 407F7020C2DA7D96CF4EDE97C51527EA /* ImageIOUIKit.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ImageIOUIKit/ImageIOUIKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit.modulemap";
+				PRODUCT_MODULE_NAME = ImageIOUIKit;
+				PRODUCT_NAME = ImageIOUIKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		EE252C6C51286892441EE171776C7E81 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1200,6 +1167,39 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
+		};
+		EF6BF7E6F7C52C8AE5D24F90EC5F44E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 407F7020C2DA7D96CF4EDE97C51527EA /* ImageIOUIKit.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/ImageIOUIKit/ImageIOUIKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/ImageIOUIKit/ImageIOUIKit.modulemap";
+				PRODUCT_MODULE_NAME = ImageIOUIKit;
+				PRODUCT_NAME = ImageIOUIKit;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
 		};
 		F312FC5143B57CE9B506902D68BCD326 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1258,8 +1258,8 @@
 		9E6F6CE0C70790A4EE5D576CD0E42735 /* Build configuration list for PBXNativeTarget "ImageIOUIKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				4663EEA3BEDD3EF65A8CF1F1499EB0B8 /* Debug */,
-				777EA46EF0D6B991764084916DBD3566 /* Release */,
+				B84AD1BEDFFD5ECD6F7FA9E0417C473E /* Debug */,
+				EF6BF7E6F7C52C8AE5D24F90EC5F44E7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1276,8 +1276,8 @@
 		DAEA9955D3D0C5D67B1E1982826D571C /* Build configuration list for PBXNativeTarget "ImageIOSwift" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				11CB25CD3455E9455D28EBAC97CE67B9 /* Debug */,
-				CCEB965C330C549A9BE4CE7E1196F483 /* Release */,
+				B34FD3B28E874F2C968B6B9DA135F549 /* Debug */,
+				937029FDF90FB40EA2CB0A5FFE06FEF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

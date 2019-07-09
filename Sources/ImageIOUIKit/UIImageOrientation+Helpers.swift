@@ -10,7 +10,7 @@
 import UIKit
 
 
-extension UIImageOrientation {
+extension UIImage.Orientation {
 	public init(exifOrientation: Int) {
 		switch exifOrientation {
 		case 2:

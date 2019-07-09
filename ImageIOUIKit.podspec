@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/davbeck/ImageIOSwift.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/davbeck'
 
-	s.swift_version = '4.0'
+	s.swift_version = '5.1'
   s.ios.deployment_target = '9.0'
   s.static_framework = true
 
