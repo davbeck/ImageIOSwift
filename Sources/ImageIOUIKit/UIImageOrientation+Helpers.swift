@@ -8,6 +8,7 @@
 
 #if canImport(UIKit)
 import UIKit
+import ImageIOSwift
 
 
 extension UIImage.Orientation {
@@ -30,6 +31,12 @@ extension UIImage.Orientation {
 		default: // 1
 			self = .up
 		}
+	}
+}
+
+extension ImageProperties {
+	var orientation: UIImage.Orientation {
+		return UIImage.Orientation(exifOrientation: exifOrientation)
 	}
 }
 #endif

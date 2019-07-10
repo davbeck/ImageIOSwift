@@ -35,7 +35,7 @@ public struct ImageProperties {
 	public var imageSize: CGSize? {
 		guard var width = pixelWidth, var height = pixelHeight else { return nil }
 		
-		switch orientation {
+		switch exifOrientation {
 		case 5...8: // http://magnushoff.com/jpeg-orientation.html
 			swap(&width, &height)
 		default: break
@@ -44,12 +44,12 @@ public struct ImageProperties {
 		return CGSize(width: width, height: height)
 	}
 	
-	public var orientation: Int {
+	public var exifOrientation: Int {
 		return rawValue[kCGImagePropertyOrientation] as? Int ?? tiff?.orientation ?? iptc?.orientation ?? 1
 	}
 	
 	public var transform: CGAffineTransform {
-		switch self.orientation {
+		switch self.exifOrientation {
 		case 2:
 			return CGAffineTransform(scaleX: -1, y: 1)
 		case 3:
@@ -105,6 +105,11 @@ public struct ImageProperties {
 extension ImageSource {
 	public var totalDuration: Double {
 		return (0..<count).reduce(0, { $0 + (self.properties(at: $1).delayTime ?? 0) })
+	}
+	
+	public var preferredFramesPerSecond: Int {
+		guard let shortestDelayTime = (0..<count).map({ (self.properties(at: $0).delayTime ?? 0) }).min() else { return 1 }
+		return Int(ceil(1 / shortestDelayTime))
 	}
 	
 	public func animationFrame(at timestamp: TimeInterval) -> Int {
