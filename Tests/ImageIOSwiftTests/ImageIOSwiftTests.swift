@@ -1,11 +1,9 @@
-import XCTest
 @testable import ImageIOSwift
+import XCTest
 
 final class ImageIOSwiftTests: XCTestCase {
-    func testExample() {
-        
-    }
-
+    func testExample() {}
+    
     static var allTests = [
         ("testExample", testExample),
     ]
