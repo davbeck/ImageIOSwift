@@ -18,12 +18,10 @@
                 displayedIndex = 0
                 updateAnimation()
                 updateImage(asynchronously: false)
-                updateProperties()
                 
                 if let imageSource = _imageSource {
                     notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource, queue: .main, using: { [weak self] _ in
                         self?.updateImage(asynchronously: true)
-                        self?.updateProperties()
                         self?.updateAnimation()
                     }))
                 }
@@ -58,6 +56,13 @@
                     self.displayView.layer.contents = newValue
                     didChangeValue(for: \.displayedImage)
                 }
+            }
+        }
+        
+        private var displayedProperties: ImageProperties? {
+            didSet {
+                self.displayView.transform = self.displayedProperties?.transform ?? CGAffineTransform.identity
+                self.invalidateIntrinsicContentSize()
             }
         }
         
@@ -125,7 +130,7 @@
         }
         
         open override var intrinsicContentSize: CGSize {
-            return imageSource?.properties().imageSize ??
+            return displayedProperties?.imageSize ??
                 CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
         }
         
@@ -141,25 +146,26 @@
         
         private func updateImage(asynchronously: Bool = true) {
             if asynchronously {
-                queue.async {
+                self.queue.async {
                     var options = ImageSource.ImageOptions()
                     options.shouldDecodeImmediately = true
                     let image = self.imageSource?.cgImage(at: self.displayedIndex, options: options)
                     
+                    let properties = self.imageSource?.properties(at: self.displayedIndex)
+                    
                     DispatchQueue.main.async {
                         self.displayedImage = image
+                        self.displayedProperties = properties
                     }
                 }
             } else {
-                queue.sync {
+                self.queue.sync {
                     self.displayedImage = self.imageSource?.cgImage(at: self.displayedIndex)
+                    self.displayedProperties = self.imageSource?.properties(at: self.displayedIndex)
                 }
             }
-        }
-        
-        private func updateProperties() {
+            
             self.invalidateIntrinsicContentSize()
-            self.displayView.transform = self.imageSource?.properties().transform ?? CGAffineTransform.identity
         }
         
         // MARK: - URL Loading
