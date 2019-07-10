@@ -17,19 +17,14 @@
                 animationController = nil
                 displayedIndex = 0
                 updateAnimation()
-                updateImage()
+                updateImage(asynchronously: false)
+                updateProperties()
                 
                 if let imageSource = _imageSource {
-                    notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource, queue: nil, using: { [weak self] _ in
-                        if Thread.isMainThread {
-                            self?.updateImage()
-                            self?.updateAnimation()
-                        } else {
-                            DispatchQueue.main.async { // must be async
-                                self?.updateImage()
-                                self?.updateAnimation()
-                            }
-                        }
+                    notificationObservers.append(notificationCenter.addObserver(forName: ImageSource.didUpdateData, object: imageSource, queue: .main, using: { [weak self] _ in
+                        self?.updateImage(asynchronously: true)
+                        self?.updateProperties()
+                        self?.updateAnimation()
                     }))
                 }
             }
@@ -130,7 +125,7 @@
         }
         
         open override var intrinsicContentSize: CGSize {
-            return imageSource?.properties(at: displayedIndex).imageSize ??
+            return imageSource?.properties().imageSize ??
                 CGSize(width: UIView.noIntrinsicMetric, height: UIView.noIntrinsicMetric)
         }
         
@@ -142,12 +137,29 @@
         
         // MARK: - Updating
         
-        private func updateImage() {
-            self.displayedImage = self.imageSource?.cgImage(at: self.displayedIndex)
-            
+        private let queue = DispatchQueue(label: "ImageSourceView")
+        
+        private func updateImage(asynchronously: Bool = true) {
+            if asynchronously {
+                queue.async {
+                    var options = ImageSource.ImageOptions()
+                    options.shouldDecodeImmediately = true
+                    let image = self.imageSource?.cgImage(at: self.displayedIndex, options: options)
+                    
+                    DispatchQueue.main.async {
+                        self.displayedImage = image
+                    }
+                }
+            } else {
+                queue.sync {
+                    self.displayedImage = self.imageSource?.cgImage(at: self.displayedIndex)
+                }
+            }
+        }
+        
+        private func updateProperties() {
             self.invalidateIntrinsicContentSize()
-            
-            self.displayView.transform = self.imageSource?.properties(at: self.displayedIndex).transform ?? CGAffineTransform.identity
+            self.displayView.transform = self.imageSource?.properties().transform ?? CGAffineTransform.identity
         }
         
         // MARK: - URL Loading
@@ -184,6 +196,9 @@
                 self.displayLink = CADisplayLink(callback: { [weak self] link in
                     self?.displayLinkFired(link)
                 })
+                if #available(iOS 10.0, *) {
+                    self.displayLink?.preferredFramesPerSecond = view.imageSource?.preferredFramesPerSecond ?? 0
+                }
                 self.displayLink?.add(to: RunLoop.main, forMode: .common)
                 if #available(iOS 10.0, *) {
                     displayLink?.preferredFramesPerSecond = 60
