@@ -304,3 +304,9 @@ extension ImageSource: Equatable {
         return lhs.cgImageSource == rhs.cgImageSource
     }
 }
+
+extension ImageSource: CustomStringConvertible {
+    public var description: String {
+        return "ImageSource[\(ObjectIdentifier(self))](status: \(self.status))>"
+    }
+}

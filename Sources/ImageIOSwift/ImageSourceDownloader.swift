@@ -56,7 +56,7 @@ public class ImageSourceDownloader: NSObject {
         var error: Swift.Error?
         
         /// The underlying request tasks.
-        fileprivate var tasks: [Weak<Task>] = []
+        fileprivate var tasks: [UUID: Weak<Task>] = [:]
         
         init(sessionTask: URLSessionTask, queue: DispatchQueue) {
             self.sessionTask = sessionTask
@@ -78,23 +78,24 @@ public class ImageSourceDownloader: NSObject {
         }
         
         fileprivate func sendComplete() {
-            for task in self.tasks {
+            for task in self.tasks.values {
                 task.value?.sendCompletion(data: self.data, response: self.sessionTask.response, error: self.error)
             }
-            self.tasks = []
+            self.tasks = [:]
         }
         
         /// Cancel an individual sub task, and the download if there are no more sub tasks.
         ///
         /// - Parameter task: The task to cancel.
-        fileprivate func cancel(_ task: Task) {
+        fileprivate func cancel(taskID: UUID) {
             self.queue.async {
-                guard let index = self.tasks.firstIndex(where: { $0.value === task }) else { return }
-                self.tasks.remove(at: index)
+                if let task = self.tasks[taskID]?.value {
+                    let error = CocoaError(.userCancelled)
+                    task.sendCompletion(data: nil, response: nil, error: error)
+                }
+                self.tasks[taskID] = nil
                 
-                let error = CocoaError(.userCancelled)
-                task.sendCompletion(data: nil, response: nil, error: error)
-                
+                self.tasks = self.tasks.filter({ $0.1.value != nil })
                 if self.tasks.isEmpty {
                     self.sessionTask.cancel()
                 }
@@ -102,13 +103,12 @@ public class ImageSourceDownloader: NSObject {
         }
         
         fileprivate func resume(_ task: Task) {
-            guard !self.tasks.contains(where: { $0.value === task }) else { return }
+            guard self.tasks[task.id]?.value == nil else { return }
             
             if self.error != nil || self.imageSource.status == .complete {
                 task.sendCompletion(data: self.data, response: self.sessionTask.response, error: self.error)
             } else {
-                self.tasks.append(Weak(task))
-                
+                self.tasks[task.id] = Weak(task)
                 self.sessionTask.resume()
             }
         }
@@ -137,9 +137,15 @@ public class ImageSourceDownloader: NSObject {
         
         private var completionHandler: CompletionHandler?
         
+        fileprivate let id = UUID()
+        
         fileprivate init(downloadTask: DownloadTask, completionHandler: CompletionHandler?) {
             self.downloadTask = downloadTask
             self.completionHandler = completionHandler
+        }
+        
+        deinit {
+            self.cancel()
         }
         
         /// Cancels the request.
@@ -147,7 +153,7 @@ public class ImageSourceDownloader: NSObject {
         /// If there are no other requests currently waiting on the session task, it will be cancelled as well. The completion handler will be called immediately with a cancel error.
         /// If there are multiple tasks downloading the same image, this may not cancel the session task.
         public func cancel() {
-            self.downloadTask.cancel(self)
+            self.downloadTask.cancel(taskID: self.id)
         }
         
         /// Starts the task.
@@ -276,5 +282,11 @@ extension ImageSourceDownloader: URLSessionDataDelegate {
         if downloadTask.error == nil {
             self.taskCache[request] = downloadTask
         }
+    }
+}
+
+extension ImageSourceDownloader.Task: CustomStringConvertible {
+    public var description: String {
+        return "ImageSourceDownloader.Task[\(ObjectIdentifier(self))](imageSource: \(imageSource))>"
     }
 }
