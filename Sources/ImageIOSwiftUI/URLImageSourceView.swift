@@ -30,6 +30,9 @@ struct RemoteImageSourceView: View {
             isAnimationEnabled: isAnimationEnabled,
             label: self.label
         )
+        .onAppear {
+            self.task.resume()
+        }
     }
 }
 
@@ -48,7 +51,7 @@ public struct URLImageSourceView: View {
     
     public var body: some View {
         return RemoteImageSourceView(
-            task: self.imageSourceDownloader.download(self.url),
+            task: self.imageSourceDownloader.task(for: self.url),
             isAnimationEnabled: self.isAnimationEnabled,
             label: self.label
         )
