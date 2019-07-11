@@ -3,3 +3,4 @@
 --disable redundantGet,redundantRawValues
 --self insert
 --trimwhitespace "nonblank-lines"
+--indent tab
