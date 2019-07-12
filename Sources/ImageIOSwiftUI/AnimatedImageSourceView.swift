@@ -3,7 +3,7 @@ import SwiftUI
 
 struct AnimatedImageSourceView: View {
 	@ObjectBinding var imageSource: ImageSource
-	@State var displayLink = DisplayLink()
+	var displayLink: DisplayLink
 	@State var startTimestamp: TimeInterval? = .none
 	@State var animationFrame: Int = 0
 	var label: Text
@@ -11,7 +11,7 @@ struct AnimatedImageSourceView: View {
 	init(imageSource: ImageSource, label: Text) {
 		self.imageSource = imageSource
 		self.label = label
-		self.$$displayLink = State(initialValue: DisplayLink(preferredFramesPerSecond: imageSource.preferredFramesPerSecond))
+		self.displayLink = DisplayLink(preferredFramesPerSecond: imageSource.preferredFramesPerSecond)
 	}
 	
 	var body: some View {

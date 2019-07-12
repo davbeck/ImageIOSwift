@@ -1,5 +1,5 @@
 framework module ImageIOSwift {
-  umbrella header "ImageIOSwift-umbrella.h"
+  umbrella header "ImageIOSwift-iOS9.0-umbrella.h"
 
   export *
   module * { export * }

@@ -20,7 +20,7 @@ extension EnvironmentValues {
 }
 
 struct RemoteImageSourceView: View {
-	var task: ImageSourceDownloader.Task
+	@State var task: ImageSourceDownloader.Task
 	var isAnimationEnabled: Bool = true
 	var label: Text
 	
@@ -54,6 +54,6 @@ public struct URLImageSourceView: View {
 			task: self.imageSourceDownloader.task(for: self.url),
 			isAnimationEnabled: self.isAnimationEnabled,
 			label: self.label
-		)
+		).id(url)
 	}
 }

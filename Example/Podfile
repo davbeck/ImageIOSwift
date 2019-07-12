@@ -11,3 +11,10 @@ target 'ImageIOSwift_Example' do
     pod 'FBSnapshotTestCase' , '~> 2.1.4'
   end
 end
+
+target 'example-swiftui-ios' do
+	platform :ios, '13.0'
+	
+	pod 'ImageIOSwift', :path => '../'
+	pod 'ImageIOSwiftUI', :path => '../'
+end
