@@ -91,8 +91,6 @@ struct StaticImageSourceView: View {
 			.overlay(
 				image.map { Image($0, scale: 1, label: self.label)
 					.resizable()
-					// hide the slash circle placeholder
-					.opacity(image == nil ? 0 : 1)
 					// adjust based on exif orientation
 					.rotationEffect(properties.rotateZ)
 					.scaleEffect(x: properties.scaleX,

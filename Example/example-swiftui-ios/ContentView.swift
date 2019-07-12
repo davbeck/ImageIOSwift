@@ -10,6 +10,9 @@ struct ContentView: View {
 				NavigationLink(destination: AnimationsView()) {
 					Text("Animations")
 				}
+				NavigationLink(destination: OrientationsView()) {
+					Text("EXIF Orientations")
+				}
 			}
 			.navigationBarTitle("Examples")
 		}

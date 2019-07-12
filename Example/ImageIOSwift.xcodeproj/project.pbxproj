@@ -135,7 +135,6 @@
 		7AD84CA322D83CF100DCC9C5 /* starfield_animation.heic in Resources */ = {isa = PBXBuildFile; fileRef = 114D89D31F8BCD650064CBDB /* starfield_animation.heic */; };
 		7AD84CA422D83CF100DCC9C5 /* sea1_animation.heic in Resources */ = {isa = PBXBuildFile; fileRef = 114D89D71F8BCD650064CBDB /* sea1_animation.heic */; };
 		7AD84CA522D83CF100DCC9C5 /* bird_burst.heic in Resources */ = {isa = PBXBuildFile; fileRef = 114D89D01F8BCD650064CBDB /* bird_burst.heic */; };
-		7AD84CA622D83EF700DCC9C5 /* AnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD84C5E22D83C5100DCC9C5 /* AnimationsView.swift */; };
 		7AE0A21B22D7D96E009E3C0E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE0A21A22D7D96E009E3C0E /* AppDelegate.swift */; };
 		7AE0A21D22D7D96E009E3C0E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE0A21C22D7D96E009E3C0E /* SceneDelegate.swift */; };
 		7AE0A21F22D7D96E009E3C0E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE0A21E22D7D96E009E3C0E /* ContentView.swift */; };
@@ -143,6 +142,10 @@
 		7AE0A22422D7D96F009E3C0E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AE0A22322D7D96F009E3C0E /* Preview Assets.xcassets */; };
 		7AE0A22722D7D96F009E3C0E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AE0A22522D7D96F009E3C0E /* LaunchScreen.storyboard */; };
 		7AE0A22D22D7DBB3009E3C0E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AE0A22C22D7DBB3009E3C0E /* ProfileView.swift */; };
+		7AF9BBA122D8CE3300C86865 /* AnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF9BBA022D8CE3300C86865 /* AnimationsView.swift */; };
+		7AF9BBA422D8D09000C86865 /* Sample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF9BBA222D8D07900C86865 /* Sample.swift */; };
+		7AF9BBA622D8D0F400C86865 /* SampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF9BBA522D8D0F400C86865 /* SampleView.swift */; };
+		7AF9BBA822D8D35F00C86865 /* OrientationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AF9BBA722D8D35F00C86865 /* OrientationsView.swift */; };
 		D645FDB78994BF8AD09FFADA /* Pods_ImageIOSwift_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E8BB0656ED407714E4C355F /* Pods_ImageIOSwift_Example.framework */; };
 		DC209DBC1161065B7EBE0F72 /* Pods_ImageIOSwift_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B603C401CFEB133805AAEC /* Pods_ImageIOSwift_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -239,6 +242,10 @@
 		7AE0A22622D7D96F009E3C0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7AE0A22822D7D96F009E3C0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AE0A22C22D7DBB3009E3C0E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		7AF9BBA022D8CE3300C86865 /* AnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationsView.swift; sourceTree = "<group>"; };
+		7AF9BBA222D8D07900C86865 /* Sample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sample.swift; sourceTree = "<group>"; };
+		7AF9BBA522D8D0F400C86865 /* SampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleView.swift; sourceTree = "<group>"; };
+		7AF9BBA722D8D35F00C86865 /* OrientationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationsView.swift; sourceTree = "<group>"; };
 		81AD5C63F2AF042E13DE2DEE /* Pods-ImageIOSwift_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageIOSwift_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageIOSwift_Example/Pods-ImageIOSwift_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		9730D974830BDE06DF98CF35 /* Pods_example_swiftui_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_example_swiftui_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		978B82AB65E373C6032652AD /* Pods-ImageIOSwift_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ImageIOSwift_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ImageIOSwift_Tests/Pods-ImageIOSwift_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -467,6 +474,10 @@
 				7AE0A21C22D7D96E009E3C0E /* SceneDelegate.swift */,
 				7AE0A21E22D7D96E009E3C0E /* ContentView.swift */,
 				7AE0A22C22D7DBB3009E3C0E /* ProfileView.swift */,
+				7AF9BBA022D8CE3300C86865 /* AnimationsView.swift */,
+				7AF9BBA722D8D35F00C86865 /* OrientationsView.swift */,
+				7AF9BBA522D8D0F400C86865 /* SampleView.swift */,
+				7AF9BBA222D8D07900C86865 /* Sample.swift */,
 				7AE0A22022D7D96F009E3C0E /* Assets.xcassets */,
 				7AE0A22522D7D96F009E3C0E /* LaunchScreen.storyboard */,
 				7AE0A22822D7D96F009E3C0E /* Info.plist */,
@@ -603,7 +614,7 @@
 					};
 					7AE0A21722D7D96E009E3C0E = {
 						CreatedOnToolsVersion = 11.0;
-						DevelopmentTeam = VKHGABD3Q5;
+						DevelopmentTeam = 7TR2B85D62;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -916,7 +927,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7AD84CA622D83EF700DCC9C5 /* AnimationsView.swift in Sources */,
+				7AF9BBA122D8CE3300C86865 /* AnimationsView.swift in Sources */,
+				7AF9BBA422D8D09000C86865 /* Sample.swift in Sources */,
+				7AF9BBA622D8D0F400C86865 /* SampleView.swift in Sources */,
+				7AF9BBA822D8D35F00C86865 /* OrientationsView.swift in Sources */,
 				7AE0A22D22D7DBB3009E3C0E /* ProfileView.swift in Sources */,
 				7AE0A21B22D7D96E009E3C0E /* AppDelegate.swift in Sources */,
 				7AE0A21D22D7D96E009E3C0E /* SceneDelegate.swift in Sources */,
@@ -1222,7 +1236,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "example-swiftui-ios/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "example-swiftui-ios/Info.plist";
@@ -1251,7 +1265,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "example-swiftui-ios/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "example-swiftui-ios/Info.plist";
