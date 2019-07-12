@@ -66,24 +66,30 @@ extension ImageProperties {
 	}
 }
 
-extension CGImage {}
-
-struct ImageSourceBase: View {
+/// Provides the layout bounds of an image source.
+public struct ImageSourceBase: View {
 	var properties: ImageProperties
 	
-	var body: some View {
+	public var body: some View {
 		Rectangle()
 			.fill(Color.clear)
 			.frame(idealWidth: properties.imageSize?.width, idealHeight: properties.imageSize?.height)
 	}
 }
 
-struct StaticImageSourceView: View {
-	@ObjectBinding var imageSource: ImageSource
-	var animationFrame: Int = 0
-	var label: Text
+/// Displays a single frame of an image source.
+public struct StaticImageSourceView: View {
+	@ObjectBinding public var imageSource: ImageSource
+	public var animationFrame: Int = 0
+	public var label: Text
 	
-	var body: some View {
+	public init(imageSource: ImageSource, animationFrame: Int = 0, label: Text) {
+		self.imageSource = imageSource
+		self.animationFrame = animationFrame
+		self.label = label
+	}
+	
+	public var body: some View {
 		let image = self.imageSource.cgImage(at: animationFrame)
 		let properties = imageSource.properties(at: animationFrame)
 		

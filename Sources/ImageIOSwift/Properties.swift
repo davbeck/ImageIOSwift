@@ -95,6 +95,21 @@ extension ImageSource {
 		return (0..<count).reduce(0) { $0 + (self.properties(at: $1).delayTime ?? 0) }
 	}
 	
+	public func timestamp(atFrame frame: Int) -> TimeInterval {
+		guard frame < count else { return 0 }
+		
+		return (0..<frame).reduce(0) { $0 + (self.properties(at: $1).delayTime ?? 0) }
+	}
+	
+	public func progress(atFrame frame: Int) -> TimeInterval {
+		guard self.count > 1, !totalDuration.isZero else { return 0 }
+		
+		let timestamp = self.timestamp(atFrame: frame)
+		let totalDuration = self.totalDuration
+		
+		return timestamp / totalDuration
+	}
+	
 	public var preferredFramesPerSecond: Int {
 		guard let shortestDelayTime = (0..<count).map({ (self.properties(at: $0).delayTime ?? 0) }).min() else { return 1 }
 		return Int(ceil(1 / shortestDelayTime))

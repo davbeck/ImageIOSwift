@@ -1,14 +1,5 @@
-//
-//  Sample.swift
-//  example-swiftui-mac
-//
-//  Created by David Beck on 7/12/19.
-//  Copyright © 2019 CocoaPods. All rights reserved.
-//
-
 import Foundation
 import SwiftUI
-
 
 struct Sample: Identifiable {
 	enum Category {
@@ -41,19 +32,19 @@ struct Sample: Identifiable {
 		Sample(url: "https://media.giphy.com/media/NWg7M1VlT101W/giphy.gif", categories: [.animated]),
 		Sample(url: "https://media.giphy.com/media/l4FGni1RBAR2OWsGk/giphy.gif", categories: [.animated]),
 		
-		] + ["Landscape", "Portrait"].flatMap({ (aspect) in
-			(1...8).map({ Sample(filename: "\(aspect)_\($0).jpg", categories: [.orientation]) })
-		})
+	] + ["Landscape", "Portrait"].flatMap { aspect in
+		(1...8).map { Sample(filename: "\(aspect)_\($0).jpg", categories: [.orientation]) }
+	}
 	
 	var id: URL {
-		return url
+		return self.url
 	}
 	
 	var name: String {
-		if url.isFileURL {
-			return url.lastPathComponent
+		if self.url.isFileURL {
+			return self.url.lastPathComponent
 		} else {
-			return url.absoluteString
+			return self.url.absoluteString
 		}
 	}
 }
