@@ -7,6 +7,9 @@ struct ContentView: View {
 				NavigationLink(destination: ProfileView()) {
 					Text("Profile Screen")
 				}
+				NavigationLink(destination: AnimationsView()) {
+					Text("Animations")
+				}
 			}
 			.navigationBarTitle("Examples")
 		}

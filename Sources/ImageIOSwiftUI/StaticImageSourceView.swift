@@ -66,6 +66,8 @@ extension ImageProperties {
 	}
 }
 
+extension CGImage {}
+
 struct ImageSourceBase: View {
 	var properties: ImageProperties
 	
@@ -87,7 +89,7 @@ struct StaticImageSourceView: View {
 		
 		return ImageSourceBase(properties: properties)
 			.overlay(
-				(image.map { Image($0, scale: 1, label: self.label) } ?? Image(systemName: "slash.circle.fill"))
+				image.map { Image($0, scale: 1, label: self.label)
 					.resizable()
 					// hide the slash circle placeholder
 					.opacity(image == nil ? 0 : 1)
@@ -96,6 +98,7 @@ struct StaticImageSourceView: View {
 					.scaleEffect(x: properties.scaleX,
 					             y: properties.scaleY,
 					             anchor: .center)
+				}
 			)
 	}
 }

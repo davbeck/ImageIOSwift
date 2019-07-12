@@ -62,7 +62,7 @@ public struct ImageProperties {
 	// MARK: - Aggregate
 	
 	public var loopCount: Int {
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, OSX 10.15, *) {
 			return heic?.loopCount ?? gif?.loopCount ?? png?.loopCount ?? 1
 		} else {
 			return gif?.loopCount ?? png?.loopCount ?? 1
@@ -70,7 +70,7 @@ public struct ImageProperties {
 	}
 	
 	public var clampedDelayTime: Double? {
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, OSX 10.15, *) {
 			return heic?.clampedDelayTime ?? gif?.clampedDelayTime ?? png?.clampedDelayTime
 		} else {
 			return gif?.clampedDelayTime ?? png?.clampedDelayTime
@@ -78,7 +78,7 @@ public struct ImageProperties {
 	}
 	
 	public var unclampedDelayTime: Double? {
-		if #available(iOS 13.0, *) {
+		if #available(iOS 13.0, OSX 10.15, *) {
 			return heic?.unclampedDelayTime ?? gif?.unclampedDelayTime ?? png?.unclampedDelayTime
 		} else {
 			return gif?.unclampedDelayTime ?? png?.unclampedDelayTime

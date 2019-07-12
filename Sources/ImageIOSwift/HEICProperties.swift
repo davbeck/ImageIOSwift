@@ -1,6 +1,6 @@
 import ImageIO
 
-@available(iOS 13.0, *)
+@available(iOS 13.0, OSX 10.15, *)
 extension ImageProperties {
 	public struct HEICProperties {
 		public let rawValue: [CFString: Any]

@@ -43,6 +43,10 @@ public struct URLImageSourceView: View {
 	public var isAnimationEnabled: Bool = true
 	public var label: Text
 	
+	public init(url: URL, isAnimationEnabled: Bool = true) {
+		self.init(url: url, isAnimationEnabled: isAnimationEnabled, label: Text(url.absoluteString))
+	}
+	
 	public init(url: URL, isAnimationEnabled: Bool = true, label: Text) {
 		self.url = url
 		self.isAnimationEnabled = isAnimationEnabled

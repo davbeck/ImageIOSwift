@@ -13,8 +13,15 @@ target 'ImageIOSwift_Example' do
 end
 
 target 'example-swiftui-ios' do
-	platform :ios, '13.0'
-	
-	pod 'ImageIOSwift', :path => '../'
-	pod 'ImageIOSwiftUI', :path => '../'
+  platform :ios, '13.0'
+  
+  pod 'ImageIOSwift', :path => '../'
+  pod 'ImageIOSwiftUI', :path => '../'
+end
+
+target 'example-swiftui-mac' do
+  platform :osx, '10.15'
+  
+  pod 'ImageIOSwift', :path => '../'
+  pod 'ImageIOSwiftUI', :path => '../'
 end
