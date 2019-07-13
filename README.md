@@ -64,6 +64,22 @@ URLImageSourceView(
 
 The content callback is called every time image data is updated or an animation frame changes. By default, `StaticImageSourceView` is used to display an image frame, and you can use it as a base for your customization.
 
+If you want to provide a placeholder while the image loads, the recommended way to do that is with a `ZStack`:
+
+```swift
+// load an image, clipped by a circle with a gray background and placeholder image
+ZStack {
+	Image(systemName: "person.fill")
+		.foregroundColor(Color(white: 0.4))
+	URLImageSourceView(url: user.picture.medium)
+		.frame(width: 36, height: 36)
+}
+.frame(width: 36, height: 36)
+.background(Color(white: 0.8))
+.clipShape(Circle())
+```
+
+This way images that load incrementally will be shown as they load.
 
 ### UIKit (ImageIOUIKit)
 
