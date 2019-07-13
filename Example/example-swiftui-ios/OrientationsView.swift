@@ -25,7 +25,6 @@ struct OrientationsView: View {
 					.aspectRatio(contentMode: .fit)
 			}
 		}
-		.padding()
 		.navigationBarTitle(Text("EXIF Orientations"), displayMode: .inline)
 	}
 }

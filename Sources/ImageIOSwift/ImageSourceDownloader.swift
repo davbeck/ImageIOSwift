@@ -103,13 +103,15 @@ public class ImageSourceDownloader: NSObject {
 		}
 		
 		fileprivate func resume(_ task: Task) {
-			guard self.tasks[task.id]?.value == nil else { return }
-			
-			if self.error != nil || self.imageSource.status == .complete {
-				task.sendCompletion(data: self.data, response: self.sessionTask.response, error: self.error)
-			} else {
-				self.tasks[task.id] = Weak(task)
-				self.sessionTask.resume()
+			self.queue.async {
+				guard self.tasks[task.id]?.value == nil else { return }
+				
+				if self.error != nil || self.imageSource.status == .complete {
+					task.sendCompletion(data: self.data, response: self.sessionTask.response, error: self.error)
+				} else {
+					self.tasks[task.id] = Weak(task)
+					self.sessionTask.resume()
+				}
 			}
 		}
 	}
