@@ -5,46 +5,120 @@
 [![License](https://img.shields.io/cocoapods/l/ImageIOSwift.svg?style=flat)](http://cocoapods.org/pods/ImageIOSwift)
 [![Platform](https://img.shields.io/cocoapods/p/ImageIOSwift.svg?style=flat)](http://cocoapods.org/pods/ImageIOSwift)
 
-[ImageIO](https://developer.apple.com/documentation/imageio) is an Apple framework that provides low level access to image files and is what powers UIImage and other image related operations on iOS and macOS. However, in part because it is a C/Core Foundation framework, using it can be difficult.
+ImageIO.Swift makes working with images on Apple platforms easy. It's [SDWebImage](https://github.com/SDWebImage/SDWebImage), [FLAnimatedImage](https://github.com/Flipboard/FLAnimatedImage) and [Concorde](https://github.com/contentful-labs/Concorde) all in one!
 
-ImageIO.Swift is a lightweight wrapper around the framework that makes it much easier to access the vast power that ImageIO provides, including animated GIFs, incremental loading and efficient thumbnail generation.
+- Download images asychronously.
+- Animate GIFs, [PNGs](https://en.wikipedia.org/wiki/APNG) and (in iOS 13) HEICs!
+- Incrementally load interlaced and [progressive JPEGs](https://www.liquidweb.com/kb/what-is-a-progressive-jpeg/).
+- Generate thumbnails directly from the file (especially useful for HEIC images because they often embed pre-rendered thumbnails).
+- Examine image details and exif metadata.
 
-While there are alternatives that provide many of the same features, and many of them use very similar implimentations based on `ImageIO`, this project provides a unified interface for all uses of ImageIO. So for instance you can use the same view and image processing code for animated images, progressive jpegs, and any other format that ImageIO supports.
+## Usage
 
-## ImageSource
+### SwiftUI (ImageIOSwiftUI)
+
+`URLImageSourceView` works a lot like an `img` tag in html.
+
+```swift
+// display an image downloaded from a URL
+URLImageSourceView(
+	url: url, 
+	isAnimationEnabled: true,
+	label: Text("Alt text")
+)
+```
+
+If an image url is shown in multiple places on the same screen (like a single user's profile picture on a news feed layout) it will only be downloaded and loaded into memory once. It will also be intelligently cached so that subsequent requests will re-use memory and downloaded data.
+
+If you want to load an image source separately, you can use `ImageSourceView`:
+
+```swift
+// display an image source, animating if possible
+ImageSourceView(
+	imageSource: imageSource,
+	isAnimationEnabled: true,
+	label: Text("Alt text")
+)
+```
+
+Finally, if you want to customize how an image is rendered, you can provide your own content to either `URLImageSourceView` or `ImageSourceView`:
+
+```swift
+// places an animation progress bar at the bottom of the image
+URLImageSourceView(
+	url: url,
+	isAnimationEnabled: true,
+	label: Text("Alt text")
+) { imageSource, animationFrame, label in
+	StaticImageSourceView(imageSource: imageSource, animationFrame: animationFrame, label: label)
+		.aspectRatio(contentMode: .fit)
+		.overlay(
+			Rectangle()
+				.fill(Color.blue.opacity(0.5))
+				.frame(height: 10)
+				.relativeWidth(Length(imageSource.progress(atFrame: animationFrame))),
+			alignment: .bottomLeading
+		)
+}
+```
+
+The content callback is called every time image data is updated or an animation frame changes. By default, `StaticImageSourceView` is used to display an image frame, and you can use it as a base for your customization.
+
+
+### UIKit (ImageIOUIKit)
+
+`ImageSourceView` handles loading and displaying images.
+
+```swift
+// display an image downloaded from a URL
+let view = ImageSourceView()
+view.isAnimationEnabled = true
+view.load(url)
+```
+
+If an image url is shown in multiple places on the same screen (like a single users profile picture on a news feed layout) it will only be downloaded and loaded into memory once. It will also be intelligently cached so that subsequent requests will re-use memory and downloaded data.
+
+You can also set an image source directly:
+
+```swift
+let view = ImageSourceView()
+view.isAnimationEnabled = true
+view.imageSource = imageSource
+```
+
+You can access the views `imageSource` (regardless of whether you set it directly or loaded it from a url) and subscribe to it's `didUpdateData` notification to track it's download. To get updates for different animation frames, you can either subclass `ImageSourceView` or use KVO with `displayedImage`.
+
+The UIKit module also includes extensions on `ImageSource` to access `UIImage`s that are correctly orriented (a feature that `CGImage` doesn't account for).
+
+### ImageSource
 
 You can think of `CG/NS/UIImage` as a single frame of pixels. `ImageSource` sits a level below that, providing access to almost anything an image *file* provides, including metadata and multiple representations. For instance, animated images have multiple image frames as well as timing metadata.
 
-On iOS, `ImageSourceView` is provided to display image sources, including animations.
-
-### Animated Images
-
-CG/NS/UIImage can only represent a single animation frame from an animated GIF or [PNG](https://en.wikipedia.org/wiki/APNG). ImageSource on the other hand can generate images for each frame of the animation, along with timing data.
-
-To display an animated image, set `isAnimationEnabled = true` on an `ImageSourceView`. Variable delay times and loop counts will even be taken into account. Implimentation is based off of [Apple's sample code](https://developer.apple.com/library/content/samplecode/UsingPhotosFramework/Listings/Shared_AnimatedImageView_swift.html#//apple_ref/doc/uid/TP40014575-Shared_AnimatedImageView_swift-DontLinkElementID_5) and works similarly to [FLAnimatedImage](https://github.com/Flipboard/FLAnimatedImage), although neither of those support aPNG.
-
-### Incremental loading
-
-![Interlaced JPEG Rendering](Images/Interlaced.gif) ![Progressive JPEG Rendering](Images/Progressive.gif)
-
-Similar to [https://github.com/contentful-labs/Concorde](Concorde) ImageIO actually support incremental loading out of the box. This can be used with progressive JPEGs to show low resolution versions of an image until the rest of the image loads.
-
-Additionally, animated images can load individual frames incrementally as well. If animation is enabled, `ImageSourceView` will show the first frame loaded until the entire image loads, at which time the animation will begin normally.
+You can access things like `count` (the number of frames in an animated image) or `typeIdentifier` to get the kind of file it is. But it's primary use is to generate images:
 
 ```swift
-let imageSource = ImageSource.incremental()
-imageSourceView.imageSource = imageSource
-// as data is loaded, pass in the entire image data
-imageSource.update(loadedData, isFinal: loadedData.count == totalCount)
+imageSource.cgImage(at: 3) // frame 3
+// with UIKit integration:
+imageSource.image(at: 3)
 ```
 
-### Thumbnails
+You can provide options on how the image gets generated.
 
-Depending on the underlying image file and the options passed in, you can get an embeded thumnail in an image or a generated thumbnail.
+```swift
+// decode the image data immediately instead of lazily when it gets drawn for the first time
+// this is especially useful if you're loading images in a background thread before passing them to the main thread
+var options = ImageSource.ImageOptions()
+options.shouldDecodeImmediately = false
+imageSource.cgImage(options: options)
+```
 
-Typically if you are not using the embeded thumbnail from the image, it is better to load a complete image and draw it in a smaller view than it is to generate a thumbnail (🤷🏽‍♀️), both in terms of time and memory. However if you do need to generate a thumbnail, this method can be quit a bit faster and use *a lot* less memory than loading the image and drawing into a context.
+Creating thumbnails is similar:
 
-### Metadata
+```swift
+imageSource.cgThumbnailImage(size: thumbnailSize, mode: .fill)
+```
+
+Note that image sources don't support cropping, so it will always return an image with the same aspect ratio as the original. If the image contains an embed thumbnail, this can be quit faster than normal thumnail rendering.
 
 Because images sources can reference a file on disk, you can load metadata for an image without loading the entire file into memory. This is especially useful for getting an images size.
 
@@ -62,7 +136,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ### [Swift Package Manager](https://swift.org/package-manager/)
 
-In Xcode 11 you can add ImageIOSwift as a package in your project settings using the Github URL of the project.
+In Xcode 11 you can add ImageIOSwift as a package in your project settings using the Github URL of the project. You can then link to the packages you need (ImageIOSwift, ImageIOSwiftUI or ImageIOUIKit).
 
 On macOS, you can use is on the command line by adding the following to your Package.swift:
 
@@ -80,6 +154,9 @@ Add the following line to your Podfile:
 
 ```ruby
 pod 'ImageIOSwift'
+# one of both of these
+pod 'ImageIOSwiftUI'
+pod 'ImageIOUIKit'
 ```
 
 ## License
