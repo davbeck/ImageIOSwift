@@ -1,9 +1,9 @@
 import ImageIOSwiftUI
 import SwiftUI
 
-private let samples = Sample.images.filter { $0.categories.contains(.animated) }
+private let samples = Sample.images.filter { !$0.url.isFileURL }
 
-struct AnimationsView: View {
+struct IncrementalSamplesView: View {
 	var body: some View {
 		List(samples) { sample in
 			NavigationLink(destination: SampleView(sample: sample)) {
@@ -15,9 +15,9 @@ struct AnimationsView: View {
 }
 
 #if DEBUG
-	struct AnimationsView_Previews: PreviewProvider {
+	struct IncrementalSamplesView_Previews: PreviewProvider {
 		static var previews: some View {
-			AnimationsView()
+			IncrementalSamplesView()
 		}
 	}
 #endif

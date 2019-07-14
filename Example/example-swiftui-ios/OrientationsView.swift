@@ -1,7 +1,7 @@
 import ImageIOSwiftUI
 import SwiftUI
 
-let samples = Sample.images.filter { $0.categories.contains(.orientation) }
+private let samples = Sample.images.filter { $0.categories.contains(.orientation) }
 
 struct OrientationsView: View {
 	var body: some View {

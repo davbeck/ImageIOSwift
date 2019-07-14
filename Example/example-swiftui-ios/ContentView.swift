@@ -10,6 +10,9 @@ struct ContentView: View {
 				NavigationLink(destination: UserListView()) {
 					Text("User List")
 				}
+				NavigationLink(destination: IncrementalSamplesView()) {
+					Text("Remote Image Loading")
+				}
 				NavigationLink(destination: AnimationsView()) {
 					Text("Animations")
 				}

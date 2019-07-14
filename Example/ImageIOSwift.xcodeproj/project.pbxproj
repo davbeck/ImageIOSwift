@@ -60,6 +60,7 @@
 		607FACEC1AFB9204008FA782 /* SizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* SizeTests.swift */; };
 		7A749D6D22D9740C00478EA6 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A749D6C22D9740C00478EA6 /* UserListView.swift */; };
 		7A749D6F22D974C800478EA6 /* RandomUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A749D6E22D974C800478EA6 /* RandomUser.swift */; };
+		7A946A9822DBA75C00A6EBBD /* IncrementalSamplesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A946A9722DBA75C00A6EBBD /* IncrementalSamplesView.swift */; };
 		7AD84C4B22D831AA00DCC9C5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD84C4A22D831AA00DCC9C5 /* AppDelegate.swift */; };
 		7AD84C4D22D831AA00DCC9C5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AD84C4C22D831AA00DCC9C5 /* ContentView.swift */; };
 		7AD84C4F22D831AC00DCC9C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7AD84C4E22D831AC00DCC9C5 /* Assets.xcassets */; };
@@ -227,6 +228,7 @@
 		607FACEB1AFB9204008FA782 /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
 		7A749D6C22D9740C00478EA6 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
 		7A749D6E22D974C800478EA6 /* RandomUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomUser.swift; sourceTree = "<group>"; };
+		7A946A9722DBA75C00A6EBBD /* IncrementalSamplesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncrementalSamplesView.swift; sourceTree = "<group>"; };
 		7AD84C4822D831AA00DCC9C5 /* example-swiftui-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "example-swiftui-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AD84C4A22D831AA00DCC9C5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AD84C4C22D831AA00DCC9C5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 				7AE0A21E22D7D96E009E3C0E /* ContentView.swift */,
 				7AE0A22C22D7DBB3009E3C0E /* ProfileView.swift */,
 				7A749D6C22D9740C00478EA6 /* UserListView.swift */,
+				7A946A9722DBA75C00A6EBBD /* IncrementalSamplesView.swift */,
 				7AF9BBA022D8CE3300C86865 /* AnimationsView.swift */,
 				7AF9BBA722D8D35F00C86865 /* OrientationsView.swift */,
 				7AF9BBA522D8D0F400C86865 /* SampleView.swift */,
@@ -943,6 +946,7 @@
 				7AE0A21D22D7D96E009E3C0E /* SceneDelegate.swift in Sources */,
 				7AE0A21F22D7D96E009E3C0E /* ContentView.swift in Sources */,
 				7A749D6F22D974C800478EA6 /* RandomUser.swift in Sources */,
+				7A946A9822DBA75C00A6EBBD /* IncrementalSamplesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

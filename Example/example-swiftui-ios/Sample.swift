@@ -28,10 +28,14 @@ struct Sample: Identifiable {
 		Sample(filename: "starfield_animation.heic", categories: [.animated]),
 		Sample(filename: "sea1_animation.heic", categories: [.animated]),
 		
+		Sample(url: "http://littlesvr.ca/apng/images/GenevaDrive.gif", categories: [.animated]),
+		Sample(url: "http://littlesvr.ca/apng/images/GenevaDrive.png", categories: [.animated]),
 		Sample(url: "https://media.giphy.com/media/7LO7q5KcXawaQ/giphy.gif", categories: [.animated]),
 		Sample(url: "https://media.giphy.com/media/NWg7M1VlT101W/giphy.gif", categories: [.animated]),
 		Sample(url: "https://media.giphy.com/media/l4FGni1RBAR2OWsGk/giphy.gif", categories: [.animated]),
 		
+		Sample(url: "http://pooyak.com/p/progjpeg/jpegload.cgi?o=0"),
+		Sample(url: "http://pooyak.com/p/progjpeg/jpegload.cgi?o=1"),
 	] + ["Landscape", "Portrait"].flatMap { aspect in
 		(1...8).map { Sample(filename: "\(aspect)_\($0).jpg", categories: [.orientation]) }
 	}
