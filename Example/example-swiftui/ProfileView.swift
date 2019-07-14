@@ -14,6 +14,22 @@ let names = [
 	"Julie",
 ]
 
+#if os(iOS) || os(tvOS) || os(watchOS)
+struct Placeholder: View {
+	var body: some View {
+		Image(systemName: "person.fill")
+			.foregroundColor(Color(white: 0.4))
+	}
+}
+#else
+struct Placeholder: View {
+	var body: some View {
+		EmptyView()
+	}
+}
+#endif
+
+
 struct ProfileView: View {
 	@State var url: URL = uifaces.randomElement()!
 	@State var name: String = names.randomElement()!
@@ -21,9 +37,8 @@ struct ProfileView: View {
 	var body: some View {
 		VStack {
 			ZStack {
-//				Image(systemName: "person.fill")
-//					.font(.system(size: 80))
-//					.foregroundColor(Color(white: 0.4))
+				Placeholder()
+					.font(.system(size: 80))
 				URLImageSourceView(url: url, isAnimationEnabled: true, label: Text(url.lastPathComponent))
 					.aspectRatio(contentMode: .fit)
 					.frame(width: 128, height: 128)
