@@ -15,20 +15,20 @@ let names = [
 ]
 
 #if os(iOS) || os(tvOS) || os(watchOS)
-struct Placeholder: View {
-	var body: some View {
-		Image(systemName: "person.fill")
-			.foregroundColor(Color(white: 0.4))
+	struct Placeholder: View {
+		var body: some View {
+			Image(systemName: "person.fill")
+				.foregroundColor(Color(white: 0.4))
+		}
 	}
-}
+	
 #else
-struct Placeholder: View {
-	var body: some View {
-		EmptyView()
+	struct Placeholder: View {
+		var body: some View {
+			EmptyView()
+		}
 	}
-}
 #endif
-
 
 struct ProfileView: View {
 	@State var url: URL = uifaces.randomElement()!

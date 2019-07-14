@@ -248,16 +248,18 @@ public class ImageSourceDownloader: NSObject {
 	///
 	/// This will get either an in progress task, a previously succesful task, or create a new one.
 	private func downloadTask(for request: URLRequest) -> DownloadTask {
-		if let inProgress = tasks[request] {
-			return inProgress
-		} else if let cached = taskCache[request] {
-			return cached
-		} else {
-			let sessionTask = self.session.dataTask(with: request)
-			
-			let downloadTask = DownloadTask(sessionTask: sessionTask, queue: self.queue)
-			self.tasks[request] = downloadTask
-			return downloadTask
+		return self.queue.sync {
+			if let inProgress = tasks[request] {
+				return inProgress
+			} else if let cached = taskCache[request] {
+				return cached
+			} else {
+				let sessionTask = self.session.dataTask(with: request)
+				
+				let downloadTask = DownloadTask(sessionTask: sessionTask, queue: self.queue)
+				self.tasks[request] = downloadTask
+				return downloadTask
+			}
 		}
 	}
 }
