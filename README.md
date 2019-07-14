@@ -17,6 +17,8 @@ ImageIO.Swift makes working with images on Apple platforms easy. It's [SDWebImag
 
 ### SwiftUI (ImageIOSwiftUI)
 
+Works with iOS, macOS, watchOS and tvOS!
+
 `URLImageSourceView` works a lot like an `img` tag in html.
 
 ```swift
