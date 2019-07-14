@@ -1,8 +1,18 @@
 import Combine
 import Foundation
+#if canImport(QuartzCore)
 import QuartzCore
+#endif
 
 struct DisplayLink: Publisher {
+    static var currentTime: TimeInterval {
+        #if canImport(QuartzCore)
+        return CACurrentMediaTime()
+        #else
+        return NSDate().timeIntervalSinceReferenceDate
+        #endif
+    }
+    
 	class Subscription<S>: Combine.Subscription where S: Subscriber, Never == S.Failure, CFTimeInterval == S.Input {
 		#if os(iOS)
 			private lazy var link = CADisplayLink(target: self, selector: #selector(displayLinkFired))
@@ -67,7 +77,7 @@ struct DisplayLink: Publisher {
 			@objc private func timerFired() {
 				guard self.demand != .none else { return }
 				// this seems to always return .max(0)
-				_ = self.subscriber.receive(CACurrentMediaTime())
+				_ = self.subscriber.receive(DisplayLink.currentTime)
 			}
 		#endif
 	}

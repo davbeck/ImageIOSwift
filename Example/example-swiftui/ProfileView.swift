@@ -20,13 +20,18 @@ struct ProfileView: View {
 	
 	var body: some View {
 		VStack {
-			URLImageSourceView(url: url, isAnimationEnabled: true, label: Text(url.lastPathComponent))
-				.aspectRatio(contentMode: .fit)
-				.frame(width: 128, height: 128)
-				.clipShape(Circle())
-				.padding(5)
-				.background(Color.gray.opacity(0.5))
-				.clipShape(Circle())
+			ZStack {
+//				Image(systemName: "person.fill")
+//					.font(.system(size: 80))
+//					.foregroundColor(Color(white: 0.4))
+				URLImageSourceView(url: url, isAnimationEnabled: true, label: Text(url.lastPathComponent))
+					.aspectRatio(contentMode: .fit)
+					.frame(width: 128, height: 128)
+					.clipShape(Circle())
+			}
+			.padding(5)
+			.background(Color.gray.opacity(0.5))
+			.clipShape(Circle())
 			Text(self.name)
 			Spacer()
 			HStack {
@@ -44,5 +49,6 @@ struct ProfileView: View {
 				.multilineTextAlignment(.center)
 		}
 		.padding()
+		.navigationBarTitle("Profile")
 	}
 }

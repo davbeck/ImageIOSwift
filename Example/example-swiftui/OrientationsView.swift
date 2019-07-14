@@ -1,6 +1,14 @@
 import ImageIOSwiftUI
 import SwiftUI
 
+func open(_ url: URL) {
+	#if os(iOS)
+	UIApplication.shared.open(url, options: [:], completionHandler: nil)
+	#elseif os(macOS)
+	NSWorkspace.shared.open(url)
+	#endif
+}
+
 private let samples = Sample.images.filter { $0.categories.contains(.orientation) }
 
 struct OrientationsView: View {
@@ -13,7 +21,7 @@ struct OrientationsView: View {
 				""")
 					.lineLimit(nil)
 				Button(action: {
-					UIApplication.shared.open(URL(string: "https://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/")!, options: [:], completionHandler: nil)
+					open(URL(string: "https://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/")!)
 				}) {
 					Text("More info")
 				}

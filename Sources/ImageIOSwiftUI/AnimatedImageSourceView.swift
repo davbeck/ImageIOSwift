@@ -16,7 +16,7 @@ struct AnimatedImageSourceView<Content: View>: View {
 	var body: some View {
 		return self.content(imageSource, self.animationFrame, label)
 			.onAppear {
-				self.startTimestamp = CACurrentMediaTime()
+				self.startTimestamp = DisplayLink.currentTime
 			}
 			.onReceive(displayLink) { targetTimestamp in
 				if let startTimestamp = self.startTimestamp {

@@ -18,8 +18,8 @@ struct RandomUsersResponseView: View {
 		List(response.results.identified(by: \.login.uuid)) { user in
 			HStack {
 				ZStack {
-					Image(systemName: "person.fill")
-						.foregroundColor(Color(white: 0.4))
+//					Image(systemName: "person.fill")
+//						.foregroundColor(Color(white: 0.4))
 					URLImageSourceView(url: user.picture.medium)
 						.frame(width: 36, height: 36)
 				}

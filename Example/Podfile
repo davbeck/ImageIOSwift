@@ -25,3 +25,10 @@ target 'example-swiftui-mac' do
   pod 'ImageIOSwift', :path => '../'
   pod 'ImageIOSwiftUI', :path => '../'
 end
+
+target 'example-swiftui-watch-extension' do
+  platform :watchos, '6.0'
+  
+  pod 'ImageIOSwift', :path => '../'
+  pod 'ImageIOSwiftUI', :path => '../'
+end
