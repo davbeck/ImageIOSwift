@@ -3,17 +3,14 @@ import SwiftUI
 
 struct AnimatedImageSourceView<Content: View>: View {
 	@ObjectBinding var imageSource: ImageSource
-	var displayLink: DisplayLink
-	@State var startTimestamp: TimeInterval? = .none
-	@State var animationFrame: Int = 0
 	var label: Text
 	var content: ImageSourceViewContent<Content>
 	
-	init(imageSource: ImageSource, label: Text, content: @escaping ImageSourceViewContent<Content>) {
-		self.imageSource = imageSource
-		self.label = label
-		self.displayLink = DisplayLink(preferredFramesPerSecond: imageSource.preferredFramesPerSecond)
-		self.content = content
+	@State var startTimestamp: TimeInterval? = .none
+	@State var animationFrame: Int = 0
+	
+	var displayLink: DisplayLink {
+		DisplayLink(preferredFramesPerSecond: self.imageSource.preferredFramesPerSecond)
 	}
 	
 	var body: some View {
