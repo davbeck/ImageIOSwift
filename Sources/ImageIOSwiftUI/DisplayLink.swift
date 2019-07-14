@@ -1,18 +1,18 @@
 import Combine
 import Foundation
 #if canImport(QuartzCore)
-import QuartzCore
+	import QuartzCore
 #endif
 
 struct DisplayLink: Publisher {
-    static var currentTime: TimeInterval {
-        #if canImport(QuartzCore)
-        return CACurrentMediaTime()
-        #else
-        return NSDate().timeIntervalSinceReferenceDate
-        #endif
-    }
-    
+	static var currentTime: TimeInterval {
+		#if canImport(QuartzCore)
+			return CACurrentMediaTime()
+		#else
+			return NSDate().timeIntervalSinceReferenceDate
+		#endif
+	}
+	
 	class Subscription<S>: Combine.Subscription where S: Subscriber, Never == S.Failure, CFTimeInterval == S.Input {
 		#if os(iOS)
 			private lazy var link = CADisplayLink(target: self, selector: #selector(displayLinkFired))

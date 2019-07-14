@@ -3,9 +3,9 @@ import SwiftUI
 
 func open(_ url: URL) {
 	#if os(iOS)
-	UIApplication.shared.open(url, options: [:], completionHandler: nil)
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
 	#elseif os(macOS)
-	NSWorkspace.shared.open(url)
+		NSWorkspace.shared.open(url)
 	#endif
 }
 

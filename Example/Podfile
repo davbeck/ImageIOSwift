@@ -32,3 +32,10 @@ target 'example-swiftui-watch-extension' do
   pod 'ImageIOSwift', :path => '../'
   pod 'ImageIOSwiftUI', :path => '../'
 end
+
+target 'example-swiftui-tvos' do
+  platform :tvos, '13.0'
+  
+  pod 'ImageIOSwift', :path => '../'
+  pod 'ImageIOSwiftUI', :path => '../'
+end
