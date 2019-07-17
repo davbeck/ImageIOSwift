@@ -37,10 +37,19 @@ public class ImageSourceDownloader: NSObject {
 		/// The underlying task used to download the file.
 		let sessionTask: URLSessionTask
 		
+		fileprivate lazy var _imageSource: ImageSource = .incremental()
+		
 		/// The image source that is being loaded incrementally.
 		///
 		/// The image source is created immediately when the download begins. You can display this immediately, and metadata like size, as well as the actual image, will be loaded as the data becomes available.
-		private(set) lazy var imageSource: ImageSource = .incremental()
+		var imageSource: ImageSource {
+			if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
+				dispatchPrecondition(condition: .notOnQueue(queue))
+			}
+			
+			// because the property is lazy, it will be written to on the first read
+			return self.queue.sync { self._imageSource }
+		}
 		
 		/// The image data that has been loaded so far.
 		var data: Data = Data() {
@@ -49,7 +58,7 @@ public class ImageSourceDownloader: NSObject {
 					dispatchPrecondition(condition: .onQueue(queue))
 				}
 				
-				self.imageSource.update(self.data, isFinal: false)
+				self._imageSource.update(self.data, isFinal: false)
 			}
 		}
 		
@@ -71,8 +80,8 @@ public class ImageSourceDownloader: NSObject {
 				dispatchPrecondition(condition: .onQueue(queue))
 			}
 			
-			self.imageSource.update(self.data, isFinal: true)
-			self.error = error ?? self.imageSource.error
+			self._imageSource.update(self.data, isFinal: true)
+			self.error = error ?? self._imageSource.error
 			
 			self.sendComplete()
 		}
@@ -106,7 +115,7 @@ public class ImageSourceDownloader: NSObject {
 			self.queue.async {
 				guard self.tasks[task.id]?.value == nil else { return }
 				
-				if self.error != nil || self.imageSource.status == .complete {
+				if self.error != nil || self._imageSource.status == .complete {
 					task.sendCompletion(data: self.data, response: self.sessionTask.response, error: self.error)
 				} else {
 					self.tasks[task.id] = Weak(task)
@@ -139,11 +148,14 @@ public class ImageSourceDownloader: NSObject {
 		
 		private var completionHandler: CompletionHandler?
 		
+		private var completionQueue: DispatchQueue
+		
 		fileprivate let id = UUID()
 		
-		fileprivate init(downloadTask: DownloadTask, completionHandler: CompletionHandler?) {
+		fileprivate init(downloadTask: DownloadTask, completionHandler: CompletionHandler?, completionQueue: DispatchQueue) {
 			self.downloadTask = downloadTask
 			self.completionHandler = completionHandler
+			self.completionQueue = completionQueue
 		}
 		
 		deinit {
@@ -167,10 +179,16 @@ public class ImageSourceDownloader: NSObject {
 		}
 		
 		fileprivate func sendCompletion(data: Data?, response: URLResponse?, error: Error?) {
-			guard let completionHandler = self.completionHandler else { return }
+			if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
+				dispatchPrecondition(condition: .onQueue(downloadTask.queue))
+			}
 			
+			guard let completionHandler = self.completionHandler else { return }
 			self.completionHandler = nil // only send once
-			completionHandler(self.imageSource, data, response, error)
+			
+			self.completionQueue.async {
+				completionHandler(self.downloadTask._imageSource, data, response, error)
+			}
 		}
 	}
 	
@@ -190,11 +208,12 @@ public class ImageSourceDownloader: NSObject {
 	///
 	/// - Parameters:
 	///   - url: The remote URL to download from.
+	///   - queue: The dispatch queue to call the completion handler on. Defaults to the main queue.
 	///   - completionHandler: Called when the download completes.
 	/// - Returns: A task for the request. You can use the task's image source immediately to display an incrementally loaded image.
-	public func download(_ url: URL, completionHandler: CompletionHandler? = nil) -> Task {
+	public func download(_ url: URL, queue: DispatchQueue = .main, completionHandler: CompletionHandler? = nil) -> Task {
 		let request = URLRequest(url: url)
-		return self.download(request, completionHandler: completionHandler)
+		return self.download(request, queue: queue, completionHandler: completionHandler)
 	}
 	
 	/// Download a remote image.
@@ -205,10 +224,11 @@ public class ImageSourceDownloader: NSObject {
 	///
 	/// - Parameters:
 	///   - request: The request used to download the image.
+	///   - queue: The dispatch queue to call the completion handler on. Defaults to the main queue.
 	///   - completionHandler: Called when the download completes.
 	/// - Returns: A task for the request. You can use the task's image source immediately to display an incrementally loaded image.
-	public func download(_ request: URLRequest, completionHandler _: CompletionHandler? = nil) -> Task {
-		let task = self.task(for: request)
+	public func download(_ request: URLRequest, queue: DispatchQueue = .main, completionHandler: CompletionHandler? = nil) -> Task {
+		let task = self.task(for: request, queue: queue, completionHandler: completionHandler)
 		task.resume()
 		return task
 	}
@@ -221,11 +241,12 @@ public class ImageSourceDownloader: NSObject {
 	///
 	/// - Parameters:
 	///   - url: The remote URL to download from.
+	///   - queue: The dispatch queue to call the completion handler on. Defaults to the main queue.
 	///   - completionHandler: Called when the download completes.
 	/// - Returns: A task for the request. You can use the task's image source immediately to display an incrementally loaded image.
-	public func task(for url: URL, completionHandler: CompletionHandler? = nil) -> Task {
+	public func task(for url: URL, queue: DispatchQueue = .main, completionHandler: CompletionHandler? = nil) -> Task {
 		let request = URLRequest(url: url)
-		return self.task(for: request, completionHandler: completionHandler)
+		return self.task(for: request, queue: queue, completionHandler: completionHandler)
 	}
 	
 	/// Task to download an image.
@@ -235,12 +256,13 @@ public class ImageSourceDownloader: NSObject {
 	/// The image source is available immediately from the returned Task. It will not start downloading until you call `resume()`.
 	///
 	/// - Parameters:
-	///   - url: The remote URL to download from.
+	///   - request: The request used to download the image.
+	///   - queue: The dispatch queue to call the completion handler on. Defaults to the main queue.
 	///   - completionHandler: Called when the download completes.
 	/// - Returns: A task for the request. You can use the task's image source immediately to display an incrementally loaded image.
-	public func task(for request: URLRequest, completionHandler: CompletionHandler? = nil) -> Task {
+	public func task(for request: URLRequest, queue: DispatchQueue = .main, completionHandler: CompletionHandler? = nil) -> Task {
 		let downloadTask = self.downloadTask(for: request)
-		let task = Task(downloadTask: downloadTask, completionHandler: completionHandler)
+		let task = Task(downloadTask: downloadTask, completionHandler: completionHandler, completionQueue: queue)
 		return task
 	}
 	
