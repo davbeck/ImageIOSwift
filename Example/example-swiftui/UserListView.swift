@@ -15,7 +15,7 @@ struct RandomUsersResponseView: View {
 	var response: RandomUsersResponse
 	
 	var body: some View {
-		List(response.results.identified(by: \.login.uuid)) { user in
+		List(response.results, id: \.login.uuid) { user in
 			HStack {
 				ZStack {
 					Placeholder()

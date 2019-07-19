@@ -4,7 +4,7 @@ import ImageIO
 public struct ImageProperties {
 	public let rawValue: [CFString: Any]
 	
-	public init(rawValue: [CFString: Any]) {
+	public init(rawValue: [CFString: Any] = [:]) {
 		self.rawValue = rawValue
 	}
 	
@@ -102,7 +102,7 @@ extension ImageSource {
 	}
 	
 	public func progress(atFrame frame: Int) -> TimeInterval {
-		guard self.count > 1, !totalDuration.isZero else { return 0 }
+		guard self.count > 1, !self.totalDuration.isZero else { return 0 }
 		
 		let timestamp = self.timestamp(atFrame: frame)
 		let totalDuration = self.totalDuration

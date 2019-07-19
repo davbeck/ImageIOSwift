@@ -1,3 +1,4 @@
+import Combine
 import ImageIOSwiftUI
 import SwiftUI
 
@@ -7,21 +8,24 @@ struct SampleView: View {
 	
 	var body: some View {
 		VStack {
-			URLImageSourceView(
-				url: sample.url,
-				isAnimationEnabled: isAnimationEnabled,
-				label: Text(sample.name)
-			) { imageSource, animationFrame, label in
-				StaticImageSourceView(imageSource: imageSource, animationFrame: animationFrame, label: label)
-					.aspectRatio(contentMode: .fit)
-					.overlay(
-						Rectangle()
-							.fill(Color.blue.opacity(0.5))
-							.frame(height: 10)
-							.relativeWidth(Length(imageSource.progress(atFrame: animationFrame))),
-						alignment: .bottomLeading
+			ImageTaskView(url: sample.url) { task in
+				ImageControllerView(imageSource: task.imageSource) { controller in
+					StaticImageSourceView(
+						image: controller.currentImage,
+						properties: controller.currentProperties,
+						label: Text(self.sample.name)
 					)
+					.overlay(
+						AnimationProgress(progress: controller.imageSource.progress(atFrame: controller.currentFrame)),
+						alignment: .bottom
+					)
+				}
+				.overlay(
+					DownloadProgress(progress: task.sessionTask.progress),
+					alignment: .topTrailing
+				)
 			}
+			.aspectRatio(contentMode: .fit)
 		}
 		.padding()
 		.navigationBarTitle(Text(sample.name), displayMode: .inline)

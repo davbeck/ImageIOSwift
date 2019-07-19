@@ -79,20 +79,17 @@ public struct ImageSourceBase: View {
 
 /// Displays a single frame of an image source.
 public struct StaticImageSourceView: View {
-	@ObjectBinding public var imageSource: ImageSource
-	public var animationFrame: Int = 0
+	public var image: CGImage?
+	public var properties: ImageProperties
 	public var label: Text
 	
-	public init(imageSource: ImageSource, animationFrame: Int = 0, label: Text) {
-		self.imageSource = imageSource
-		self.animationFrame = animationFrame
+	public init(image: CGImage?, properties: ImageProperties, label: Text) {
+		self.image = image
+		self.properties = properties
 		self.label = label
 	}
 	
 	public var body: some View {
-		let image = self.imageSource.cgImage(at: animationFrame)
-		let properties = imageSource.properties(at: animationFrame)
-		
 		return ImageSourceBase(properties: properties)
 			.overlay(
 				image.map { Image($0, scale: 1, label: self.label)

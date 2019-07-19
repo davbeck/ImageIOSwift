@@ -94,6 +94,14 @@
 		7A4D2F7122DBE0D80061EA81 /* starfield_animation.heic in Resources */ = {isa = PBXBuildFile; fileRef = 114D89D31F8BCD650064CBDB /* starfield_animation.heic */; };
 		7A4D2F7222DBE0D80061EA81 /* sea1_animation.heic in Resources */ = {isa = PBXBuildFile; fileRef = 114D89D71F8BCD650064CBDB /* sea1_animation.heic */; };
 		7A4D2F7322DBE0D80061EA81 /* bird_burst.heic in Resources */ = {isa = PBXBuildFile; fileRef = 114D89D01F8BCD650064CBDB /* bird_burst.heic */; };
+		7A6CB03D22E23012002C1E8D /* DownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB03B22E22FEC002C1E8D /* DownloadProgress.swift */; };
+		7A6CB03E22E23013002C1E8D /* DownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB03B22E22FEC002C1E8D /* DownloadProgress.swift */; };
+		7A6CB03F22E23015002C1E8D /* DownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB03B22E22FEC002C1E8D /* DownloadProgress.swift */; };
+		7A6CB04022E23016002C1E8D /* DownloadProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB03B22E22FEC002C1E8D /* DownloadProgress.swift */; };
+		7A6CB04222E234E1002C1E8D /* AnimationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB04122E234E1002C1E8D /* AnimationProgress.swift */; };
+		7A6CB04322E234E1002C1E8D /* AnimationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB04122E234E1002C1E8D /* AnimationProgress.swift */; };
+		7A6CB04422E234E1002C1E8D /* AnimationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB04122E234E1002C1E8D /* AnimationProgress.swift */; };
+		7A6CB04522E234E1002C1E8D /* AnimationProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6CB04122E234E1002C1E8D /* AnimationProgress.swift */; };
 		7A946AA322DBD21B00A6EBBD /* navigationBarTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A946AA222DBD21B00A6EBBD /* navigationBarTitle.swift */; };
 		7A946AAA22DBD40700A6EBBD /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A946AA822DBD40700A6EBBD /* Interface.storyboard */; };
 		7A946AAC22DBD40A00A6EBBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A946AAB22DBD40A00A6EBBD /* Assets.xcassets */; };
@@ -378,6 +386,8 @@
 		607FACE51AFB9204008FA782 /* ImageIOSwift_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageIOSwift_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* SizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeTests.swift; sourceTree = "<group>"; };
+		7A6CB03B22E22FEC002C1E8D /* DownloadProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadProgress.swift; sourceTree = "<group>"; };
+		7A6CB04122E234E1002C1E8D /* AnimationProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationProgress.swift; sourceTree = "<group>"; };
 		7A946AA222DBD21B00A6EBBD /* navigationBarTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = navigationBarTitle.swift; sourceTree = "<group>"; };
 		7A946AA622DBD40700A6EBBD /* example-swiftui-watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "example-swiftui-watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A946AA922DBD40700A6EBBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
@@ -694,6 +704,8 @@
 				7A946B2D22DBDDDF00A6EBBD /* AnimationsView.swift */,
 				7A946B2E22DBDDDF00A6EBBD /* ContentView.swift */,
 				7A946B2F22DBDDDF00A6EBBD /* SampleView.swift */,
+				7A6CB04122E234E1002C1E8D /* AnimationProgress.swift */,
+				7A6CB03B22E22FEC002C1E8D /* DownloadProgress.swift */,
 				7A946AA222DBD21B00A6EBBD /* navigationBarTitle.swift */,
 			);
 			path = "example-swiftui";
@@ -940,17 +952,17 @@
 					};
 					7A946AB122DBD40A00A6EBBD = {
 						CreatedOnToolsVersion = 11.0;
-						DevelopmentTeam = VKHGABD3Q5;
+						DevelopmentTeam = 7TR2B85D62;
 						ProvisioningStyle = Automatic;
 					};
 					7A946B4E22DBDF0700A6EBBD = {
 						CreatedOnToolsVersion = 11.0;
-						DevelopmentTeam = VKHGABD3Q5;
+						DevelopmentTeam = 7TR2B85D62;
 						ProvisioningStyle = Automatic;
 					};
 					7AD84C4722D831AA00DCC9C5 = {
 						CreatedOnToolsVersion = 11.0;
-						DevelopmentTeam = VKHGABD3Q5;
+						DevelopmentTeam = 7TR2B85D62;
 						ProvisioningStyle = Automatic;
 					};
 					7AE0A21722D7D96E009E3C0E = {
@@ -1406,7 +1418,9 @@
 				7A946B4722DBDDDF00A6EBBD /* ContentView.swift in Sources */,
 				7A946ABA22DBD40A00A6EBBD /* HostingController.swift in Sources */,
 				7A946B3522DBDDDF00A6EBBD /* Sample.swift in Sources */,
+				7A6CB04422E234E1002C1E8D /* AnimationProgress.swift in Sources */,
 				7A946B2122DBDCA400A6EBBD /* NavigationView.swift in Sources */,
+				7A6CB03F22E23015002C1E8D /* DownloadProgress.swift in Sources */,
 				7A946B3222DBDDDF00A6EBBD /* ProfileView.swift in Sources */,
 				7A946ABC22DBD40A00A6EBBD /* ExtensionDelegate.swift in Sources */,
 				7A946B4422DBDDDF00A6EBBD /* AnimationsView.swift in Sources */,
@@ -1423,6 +1437,7 @@
 			files = (
 				7A946B6622DBDF5000A6EBBD /* SampleView.swift in Sources */,
 				7A946B6322DBDF5000A6EBBD /* RandomUser.swift in Sources */,
+				7A6CB04022E23016002C1E8D /* DownloadProgress.swift in Sources */,
 				7A946B5E22DBDF5000A6EBBD /* ProfileView.swift in Sources */,
 				7A946B6222DBDF5000A6EBBD /* OrientationsView.swift in Sources */,
 				7A4D2F5022DBE0880061EA81 /* navigationBarTitle.swift in Sources */,
@@ -1431,6 +1446,7 @@
 				7A946B6522DBDF5000A6EBBD /* ContentView.swift in Sources */,
 				7A946B6422DBDF5000A6EBBD /* AnimationsView.swift in Sources */,
 				7A946B6122DBDF5000A6EBBD /* IncrementalSamplesView.swift in Sources */,
+				7A6CB04522E234E1002C1E8D /* AnimationProgress.swift in Sources */,
 				7A946B6022DBDF5000A6EBBD /* UserListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1441,6 +1457,7 @@
 			files = (
 				7A946AA322DBD21B00A6EBBD /* navigationBarTitle.swift in Sources */,
 				7A946B3A22DBDDDF00A6EBBD /* IncrementalSamplesView.swift in Sources */,
+				7A6CB03E22E23013002C1E8D /* DownloadProgress.swift in Sources */,
 				7A946B3722DBDDDF00A6EBBD /* UserListView.swift in Sources */,
 				7A946B4022DBDDDF00A6EBBD /* RandomUser.swift in Sources */,
 				7A946B4922DBDDDF00A6EBBD /* SampleView.swift in Sources */,
@@ -1449,6 +1466,7 @@
 				7A946B4622DBDDDF00A6EBBD /* ContentView.swift in Sources */,
 				7AD84C4B22D831AA00DCC9C5 /* AppDelegate.swift in Sources */,
 				7A946B4322DBDDDF00A6EBBD /* AnimationsView.swift in Sources */,
+				7A6CB04322E234E1002C1E8D /* AnimationProgress.swift in Sources */,
 				7A946B3D22DBDDDF00A6EBBD /* OrientationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1459,6 +1477,7 @@
 			files = (
 				7AE0A21B22D7D96E009E3C0E /* AppDelegate.swift in Sources */,
 				7A946B3922DBDDDF00A6EBBD /* IncrementalSamplesView.swift in Sources */,
+				7A6CB03D22E23012002C1E8D /* DownloadProgress.swift in Sources */,
 				7A946B3622DBDDDF00A6EBBD /* UserListView.swift in Sources */,
 				7A946B3F22DBDDDF00A6EBBD /* RandomUser.swift in Sources */,
 				7A946B4822DBDDDF00A6EBBD /* SampleView.swift in Sources */,
@@ -1467,6 +1486,7 @@
 				7A946B4522DBDDDF00A6EBBD /* ContentView.swift in Sources */,
 				7AE0A21D22D7D96E009E3C0E /* SceneDelegate.swift in Sources */,
 				7A946B4222DBDDDF00A6EBBD /* AnimationsView.swift in Sources */,
+				7A6CB04222E234E1002C1E8D /* AnimationProgress.swift in Sources */,
 				7A946B3C22DBDDDF00A6EBBD /* OrientationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1724,7 +1744,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"example-swiftui-watch Extension\"/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "example-swiftui-watch Extension/Info.plist";
@@ -1755,7 +1775,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"example-swiftui-watch Extension\"/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "example-swiftui-watch Extension/Info.plist";
@@ -1843,7 +1863,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "example-swiftui-tvos/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "example-swiftui-tvos/Info.plist";
@@ -1874,7 +1894,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "example-swiftui-tvos/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "example-swiftui-tvos/Info.plist";
@@ -1905,7 +1925,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "example-swiftui-mac/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1937,7 +1957,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "example-swiftui-mac/Preview\\ Content";
-				DEVELOPMENT_TEAM = VKHGABD3Q5;
+				DEVELOPMENT_TEAM = 7TR2B85D62;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

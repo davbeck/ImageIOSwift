@@ -92,14 +92,9 @@ public class ImageSource {
 	public func update(_ data: Data, isFinal: Bool) {
 		CGImageSourceUpdateData(self.cgImageSource, data as CFData, isFinal)
 		
-		// this is necessary because of a race condition with SwiftUI
-		// essentially the body will render out an incomplete image, it will be updated/finalized and then SwiftUI subscribes to the didChange publisher, missing the notification
-		// once that is fixed (or an alternative found) we need to send this notification on the main thread
-		DispatchQueue.main.async {
-			NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self)
-			if isFinal {
-				NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self)
-			}
+		NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self)
+		if isFinal {
+			NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self)
 		}
 	}
 	

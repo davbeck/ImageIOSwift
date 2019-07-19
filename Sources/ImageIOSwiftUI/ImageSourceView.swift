@@ -1,40 +1,77 @@
 import ImageIOSwift
 import SwiftUI
 
-public typealias ImageSourceViewContent<Content: View> = (_ imageSource: ImageSource, _ animationFrame: Int, _ label: Text) -> Content
-let defaultImageSourceContent = {
-	StaticImageSourceView(imageSource: $0, animationFrame: $1, label: $2)
+extension ImageSource: Hashable {
+	public func hash(into hasher: inout Hasher) {
+		hasher.combine(ObjectIdentifier(self))
+	}
 }
 
-public struct ImageSourceView<Content: View>: View {
-	@ObjectBinding public var imageSource: ImageSource
-	public var isAnimationEnabled: Bool = true
-	public var label: Text
-	public var content: ImageSourceViewContent<Content>
+/// A view that displays an image source using ImageSourceController.
+///
+/// Use this when you want to customize the display of an image source, for instance to show animation progress or info about the image.
+public struct ImageControllerView<Content: View>: View {
+	/// The image source to dipslay.
+	public var imageSource: ImageSource
+	/// When true, animation will start once the image is loaded.
+	public var isAnimationEnabled: Bool
+	/// The contents to use to render the image source.
+	public var content: (ImageSourceController) -> Content
 	
-	public init(imageSource: ImageSource, isAnimationEnabled: Bool = true, label: Text, content: @escaping ImageSourceViewContent<Content>) {
+	/// Create an image controller view.
+	/// - Parameter imageSource: The image source to dipslay.
+	/// - Parameter isAnimationEnabled: When true, animation will start once the image is loaded.
+	/// - Parameter content: The content to render for each frame of the image source.
+	public init(imageSource: ImageSource, isAnimationEnabled: Bool = true, content: @escaping (ImageSourceController) -> Content) {
 		self.imageSource = imageSource
 		self.isAnimationEnabled = isAnimationEnabled
-		self.label = label
 		self.content = content
 	}
 	
 	public var body: some View {
-		if isAnimationEnabled, imageSource.status == .complete, imageSource.count > 1 {
-			return AnyView(AnimatedImageSourceView(imageSource: imageSource, label: label, content: content))
-		} else {
-			return AnyView(self.content(imageSource, 0, label))
+		Derived(
+			from: imageSource,
+			using: ImageSourceController.init
+		) { controller in
+			self.content(controller)
+				.onAppear {
+					if self.isAnimationEnabled {
+						controller.startAnimating()
+					}
+				}
+				.onDisappear {
+					controller.stopAnimating()
+				}
 		}
 	}
 }
 
-extension ImageSourceView where Content == StaticImageSourceView {
+/// A SwiftUI view that displays an image source, updating as it loads.
+public struct ImageSourceView: View {
+	/// The image source to dipslay.
+	public var imageSource: ImageSource
+	/// When true, animation will start once the image is loaded.
+	public var isAnimationEnabled: Bool
+	/// The label associated with the image. The label is used for things like accessibility.
+	public var label: Text
+	
+	/// Create a image source view.
+	/// - Parameter imageSource: The image source to dipslay.
+	/// - Parameter isAnimationEnabled: When true, animation will start once the image is loaded.
+	/// - Parameter label: The label associated with the image. The label is used for things like accessibility.
 	public init(imageSource: ImageSource, isAnimationEnabled: Bool = true, label: Text) {
-		self.init(
-			imageSource: imageSource,
-			isAnimationEnabled: isAnimationEnabled,
-			label: label,
-			content: defaultImageSourceContent
-		)
+		self.imageSource = imageSource
+		self.isAnimationEnabled = isAnimationEnabled
+		self.label = label
+	}
+	
+	public var body: some View {
+		ImageControllerView(imageSource: imageSource, isAnimationEnabled: isAnimationEnabled) { controller in
+			StaticImageSourceView(
+				image: controller.currentImage,
+				properties: controller.currentProperties,
+				label: self.label
+			)
+		}
 	}
 }
