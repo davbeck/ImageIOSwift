@@ -39,7 +39,7 @@ struct ProfileView: View {
 			ZStack {
 				Placeholder()
 					.font(.system(size: 80))
-				URLImageSourceView(url: url, isAnimationEnabled: true, label: Text(url.lastPathComponent))
+				URLImageSourceView(url, isAnimationEnabled: true, label: Text(url.lastPathComponent))
 					.aspectRatio(contentMode: .fit)
 					.frame(width: 128, height: 128)
 					.clipShape(Circle())

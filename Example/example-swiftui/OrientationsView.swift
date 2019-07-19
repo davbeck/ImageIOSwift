@@ -29,7 +29,7 @@ struct OrientationsView: View {
 			}
 			
 			ForEach(samples) { sample in
-				URLImageSourceView(url: sample.url, label: Text(sample.name))
+				URLImageSourceView(sample.url, label: Text(sample.name))
 					.aspectRatio(contentMode: .fit)
 			}
 		}

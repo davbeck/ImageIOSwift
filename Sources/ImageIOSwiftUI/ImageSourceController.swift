@@ -21,7 +21,7 @@ public class ImageSourceController: BindableObject {
 		}
 	}
 	
-	/// The current image that should be rendered.
+	/// The current image that should be rendered.
 	public private(set) var currentImage: CGImage?
 	/// Properties for the current image.
 	///

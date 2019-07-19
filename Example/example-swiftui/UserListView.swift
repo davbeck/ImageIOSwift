@@ -19,7 +19,7 @@ struct RandomUsersResponseView: View {
 			HStack {
 				ZStack {
 					Placeholder()
-					URLImageSourceView(url: user.picture.medium)
+					URLImageSourceView(user.picture.medium)
 						.frame(width: 36, height: 36)
 				}
 				.frame(width: 36, height: 36)

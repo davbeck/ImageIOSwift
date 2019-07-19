@@ -8,7 +8,7 @@ struct SampleView: View {
 	
 	var body: some View {
 		VStack {
-			ImageTaskView(url: sample.url) { task in
+			ImageTaskView(sample.url) { task in
 				ImageControllerView(imageSource: task.imageSource) { controller in
 					StaticImageSourceView(
 						image: controller.currentImage,
