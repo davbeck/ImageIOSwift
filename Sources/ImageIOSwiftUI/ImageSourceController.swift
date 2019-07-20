@@ -49,6 +49,21 @@ public class ImageSourceController: BindableObject {
 		NotificationCenter.default.removeObserver(self)
 	}
 	
+	private var imageCache = NSCache<NSNumber, CGImage>()
+	private func image(at frame: Int) -> CGImage? {
+		var options = ImageSource.ImageOptions()
+		options.shouldDecodeImmediately = true
+		
+		if let image = imageCache.object(forKey: NSNumber(value: frame)) {
+			return image
+		} else if let image = self.imageSource.cgImage(at: frame, options: options) {
+			imageCache.setObject(image, forKey: NSNumber(value: frame))
+			return image
+		} else {
+			return nil
+		}
+	}
+	
 	private var isUpdating = false
 	private func setNeedsUpdate() {
 		dispatchPrecondition(condition: .onQueue(.main))
@@ -62,7 +77,7 @@ public class ImageSourceController: BindableObject {
 		let currentFrame = self.currentFrame
 		
 		DispatchQueue.global().async {
-			let image = self.imageSource.cgImage(at: currentFrame)
+			let image = self.image(at: currentFrame)
 			let properties = self.imageSource.properties(at: currentFrame)
 			
 			DispatchQueue.main.async {
