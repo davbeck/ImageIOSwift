@@ -4,3 +4,4 @@
 --self insert
 --trimwhitespace "nonblank-lines"
 --indent tab
+--disable andOperator
