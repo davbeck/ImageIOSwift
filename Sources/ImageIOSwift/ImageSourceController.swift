@@ -1,18 +1,11 @@
 import Combine
 import Foundation
-import ImageIOSwift
 import SwiftUI
 
 /// Manages the display of an image source, including incremental loading and animation.
 ///
 /// This controller will handle updates from an image source and animation timing. It renders each frame on a background queue and then synchronizes with the main queue. You should use this only from the main queue.
-public class ImageSourceController: BindableObject {
-	private let _willChange = PassthroughSubject<Void, Never>()
-	public let willChange: AnyPublisher<Void, Never>
-	
-	private let _didChange = PassthroughSubject<Void, Never>()
-	public let didChange: AnyPublisher<Void, Never>
-	
+public class ImageSourceController {
 	/// The currently displayed frame of animation.
 	public private(set) var currentFrame: Int = 0 {
 		didSet {
@@ -31,13 +24,16 @@ public class ImageSourceController: BindableObject {
 	/// The image source that is managed.
 	public let imageSource: ImageSource
 	
+	private var displayLink: DisplayLink? {
+		didSet {
+			oldValue?.invalidate()
+		}
+	}
+	
 	/// Create a controller and track the image source.
 	/// - Parameter imageSource: The image source to manage.
 	public init(imageSource: ImageSource) {
 		self.imageSource = imageSource
-		
-		self.willChange = self._willChange.eraseToAnyPublisher()
-		self.didChange = self._didChange.eraseToAnyPublisher()
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.didUpdateData), name: ImageSource.didUpdateData, object: imageSource)
 		
@@ -45,7 +41,7 @@ public class ImageSourceController: BindableObject {
 	}
 	
 	deinit {
-		self.animationObserver?.cancel()
+		displayLink?.invalidate()
 		NotificationCenter.default.removeObserver(self)
 	}
 	
@@ -57,7 +53,7 @@ public class ImageSourceController: BindableObject {
 		if let image = imageCache.object(forKey: NSNumber(value: frame)) {
 			return image
 		} else if let image = self.imageSource.cgImage(at: frame, options: options) {
-			imageCache.setObject(image, forKey: NSNumber(value: frame))
+			self.imageCache.setObject(image, forKey: NSNumber(value: frame))
 			return image
 		} else {
 			return nil
@@ -66,7 +62,9 @@ public class ImageSourceController: BindableObject {
 	
 	private var isUpdating = false
 	private func setNeedsUpdate() {
-		dispatchPrecondition(condition: .onQueue(.main))
+		if #available(OSX 10.12, iOS 10.0, tvOS 10.0, watchOS 3.0, *) {
+			dispatchPrecondition(condition: .onQueue(.main))
+		}
 		
 		guard !self.isUpdating else {
 			return
@@ -81,12 +79,12 @@ public class ImageSourceController: BindableObject {
 			let properties = self.imageSource.properties(at: currentFrame)
 			
 			DispatchQueue.main.async {
-				self._willChange.send()
+				self.sendWillUpdate()
 				
 				self.currentImage = image
 				self.currentProperties = properties
 				
-				self._didChange.send()
+				self.sendDidUpdate()
 				
 				// if something changed while we were updating, update again
 				self.isUpdating = false
@@ -97,13 +95,11 @@ public class ImageSourceController: BindableObject {
 		}
 	}
 	
-	// MARK: - Animation
+	fileprivate func sendWillUpdate() {}
 	
-	private var animationObserver: Cancellable? {
-		didSet {
-			oldValue?.cancel()
-		}
-	}
+	fileprivate func sendDidUpdate() {}
+	
+	// MARK: - Animation
 	
 	private var wantsAnimation: Bool = false
 	/// When the image source is actively being managed, this will be true.
@@ -126,22 +122,21 @@ public class ImageSourceController: BindableObject {
 		
 		self.wantsAnimation = false
 		self.isAnimating = true
-		let animationStartTime = DisplayLink.currentTime
 		
-		self.animationObserver = DisplayLink(preferredFramesPerSecond: self.imageSource.preferredFramesPerSecond)
-			.map { [imageSource] in imageSource.animationFrame(at: $0 - animationStartTime) }
-			.removeDuplicates()
-			// assign(to:on:) retains self causing a memory leak
-			.sink(receiveValue: { [weak self] frame in
-				self?.currentFrame = frame
-			})
+		let animationStartTime = DisplayLink.currentTime
+		self.displayLink = DisplayLink(preferredFramesPerSecond: self.imageSource.preferredFramesPerSecond) { [weak self] timestamp in
+			guard let self = self else { return }
+			let frame = self.imageSource.animationFrame(at: timestamp - animationStartTime)
+			self.currentFrame = frame
+		}
+		self.displayLink?.start()
 	}
 	
 	/// Stop animating and reset.
 	///
 	/// This does not pause the animation, instead it stops animation, leaving it on the current frame, but when animation starts again the animation will start from the beginning.
 	public func stopAnimating() {
-		self.animationObserver = nil
+		self.displayLink = nil
 		
 		self.isAnimating = false
 	}
@@ -162,5 +157,36 @@ public class ImageSourceController: BindableObject {
 				self.startAnimating()
 			}
 		}
+	}
+}
+
+/// Manages the display of an image source, including incremental loading and animation.
+///
+/// This controller will handle updates from an image source and animation timing. It renders each frame on a background queue and then synchronizes with the main queue. You should use this only from the main queue.
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+public class BindableImageSourceController: ImageSourceController, BindableObject {
+	private let _willChange = PassthroughSubject<Void, Never>()
+	public var willChange: AnyPublisher<Void, Never>
+	
+	private let _didChange = PassthroughSubject<Void, Never>()
+	public let didChange: AnyPublisher<Void, Never>
+	
+	public override init(imageSource: ImageSource) {
+		self.willChange = self._willChange.eraseToAnyPublisher()
+		self.didChange = self._didChange.eraseToAnyPublisher()
+		
+		super.init(imageSource: imageSource)
+	}
+	
+	override func sendWillUpdate() {
+		super.sendWillUpdate()
+		
+		self._willChange.send()
+	}
+	
+	override func sendDidUpdate() {
+		super.sendDidUpdate()
+		
+		self._didChange.send()
 	}
 }

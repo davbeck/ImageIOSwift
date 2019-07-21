@@ -7,22 +7,23 @@ extension ImageSource: Hashable {
 	}
 }
 
-/// A view that displays an image source using ImageSourceController.
+/// A view that displays an image source using BindableImageSourceController.
 ///
 /// Use this when you want to customize the display of an image source, for instance to show animation progress or info about the image.
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct ImageControllerView<Content: View>: View {
 	/// The image source to dipslay.
 	public var imageSource: ImageSource
 	/// When true, animation will start once the image is loaded.
 	public var isAnimationEnabled: Bool
 	/// The contents to use to render the image source.
-	public var content: (ImageSourceController) -> Content
+	public var content: (BindableImageSourceController) -> Content
 	
 	/// Create an image controller view.
 	/// - Parameter imageSource: The image source to dipslay.
 	/// - Parameter isAnimationEnabled: When true, animation will start once the image is loaded.
 	/// - Parameter content: The content to render for each frame of the image source.
-	public init(imageSource: ImageSource, isAnimationEnabled: Bool = true, content: @escaping (ImageSourceController) -> Content) {
+	public init(imageSource: ImageSource, isAnimationEnabled: Bool = true, content: @escaping (BindableImageSourceController) -> Content) {
 		self.imageSource = imageSource
 		self.isAnimationEnabled = isAnimationEnabled
 		self.content = content
@@ -31,7 +32,7 @@ public struct ImageControllerView<Content: View>: View {
 	public var body: some View {
 		Derived(
 			from: imageSource,
-			using: ImageSourceController.init
+			using: BindableImageSourceController.init
 		) { controller in
 			self.content(controller)
 				.onAppear {
@@ -47,6 +48,7 @@ public struct ImageControllerView<Content: View>: View {
 }
 
 /// A SwiftUI view that displays an image source, updating as it loads.
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct ImageSourceView: View {
 	/// The image source to dipslay.
 	public var imageSource: ImageSource

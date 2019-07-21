@@ -374,7 +374,7 @@
 		23BE29BA9A16865088EF9A2F /* Pods_example_swiftui_watch_extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_example_swiftui_watch_extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AE9D2AF5EFD0F91A5FF5AD /* Pods_example_swiftui_tvos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_example_swiftui_tvos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E8BB0656ED407714E4C355F /* Pods_ImageIOSwift_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageIOSwift_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		378FB9C09A34FB152E74F2B1 /* ImageIOSwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ImageIOSwift.podspec; path = ../ImageIOSwift.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		378FB9C09A34FB152E74F2B1 /* ImageIOSwift.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ImageIOSwift.podspec; path = ../ImageIOSwift.podspec; sourceTree = "<group>"; };
 		4B7EEFE5AC2CF2614EE09A4F /* Pods-example-swiftui-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example-swiftui-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-example-swiftui-ios/Pods-example-swiftui-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		5EAD88FF18E0D9DAFFE79CFD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* ImageIOSwift_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageIOSwift_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1246,13 +1246,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ImageIOSwift_Tests/Pods-ImageIOSwift_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageIOSwift_Tests/Pods-ImageIOSwift_Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ImageIOSwift_Tests/Pods-ImageIOSwift_Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1508,7 +1507,6 @@
 		};
 		7A946AC422DBD40B00A6EBBD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			platformFilter = ios;
 			target = 7A946AA522DBD40700A6EBBD /* example-swiftui-watch */;
 			targetProxy = 7A946AC322DBD40B00A6EBBD /* PBXContainerItemProxy */;
 		};

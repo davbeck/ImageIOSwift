@@ -18,7 +18,7 @@
   "social_media_url": "https://twitter.com/davbeck",
   "swift_versions": "5.1",
   "platforms": {
-    "ios": "13.0",
+    "ios": "9.0",
     "osx": "10.15",
     "tvos": "13.0",
     "watchos": "6.0"

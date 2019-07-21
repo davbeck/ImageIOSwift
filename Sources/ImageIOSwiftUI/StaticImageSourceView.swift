@@ -1,6 +1,7 @@
 import ImageIOSwift
 import SwiftUI
 
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 extension ImageProperties {
 	var rotateZ: Angle {
 		switch self.exifOrientation {
@@ -67,6 +68,7 @@ extension ImageProperties {
 }
 
 /// Provides the layout bounds of an image source.
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct ImageSourceBase: View {
 	var properties: ImageProperties
 	
@@ -78,6 +80,7 @@ public struct ImageSourceBase: View {
 }
 
 /// Displays a single frame of an image source.
+@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct StaticImageSourceView: View {
 	public var image: CGImage?
 	public var properties: ImageProperties
