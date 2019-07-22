@@ -2,10 +2,22 @@ import Combine
 import Foundation
 import SwiftUI
 
+public protocol ImageSourceControllerDelegate: AnyObject {
+	func imageSourceControllerWillUpdate(_ imageSourceController: ImageSourceController)
+	func imageSourceControllerDidUpdate(_ imageSourceController: ImageSourceController)
+}
+
+extension ImageSourceControllerDelegate {
+	public func imageSourceControllerWillUpdate(_: ImageSourceController) {}
+	public func imageSourceControllerDidUpdate(_: ImageSourceController) {}
+}
+
 /// Manages the display of an image source, including incremental loading and animation.
 ///
 /// This controller will handle updates from an image source and animation timing. It renders each frame on a background queue and then synchronizes with the main queue. You should use this only from the main queue.
 public class ImageSourceController {
+	public weak var delegate: ImageSourceControllerDelegate?
+	
 	/// The currently displayed frame of animation.
 	public private(set) var currentFrame: Int = 0 {
 		didSet {
@@ -53,9 +65,9 @@ public class ImageSourceController {
 		if let image = imageCache.object(forKey: NSNumber(value: frame)) {
 			return image
 		} else if let image = self.imageSource.cgImage(at: frame, options: options) {
-            if imageSource.status == .complete {
-                self.imageCache.setObject(image, forKey: NSNumber(value: frame))
-            }
+			if self.imageSource.status == .complete {
+				self.imageCache.setObject(image, forKey: NSNumber(value: frame))
+			}
 			return image
 		} else {
 			return nil
@@ -97,9 +109,13 @@ public class ImageSourceController {
 		}
 	}
 	
-	fileprivate func sendWillUpdate() {}
+	fileprivate func sendWillUpdate() {
+		self.delegate?.imageSourceControllerWillUpdate(self)
+	}
 	
-	fileprivate func sendDidUpdate() {}
+	fileprivate func sendDidUpdate() {
+		self.delegate?.imageSourceControllerDidUpdate(self)
+	}
 	
 	// MARK: - Animation
 	
