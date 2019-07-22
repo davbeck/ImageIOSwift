@@ -53,7 +53,9 @@ public class ImageSourceController {
 		if let image = imageCache.object(forKey: NSNumber(value: frame)) {
 			return image
 		} else if let image = self.imageSource.cgImage(at: frame, options: options) {
-			self.imageCache.setObject(image, forKey: NSNumber(value: frame))
+            if imageSource.status == .complete {
+                self.imageCache.setObject(image, forKey: NSNumber(value: frame))
+            }
 			return image
 		} else {
 			return nil
