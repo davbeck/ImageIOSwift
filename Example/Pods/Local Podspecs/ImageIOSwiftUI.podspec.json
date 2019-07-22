@@ -19,9 +19,9 @@
   "swift_versions": "5.1",
   "platforms": {
     "ios": "9.0",
-    "osx": "10.15",
-    "tvos": "13.0",
-    "watchos": "6.0"
+    "osx": "10.10",
+    "tvos": "9.0",
+    "watchos": "2.0"
   },
   "static_framework": true,
   "source_files": "Sources/ImageIOSwiftUI/*.swift",
