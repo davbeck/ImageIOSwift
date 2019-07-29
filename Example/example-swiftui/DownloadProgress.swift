@@ -9,8 +9,8 @@ let progressFormatter: NumberFormatter = {
 	return formatter
 }()
 
-class ProgressController: BindableObject {
-	let willChange = PassthroughSubject<Void, Never>()
+class ProgressController: ObservableObject {
+	let objectWillChange = PassthroughSubject<Void, Never>()
 	
 	let progress: Progress
 	private var observer: NSKeyValueObservation?
@@ -27,7 +27,7 @@ class ProgressController: BindableObject {
 		self.observer = progress.observe(\.fractionCompleted, options: NSKeyValueObservingOptions.prior) { progress, change in
 			guard change.isPrior else { return }
 			DispatchQueue.main.async { [weak self] in
-				self?.willChange.send()
+				self?.objectWillChange.send()
 				self?.fractionCompleted = progress.fractionCompleted
 				self?.isComplete = progress.totalUnitCount == progress.completedUnitCount
 			}
@@ -36,7 +36,7 @@ class ProgressController: BindableObject {
 }
 
 struct DownloadProgress: View {
-	@ObjectBinding var progressController: ProgressController
+	@ObservedObject var progressController: ProgressController
 	
 	init(progress: Progress) {
 		self.progressController = ProgressController(progress: progress)

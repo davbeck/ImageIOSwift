@@ -182,16 +182,16 @@ public class ImageSourceController {
 ///
 /// This controller will handle updates from an image source and animation timing. It renders each frame on a background queue and then synchronizes with the main queue. You should use this only from the main queue.
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-public class BindableImageSourceController: ImageSourceController, BindableObject {
+public class BindableImageSourceController: ImageSourceController, ObservableObject {
 	private let _willChange = PassthroughSubject<Void, Never>()
-	public var willChange: AnyPublisher<Void, Never>
+	public var objectWillChange: AnyPublisher<Void, Never>
 	
 	private let _didChange = PassthroughSubject<Void, Never>()
-	public let didChange: AnyPublisher<Void, Never>
+	public let objectDidChange: AnyPublisher<Void, Never>
 	
 	public override init(imageSource: ImageSource) {
-		self.willChange = self._willChange.eraseToAnyPublisher()
-		self.didChange = self._didChange.eraseToAnyPublisher()
+		self.objectWillChange = self._willChange.eraseToAnyPublisher()
+		self.objectDidChange = self._didChange.eraseToAnyPublisher()
 		
 		super.init(imageSource: imageSource)
 	}
