@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/ImageIOSwift.svg?style=flat)](http://cocoapods.org/pods/ImageIOSwift)
 [![Platform](https://img.shields.io/cocoapods/p/ImageIOSwift.svg?style=flat)](http://cocoapods.org/pods/ImageIOSwift)
 
+For SwiftUI support, see the [1.0.0 branch](https://github.com/davbeck/ImageIOSwift/blob/1.0.0/README.md).
+
 [ImageIO](https://developer.apple.com/documentation/imageio) is an Apple framework that provides low level access to image files and is what powers UIImage and other image related operations on iOS and macOS. However, in part because it is a C/Core Foundation framework, using it can be difficult.
 
 ImageIO.Swift is a lightweight wrapper around the framework that makes it much easier to access the vast power that ImageIO provides, including animated GIFs, incremental loading and efficient thumbnail generation.
