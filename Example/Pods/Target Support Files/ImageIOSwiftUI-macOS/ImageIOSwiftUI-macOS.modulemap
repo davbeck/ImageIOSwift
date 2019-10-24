@@ -1,0 +1,6 @@
+framework module ImageIOSwiftUI {
+  umbrella header "ImageIOSwiftUI-macOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

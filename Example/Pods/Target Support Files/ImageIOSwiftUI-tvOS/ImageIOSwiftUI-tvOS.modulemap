@@ -1,0 +1,6 @@
+framework module ImageIOSwiftUI {
+  umbrella header "ImageIOSwiftUI-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

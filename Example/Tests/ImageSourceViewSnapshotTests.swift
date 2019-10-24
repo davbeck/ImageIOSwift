@@ -1,23 +1,22 @@
-import XCTest
 import FBSnapshotTestCase
 import ImageIOSwift
-
+import ImageIOUIKit
+import XCTest
 
 class ImageSourceViewSnapshotTests: FBSnapshotTestCase {
-    override func setUp() {
-        super.setUp()
+	override func setUp() {
+		super.setUp()
 		
-//		recordMode = true
-    }
-	
+		//		recordMode = true
+	}
 	
 	// MARK: - Tests
-    
-    func testOrientations() {
+	
+	func testOrientations() {
 		let view = ImageSourceView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		
 		for name in ["Landscape", "Portrait"] {
-			for orientation in (1...8) {
+			for orientation in 1...8 {
 				guard let url = local(named: "\(name)_\(orientation).jpg") else { XCTFail(); return }
 				let expectedSize = UIImage(contentsOfFile: url.path)?.size
 				
@@ -28,7 +27,7 @@ class ImageSourceViewSnapshotTests: FBSnapshotTestCase {
 				FBSnapshotVerifyView(view, identifier: "\(name)_\(orientation)")
 			}
 		}
-    }
+	}
 	
 	func testContentMode() {
 		let view = ImageSourceView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
@@ -39,7 +38,7 @@ class ImageSourceViewSnapshotTests: FBSnapshotTestCase {
 		
 		view.imageSource = ImageSource(url: url)
 		
-		let modes: [UIViewContentMode] = [
+		let modes: [UIView.ContentMode] = [
 			.scaleToFill,
 			.scaleAspectFit,
 			.scaleAspectFill,

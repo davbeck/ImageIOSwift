@@ -1,7 +1,6 @@
 import UIKit
 
-
-extension UIViewContentMode: CustomStringConvertible {
+extension UIView.ContentMode: CustomStringConvertible {
 	public var description: String {
 		switch self {
 		case .scaleToFill:
@@ -30,6 +29,8 @@ extension UIViewContentMode: CustomStringConvertible {
 			return "bottomLeft"
 		case .bottomRight:
 			return "bottomRight"
+		@unknown default:
+			return "unknown(\(rawValue))"
 		}
 	}
 }

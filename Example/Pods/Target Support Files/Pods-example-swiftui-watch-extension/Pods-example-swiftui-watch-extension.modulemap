@@ -1,0 +1,6 @@
+framework module Pods_example_swiftui_watch_extension {
+  umbrella header "Pods-example-swiftui-watch-extension-umbrella.h"
+
+  export *
+  module * { export * }
+}

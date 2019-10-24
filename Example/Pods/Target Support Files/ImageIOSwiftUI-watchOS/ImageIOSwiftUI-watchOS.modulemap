@@ -1,0 +1,6 @@
+framework module ImageIOSwiftUI {
+  umbrella header "ImageIOSwiftUI-watchOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

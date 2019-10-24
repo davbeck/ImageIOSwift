@@ -1,0 +1,6 @@
+framework module ImageIOUIKit {
+  umbrella header "ImageIOUIKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

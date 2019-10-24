@@ -1,14 +1,5 @@
-//
-//  MetricsViewController.swift
-//  ImageIOSwift
-//
-//  Created by David Beck on 10/6/17.
-//  Copyright © 2017 David Beck. All rights reserved.
-//
-
-import UIKit
 import ImageIOSwift
-
+import UIKit
 
 class MetricsViewController: ImageSourceViewController {
 	lazy var sourceTimeLabel = UILabel()
@@ -20,20 +11,20 @@ class MetricsViewController: ImageSourceViewController {
 	lazy var uiImageTimeLabel = UILabel()
 	
 	override func viewDidLoad() {
-		sourceTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: sourceTimeLabel, name: "Create Source")
-		sizeTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: sizeTimeLabel, name: "Get Size")
-		thumbnailTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: thumbnailTimeLabel, name: "Create Thumbnail")
-		drawThumbnailTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: drawThumbnailTimeLabel, name: "Draw Thumbnail")
-		imageTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: imageTimeLabel, name: "Create Image")
-		drawTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: drawTimeLabel, name: "Draw Image")
-		uiImageTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
-		self.add(infoLabel: uiImageTimeLabel, name: "UIImage")
+		self.sourceTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: self.sourceTimeLabel, name: "Create Source")
+		self.sizeTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: self.sizeTimeLabel, name: "Get Size")
+		self.thumbnailTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: self.thumbnailTimeLabel, name: "Create Thumbnail")
+		self.drawThumbnailTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: self.drawThumbnailTimeLabel, name: "Draw Thumbnail")
+		self.imageTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: self.imageTimeLabel, name: "Create Image")
+		self.drawTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: self.drawTimeLabel, name: "Draw Image")
+		self.uiImageTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .regular)
+		self.add(infoLabel: self.uiImageTimeLabel, name: "UIImage")
 		
 		super.viewDidLoad()
 	}
@@ -46,7 +37,7 @@ class MetricsViewController: ImageSourceViewController {
 		let createSourceDuration = -start.timeIntervalSinceNow
 		
 		start = Date()
-		guard let size = imageSource?.properties(at: 0)?.imageSize else { return }
+		guard let size = imageSource?.properties(at: 0).imageSize else { return }
 		let sizeDuration = -start.timeIntervalSinceNow
 		
 		start = Date()
@@ -62,11 +53,11 @@ class MetricsViewController: ImageSourceViewController {
 			let drawThumbnailDuration = -start.timeIntervalSinceNow
 			UIGraphicsEndImageContext()
 			
-			thumbnailTimeLabel.text = "\(String(format: "%.4f", createThumbnailDuration))s (\(thumbnail.width)x\(thumbnail.height))"
-			drawThumbnailTimeLabel.text = "\(String(format: "%.4f", drawThumbnailDuration))s"
+			self.thumbnailTimeLabel.text = "\(String(format: "%.4f", createThumbnailDuration))s (\(thumbnail.width)x\(thumbnail.height))"
+			self.drawThumbnailTimeLabel.text = "\(String(format: "%.4f", drawThumbnailDuration))s"
 		} else {
-			thumbnailTimeLabel.text = "\(String(format: "%.4f", createThumbnailDuration))s (missing)"
-			drawThumbnailTimeLabel.text = nil
+			self.thumbnailTimeLabel.text = "\(String(format: "%.4f", createThumbnailDuration))s (missing)"
+			self.drawThumbnailTimeLabel.text = nil
 		}
 		
 		start = Date()
@@ -95,12 +86,11 @@ class MetricsViewController: ImageSourceViewController {
 		let uiImageDrawTime = -start.timeIntervalSinceNow
 		UIGraphicsEndImageContext()
 		
-		
-		sourceTimeLabel.text = "\(String(format: "%.4f", createSourceDuration))s"
-		sizeTimeLabel.text = "\(String(format: "%.4f", sizeDuration))s"
-		imageTimeLabel.text = "\(String(format: "%.4f", createImageDuration))s, \(String(format: "%.4f", secondCreateImageDuration))s"
-		drawTimeLabel.text = "\(String(format: "%.4f", drawDuration))s, \(String(format: "%.4f", secondDrawDuration))s"
-		uiImageTimeLabel.text = "\(String(format: "%.4f", uiImageDrawTime))s"
+		self.sourceTimeLabel.text = "\(String(format: "%.4f", createSourceDuration))s"
+		self.sizeTimeLabel.text = "\(String(format: "%.4f", sizeDuration))s"
+		self.imageTimeLabel.text = "\(String(format: "%.4f", createImageDuration))s, \(String(format: "%.4f", secondCreateImageDuration))s"
+		self.drawTimeLabel.text = "\(String(format: "%.4f", drawDuration))s, \(String(format: "%.4f", secondDrawDuration))s"
+		self.uiImageTimeLabel.text = "\(String(format: "%.4f", uiImageDrawTime))s"
 		
 		self.imageSource = imageSource
 	}

@@ -4,11 +4,17 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - ImageIOSwift (0.5.0)
+  - ImageIOSwift (1.0.0)
+  - ImageIOSwiftUI (1.0.0):
+    - ImageIOSwift (~> 1.0)
+  - ImageIOUIKit (1.0.0):
+    - ImageIOSwift (~> 1.0)
 
 DEPENDENCIES:
   - FBSnapshotTestCase (~> 2.1.4)
   - ImageIOSwift (from `../`)
+  - ImageIOSwiftUI (from `../`)
+  - ImageIOUIKit (from `../`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -17,11 +23,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   ImageIOSwift:
     :path: "../"
+  ImageIOSwiftUI:
+    :path: "../"
+  ImageIOUIKit:
+    :path: "../"
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  ImageIOSwift: 48e0dbb2632a81de9f27701737c668d9a237d935
+  ImageIOSwift: e2f2f80f0efaca88db12bdf809de790953067c45
+  ImageIOSwiftUI: b55fa6a0b7d723daf3e375c5786b0cebc0083c9c
+  ImageIOUIKit: ddd55b9a548fd02d1c0c2bc6a26a055f6375b743
 
-PODFILE CHECKSUM: 2c5ada80341fcd6c217d3e7f26bf02206e0cee02
+PODFILE CHECKSUM: d2be18b8576cdac3ef9ab50ae179d6ddb5a66160
 
-COCOAPODS: 1.7.2
+COCOAPODS: 1.7.4

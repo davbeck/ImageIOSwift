@@ -1,0 +1,7 @@
+--header strip
+--ranges no-space
+--disable redundantGet,redundantRawValues
+--self insert
+--trimwhitespace "nonblank-lines"
+--indent tab
+--disable andOperator

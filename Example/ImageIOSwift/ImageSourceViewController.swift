@@ -1,14 +1,6 @@
-//
-//  ImageSourceViewController.swift
-//  ImageService
-//
-//  Created by David Beck on 10/5/17.
-//  Copyright © 2017 David Beck. All rights reserved.
-//
-
-import UIKit
 import ImageIOSwift
-
+import ImageIOUIKit
+import UIKit
 
 class ImageSourceViewController: UIViewController {
 	let url: URL
@@ -24,7 +16,7 @@ class ImageSourceViewController: UIViewController {
 			imageView.image = imageSource?.image(at: 0)
 			
 			if let newValue = imageSource {
-				NotificationCenter.default.addObserver(self, selector: #selector(didUpdateData), name: ImageSource.didUpdateData, object: newValue.cgImageSource)
+				NotificationCenter.default.addObserver(self, selector: #selector(didUpdateData), name: ImageSource.didUpdateData, object: newValue)
 			}
 		}
 	}
@@ -39,10 +31,9 @@ class ImageSourceViewController: UIViewController {
 		self.automaticallyAdjustsScrollViewInsets = false
 	}
 	
-	required init?(coder aDecoder: NSCoder) {
+	required init?(coder _: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
 	
 	// MARK: - View Lifecycle
 	
@@ -57,7 +48,7 @@ class ImageSourceViewController: UIViewController {
 	])
 	
 	lazy var infoStackView: UIStackView = UIStackView(arrangedSubviews: [
-		self.imagesStackView
+		self.imagesStackView,
 	])
 	lazy var imageSizeLabel = UILabel()
 	lazy var framesLabel = UILabel()
@@ -81,12 +72,12 @@ class ImageSourceViewController: UIViewController {
 		lineView.axis = .horizontal
 		lineView.spacing = 5
 		lineView.alignment = .firstBaseline
-		infoStackView.addArrangedSubview(lineView)
+		self.infoStackView.addArrangedSubview(lineView)
 		
 		if let firstName = nameLabels.first {
 			nameLabel.widthAnchor.constraint(equalTo: firstName.widthAnchor).isActive = true
 		}
-		nameLabels.append(nameLabel)
+		self.nameLabels.append(nameLabel)
 	}
 	
 	private func add(label text: String, to view: UIView) {
@@ -128,28 +119,28 @@ class ImageSourceViewController: UIViewController {
 		
 		view.backgroundColor = .white
 		
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		scrollView.alwaysBounceVertical = true
-		view.addSubview(scrollView)
+		self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+		self.scrollView.alwaysBounceVertical = true
+		view.addSubview(self.scrollView)
 		
-		imageSourceView.backgroundColor = .lightGray
-		imageSourceView.contentMode = .scaleAspectFit
-		add(label: "ImageSourceView", to: imageSourceView)
+		self.imageSourceView.backgroundColor = .lightGray
+		self.imageSourceView.contentMode = .scaleAspectFit
+		self.add(label: "ImageSourceView", to: self.imageSourceView)
 		
-		imageView.backgroundColor = .lightGray
-		imageView.contentMode = .scaleAspectFit
-		add(label: "UIImageView", to: imageView)
+		self.imageView.backgroundColor = .lightGray
+		self.imageView.contentMode = .scaleAspectFit
+		self.add(label: "UIImageView", to: self.imageView)
 		
-		imagesStackView.axis = .horizontal
-		imagesStackView.spacing = 10
+		self.imagesStackView.axis = .horizontal
+		self.imagesStackView.spacing = 10
 		
-		infoStackView.translatesAutoresizingMaskIntoConstraints = false
-		infoStackView.axis = .vertical
-		infoStackView.spacing = 5
+		self.infoStackView.translatesAutoresizingMaskIntoConstraints = false
+		self.infoStackView.axis = .vertical
+		self.infoStackView.spacing = 5
 		if #available(iOS 11.0, *) {
 			infoStackView.setCustomSpacing(10, after: imagesStackView)
 		}
-		scrollView.addSubview(infoStackView)
+		self.scrollView.addSubview(self.infoStackView)
 		
 		NSLayoutConstraint.activate([
 			scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -178,22 +169,22 @@ class ImageSourceViewController: UIViewController {
 			])
 		}
 		
-		self.add(infoLabel: imageSizeLabel, name: "Image Size")
-		self.add(infoLabel: framesLabel, name: "Frames")
-		propertiesLabel.numberOfLines = 0
-		self.add(infoLabel: propertiesLabel, name: "Properties")
-		properties0Label.numberOfLines = 0
-		self.add(infoLabel: properties0Label, name: "Properties[0]")
+		self.add(infoLabel: self.imageSizeLabel, name: "Image Size")
+		self.add(infoLabel: self.framesLabel, name: "Frames")
+		self.propertiesLabel.numberOfLines = 0
+		self.add(infoLabel: self.propertiesLabel, name: "Properties")
+		self.properties0Label.numberOfLines = 0
+		self.add(infoLabel: self.properties0Label, name: "Properties[0]")
 		
-		loadImageSource()
+		self.loadImageSource()
 	}
 	
 	func loadImageSource() {
-		if url.isFileURL {
-			imageSource = ImageSource(url: url)
+		if self.url.isFileURL {
+			self.imageSource = ImageSource(url: self.url)
 		} else {
-			let task = ImageSourceDownloader.shared.download(url)
-			imageSource = task.imageSource
+			let task = ImageSourceDownloader.shared.download(self.url)
+			self.imageSource = task.imageSource
 		}
 	}
 	
@@ -204,15 +195,15 @@ class ImageSourceViewController: UIViewController {
 	}
 	
 	func updateInfo() {
-		if let size = imageSource?.properties(at: 0)?.imageSize {
-			imageSizeLabel.text = "\(Int(size.width))x\(Int(size.height))"
+		if let size = imageSource?.properties(at: 0).imageSize {
+			self.imageSizeLabel.text = "\(Int(size.width))x\(Int(size.height))"
 		} else {
-			imageSizeLabel.text = nil
+			self.imageSizeLabel.text = nil
 		}
 		
-		framesLabel.text = imageSource?.count.description
+		self.framesLabel.text = self.imageSource?.count.description
 		
-		propertiesLabel.text = imageSource?.properties()?.rawValue.description
-		properties0Label.text = imageSource?.properties(at: 0)?.rawValue.description
+		self.propertiesLabel.text = self.imageSource?.properties().rawValue.description
+		self.properties0Label.text = self.imageSource?.properties(at: 0).rawValue.description
 	}
 }

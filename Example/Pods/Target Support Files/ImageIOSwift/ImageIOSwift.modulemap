@@ -1,6 +1,0 @@
-framework module ImageIOSwift {
-  umbrella header "ImageIOSwift-umbrella.h"
-
-  export *
-  module * { export * }
-}
