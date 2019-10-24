@@ -15,7 +15,32 @@ ImageIO.Swift makes working with images on Apple platforms easy. It's [SDWebImag
 
 ## Usage
 
-### SwiftUI (ImageIOSwiftUI)
+### UIKit (ImageIOUIKit)
+
+`ImageSourceView` handles loading and displaying images.
+
+```swift
+// display an image downloaded from a URL
+let view = ImageSourceView()
+view.isAnimationEnabled = true
+view.load(url)
+```
+
+If an image url is shown in multiple places on the same screen (like a single users profile picture on a news feed layout) it will only be downloaded and loaded into memory once. It will also be intelligently cached so that subsequent requests will re-use memory and downloaded data.
+
+You can also set an image source directly:
+
+```swift
+let view = ImageSourceView()
+view.isAnimationEnabled = true
+view.imageSource = imageSource
+```
+
+You can access the views `imageSource` (regardless of whether you set it directly or loaded it from a url) and subscribe to it's `didUpdateData` notification to track it's download. To get updates for different animation frames, you can either subclass `ImageSourceView` or use KVO with `displayedImage`.
+
+The UIKit module also includes extensions on `ImageSource` to access `UIImage`s that are correctly orriented (a feature that `CGImage` doesn't account for).
+
+### Experimental: SwiftUI (ImageIOSwiftUI)
 
 Works with iOS, macOS, watchOS and tvOS!
 
@@ -83,30 +108,7 @@ ZStack {
 
 This way images that load incrementally will be shown as they load.
 
-### UIKit (ImageIOUIKit)
-
-`ImageSourceView` handles loading and displaying images.
-
-```swift
-// display an image downloaded from a URL
-let view = ImageSourceView()
-view.isAnimationEnabled = true
-view.load(url)
-```
-
-If an image url is shown in multiple places on the same screen (like a single users profile picture on a news feed layout) it will only be downloaded and loaded into memory once. It will also be intelligently cached so that subsequent requests will re-use memory and downloaded data.
-
-You can also set an image source directly:
-
-```swift
-let view = ImageSourceView()
-view.isAnimationEnabled = true
-view.imageSource = imageSource
-```
-
-You can access the views `imageSource` (regardless of whether you set it directly or loaded it from a url) and subscribe to it's `didUpdateData` notification to track it's download. To get updates for different animation frames, you can either subclass `ImageSourceView` or use KVO with `displayedImage`.
-
-The UIKit module also includes extensions on `ImageSource` to access `UIImage`s that are correctly orriented (a feature that `CGImage` doesn't account for).
+**Disclaimer**: I had hoped that SwiftUI would become more stable over the Summer, but it is still quit buggy and incomplete. While I don't know of any issues with this projects SwiftUI support, I am not using SwiftUI in any of my projects, and consequently cannot vouch for the stability of this project.
 
 ### ImageSource
 
