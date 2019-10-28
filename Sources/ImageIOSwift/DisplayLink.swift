@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 #if canImport(QuartzCore)
 	import QuartzCore
@@ -57,7 +56,7 @@ class DisplayLink {
 	
 	#if os(iOS) || os(tvOS)
 		@objc private func displayLinkFired(_: CADisplayLink) {
-			if #available(iOS 10.0, *) {
+			if #available(iOS 10.0, tvOS 10.0, *) {
 				self.onFire(self.link.targetTimestamp)
 			} else {
 				self.onFire(self.link.timestamp)
