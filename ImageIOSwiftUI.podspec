@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ImageIOSwiftUI'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'UIKit integration for ImageIO.'
 
   s.description      = <<-DESC
@@ -18,15 +18,15 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/davbeck'
 
 	s.swift_version = '5.1'
-  s.ios.deployment_target = '9.0'
-  s.osx.deployment_target = '10.10'
-  s.tvos.deployment_target = '9.0'
-  s.watchos.deployment_target = '2.0'
+  s.ios.deployment_target = '13.0'
+  s.osx.deployment_target = '10.15'
+  s.tvos.deployment_target = '13.0'
+  s.watchos.deployment_target = '6.0'
   s.static_framework = true
 
   s.source_files = 'Sources/ImageIOSwiftUI/*.swift'
 
-  s.framework  = 'SwiftUI'
+  s.frameworks = 'SwiftUI', 'Combine'
 	
-	s.dependency 'ImageIOSwift', '~> 1.0'
+	s.dependency 'ImageIOSwift', '~> 1.0.1'
 end
