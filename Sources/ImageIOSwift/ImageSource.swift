@@ -223,7 +223,7 @@ public class ImageSource {
 	/// - Parameter mode: How the thumbnail should be resized.
 	/// - Parameter options: Any options to include when creating the image. `thumbnailMaxPixelSize` will be ingnored.
 	public func cgThumbnailImage(at index: Int = 0, size: CGSize, mode: ResizingMode = .fit, options: ImageOptions = ImageOptions(shouldCache: true, shouldDecodeImmediately: true, createThumbnailBehavior: .ifAbsent)) -> CGImage? {
-		guard let originalSize = self.properties().imageSize else { return nil }
+		guard let originalSize = self.properties(at: index).imageSize else { return nil }
 		let scaledSize: CGSize
 		switch mode {
 		case .fit:
