@@ -1,5 +1,5 @@
-import Foundation
 import CoreGraphics
+import Foundation
 
 public protocol ImageSourceControllerDelegate: AnyObject {
 	func imageSourceControllerWillUpdate(_ imageSourceController: ImageSourceController)
@@ -14,7 +14,7 @@ extension ImageSourceControllerDelegate {
 /// Manages the display of an image source, including incremental loading and animation.
 ///
 /// This controller will handle updates from an image source and animation timing. It renders each frame on a background queue and then synchronizes with the main queue. You should use this only from the main queue.
-public class ImageSourceController {
+open class ImageSourceController {
 	public weak var delegate: ImageSourceControllerDelegate?
 	
 	/// The currently displayed frame of animation.
@@ -108,11 +108,11 @@ public class ImageSourceController {
 		}
 	}
 	
-	fileprivate func sendWillUpdate() {
+	open func sendWillUpdate() {
 		self.delegate?.imageSourceControllerWillUpdate(self)
 	}
 	
-	fileprivate func sendDidUpdate() {
+	open func sendDidUpdate() {
 		self.delegate?.imageSourceControllerDidUpdate(self)
 	}
 	
@@ -176,38 +176,3 @@ public class ImageSourceController {
 		}
 	}
 }
-
-#if canImport(Combine)
-	import Combine
-	
-	/// Manages the display of an image source, including incremental loading and animation.
-	///
-	/// This controller will handle updates from an image source and animation timing. It renders each frame on a background queue and then synchronizes with the main queue. You should use this only from the main queue.
-	@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-	public class BindableImageSourceController: ImageSourceController, ObservableObject {
-		private let _willChange = PassthroughSubject<Void, Never>()
-		public var objectWillChange: AnyPublisher<Void, Never>
-		
-		private let _didChange = PassthroughSubject<Void, Never>()
-		public let objectDidChange: AnyPublisher<Void, Never>
-		
-		public override init(imageSource: ImageSource) {
-			self.objectWillChange = self._willChange.eraseToAnyPublisher()
-			self.objectDidChange = self._didChange.eraseToAnyPublisher()
-			
-			super.init(imageSource: imageSource)
-		}
-		
-		override func sendWillUpdate() {
-			super.sendWillUpdate()
-			
-			self._willChange.send()
-		}
-		
-		override func sendDidUpdate() {
-			super.sendDidUpdate()
-			
-			self._didChange.send()
-		}
-	}
-#endif
