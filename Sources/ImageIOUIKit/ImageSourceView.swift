@@ -6,10 +6,6 @@ public protocol ImageSourceViewDelegate: AnyObject {
     func imageSourceViewDidUpdate(_ imageSourceView: ImageSourceView)
 }
 
-extension ImageSourceViewDelegate {
-    public func imageSourceControllerDidUpdate(_: ImageSourceView) {}
-}
-
 open class ImageSourceView: UIView {
     public weak var delegate: ImageSourceViewDelegate?
     
@@ -62,7 +58,7 @@ open class ImageSourceView: UIView {
         self.displayView.transform = self.controller?.currentProperties.transform ?? CGAffineTransform.identity
         self.invalidateIntrinsicContentSize()
         
-        self.delegate?.imageSourceControllerDidUpdate(self)
+        self.delegate?.imageSourceViewDidUpdate(self)
     }
     
     // MARK: - URL Loading
