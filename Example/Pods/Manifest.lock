@@ -4,11 +4,11 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - ImageIOSwift (1.0.3)
-  - ImageIOSwiftUI (1.0.1):
-    - ImageIOSwift (~> 1.0.1)
-  - ImageIOUIKit (1.0.1):
-    - ImageIOSwift (~> 1.0.1)
+  - ImageIOSwift (1.1.0)
+  - ImageIOSwiftUI (1.1.0):
+    - ImageIOSwift (~> 1.1.0)
+  - ImageIOUIKit (1.1.0):
+    - ImageIOSwift (~> 1.1.0)
 
 DEPENDENCIES:
   - FBSnapshotTestCase (~> 2.1.4)
@@ -30,10 +30,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  ImageIOSwift: 53461a1dcdebb9c1438fabe6b24efa606ef56e62
-  ImageIOSwiftUI: e9a2bc393a3854f0cdb6e883c38f44786ef2c981
-  ImageIOUIKit: 72b64386907ba49ddf852748f750cc5486d02cef
+  ImageIOSwift: fbc009de4e4895173540b4e4b444cf014d8193db
+  ImageIOSwiftUI: 1f7bb0d99f18383bb6cdac8e44248b4efa129048
+  ImageIOUIKit: befdc00ad0de6868ed74b44040dbacd2c21bb24c
 
 PODFILE CHECKSUM: d2be18b8576cdac3ef9ab50ae179d6ddb5a66160
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
