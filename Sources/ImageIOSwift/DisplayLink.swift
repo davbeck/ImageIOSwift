@@ -37,7 +37,7 @@ class DisplayLink {
 			#if os(iOS) || os(tvOS)
 				self.link.isPaused = self.isPaused
 			#else
-				if self.isPaused {
+				if !self.isPaused {
 					self.timer = Timer.scheduledTimer(timeInterval: self.timeInterval, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
 				} else if self.timer == nil {
 					self.timer = nil
