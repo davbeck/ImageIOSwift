@@ -19,13 +19,13 @@ public class BindableImageSourceController: ImageSourceController, ObservableObj
 		super.init(imageSource: imageSource)
 	}
 	
-	override public func sendWillUpdate() {
+	public override func sendWillUpdate() {
 		super.sendWillUpdate()
 		
 		self._willChange.send()
 	}
 	
-	override public func sendDidUpdate() {
+	public override func sendDidUpdate() {
 		super.sendDidUpdate()
 		
 		self._didChange.send()

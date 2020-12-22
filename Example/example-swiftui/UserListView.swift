@@ -43,7 +43,7 @@ struct UserListView: View {
 		.mapToResult()
 		.receive(on: RunLoop.main)
 	
-	@State var result: Result<RandomUsersResponse, Error>? = nil
+	@State var result: Result<RandomUsersResponse, Error>?
 	
 	var body: some View {
 		switch result {

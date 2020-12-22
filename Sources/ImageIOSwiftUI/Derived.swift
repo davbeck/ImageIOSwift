@@ -21,7 +21,7 @@ public struct Derived<Source: Hashable, Derived, ChildView: View>: View {
 			self.derived = derived
 			
 			if let observable = self as? ErasedObservableObject {
-				objectWillChange = observable.erasedObjectWillChange
+				self.objectWillChange = observable.erasedObjectWillChange
 			}
 		}
 		
@@ -56,7 +56,7 @@ public struct Derived<Source: Hashable, Derived, ChildView: View>: View {
 	private struct Observer: View {
 		@ObservedObject fileprivate var derived: Lazy
 		fileprivate var content: (Derived) -> ChildView
-
+		
 		var body: some View {
 			return self.content(derived.value)
 		}
@@ -107,7 +107,7 @@ protocol ErasedObservableObject {
 extension Derived.Lazy: ErasedObservableObject where Derived: ObservableObject {
 	var erasedObjectWillChange: AnyPublisher<Void, Never> {
 		return self.value.objectWillChange
-			.map({ _ in Void() })
+			.map { _ in Void() }
 			.eraseToAnyPublisher()
 	}
 }

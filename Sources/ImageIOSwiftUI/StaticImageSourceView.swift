@@ -97,7 +97,7 @@ public struct StaticImageSourceView: View {
 			.overlay(
 				image.map { Image($0, scale: 1, label: self.label)
 					.resizable()
-                    .renderingMode(.original)
+					.renderingMode(.original)
 					// adjust based on exif orientation
 					.rotationEffect(properties.rotateZ)
 					.scaleEffect(x: properties.scaleX,
