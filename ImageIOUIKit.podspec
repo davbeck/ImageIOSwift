@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ImageIOUIKit'
-  s.version          = '1.1.1'
+  s.version          = '1.1.2'
   s.summary          = 'UIKit integration for ImageIO.'
 
   s.description      = <<-DESC
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/davbeck/ImageIOSwift.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/davbeck'
 
-	s.swift_version = '5.1'
+  s.swift_version = '5.1'
   s.ios.deployment_target = '9.0'
   s.static_framework = true
 
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
 
   s.framework  = 'UIKit'
 	
-	s.dependency 'ImageIOSwift', '~> 1.1.0'
+  s.dependency 'ImageIOSwift', '~> 1.1.2'
 end

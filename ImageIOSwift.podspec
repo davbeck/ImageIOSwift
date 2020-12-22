@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ImageIOSwift'
-  s.version          = '1.1.1'
+  s.version          = '1.1.2'
   s.summary          = 'Swift wrapper around ImageIO.'
 
   s.description      = <<-DESC
