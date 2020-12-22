@@ -25,7 +25,7 @@ public class ImageSourceDownloader: NSObject {
 		
 		self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
 		
-		#if canImport(UIKit)
+		#if os(iOS) || os(tvOS)
 			NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
 		#endif
 	}
