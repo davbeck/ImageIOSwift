@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(UIKit)
+	import UIKit
+#endif
 
 /// A controller that manages downloading image sources incrementally.
 public class ImageSourceDownloader: NSObject {
@@ -21,6 +24,10 @@ public class ImageSourceDownloader: NSObject {
 		delegateQueue.underlyingQueue = self.queue
 		
 		self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
+		
+		#if canImport(UIKit)
+			NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
+		#endif
 	}
 	
 	// MARK: - Downloading
@@ -30,7 +37,7 @@ public class ImageSourceDownloader: NSObject {
 	/// A central request for a particular url.
 	///
 	/// While Task tracks a single request, multiple requests for the same url will be uniqued so that they aren't requested multiple times. When a task is cancelled, it gets removed from the download task, and only when all subtasks have been cancelled is the actual download request cancelled.
-	fileprivate class DownloadTask: NSObject {
+	fileprivate class DownloadTask {
 		/// The lock queue from the parent downloader.
 		let queue: DispatchQueue
 		
@@ -192,13 +199,15 @@ public class ImageSourceDownloader: NSObject {
 		}
 	}
 	
-	/// Current tasks being downloaded.
+	/// All active download tasks.
 	///
-	/// When a task is completed, it is removed from this list. This list is used to lookup tasks and update them from the url session delegate methods as well as share downloads.
-	fileprivate var tasks: [URLRequest: DownloadTask] = [:]
+	/// This will reference any tasks for this downloader until they are completely released, but will not itself retain the task. This allows us to always reuse existing tasks and not create duplicate image sources when the same resource is downloaded from multiple places.
+	fileprivate var tasks: [URLRequest: Weak<DownloadTask>] = [:]
 	
-	/// Successfully completed tasks.
-	fileprivate let taskCache = ReferenceCache<URLRequest, DownloadTask>()
+	/// Cache of download tasks.
+	///
+	/// Keeps tasks alive even if there isn't anything referencing them. This way if an image is requested again we can return the task immediately. Values aren't actually used, this is just to keep tasks alive so that they will be available in the tasks array.
+	fileprivate var taskCache = [URLRequest: DownloadTask]()
 	
 	/// Download an image from a given url.
 	///
@@ -271,18 +280,27 @@ public class ImageSourceDownloader: NSObject {
 	/// This will get either an in progress task, a previously succesful task, or create a new one.
 	private func downloadTask(for request: URLRequest) -> DownloadTask {
 		return self.queue.sync {
-			if let inProgress = tasks[request] {
-				return inProgress
-			} else if let cached = taskCache[request] {
-				return cached
+			if let downloadTask = tasks[request]?.value {
+				// in case our cache has been purged but the task was kept alive, extend that
+				self.taskCache[request] = downloadTask
+				return downloadTask
 			} else {
 				let sessionTask = self.session.dataTask(with: request)
 				
 				let downloadTask = DownloadTask(sessionTask: sessionTask, queue: self.queue)
-				self.tasks[request] = downloadTask
+				self.taskCache[request] = downloadTask
+				self.tasks[request] = Weak(downloadTask)
 				return downloadTask
 			}
 		}
+	}
+	
+	// MARK: - Notifications
+	
+	@objc func didReceiveMemoryWarning(_: Notification) {
+		// we may still have a reference to tasks in the tasks array if something else is keeping them alive
+		// this just removes our hold on the task and allows them to be released if nothing else is referencing them
+		self.taskCache.removeAll()
 	}
 }
 
@@ -290,7 +308,7 @@ extension ImageSourceDownloader: URLSessionDataDelegate {
 	public func urlSession(_: URLSession, dataTask sessionTask: URLSessionDataTask, didReceive data: Data) {
 		guard
 			let request = sessionTask.originalRequest,
-			let task = tasks[request]
+			let task = tasks[request]?.value
 		else { return }
 		
 		task.data.append(data)
@@ -299,7 +317,7 @@ extension ImageSourceDownloader: URLSessionDataDelegate {
 	public func urlSession(_: URLSession, task sessionTask: URLSessionTask, didCompleteWithError error: Error?) {
 		guard
 			let request = sessionTask.originalRequest,
-			let downloadTask = tasks[request]
+			let downloadTask = tasks[request]?.value
 		else { return }
 		
 		self.tasks[request] = nil
