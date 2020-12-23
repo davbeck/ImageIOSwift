@@ -35,6 +35,25 @@ open class ImageSourceController {
 	/// The image source that is managed.
 	public let imageSource: ImageSource
 	
+	public struct ThumbnailOptions: Equatable {
+		public var targetSize: CGSize
+		public var mode: ImageSource.ResizingMode
+		public var behavior: ImageSource.ImageOptions.CreateThumbnailBehavior
+		
+		public init(targetSize: CGSize, mode: ImageSource.ResizingMode, behavior: ImageSource.ImageOptions.CreateThumbnailBehavior) {
+			self.targetSize = targetSize
+			self.mode = mode
+			self.behavior = behavior
+		}
+	}
+	
+	public var thumbnailOptions: ThumbnailOptions? {
+		didSet {
+			guard self.thumbnailOptions != oldValue else { return }
+			self.setNeedsUpdate()
+		}
+	}
+	
 	private var displayLink: DisplayLink? {
 		didSet {
 			oldValue?.invalidate()
@@ -43,8 +62,9 @@ open class ImageSourceController {
 	
 	/// Create a controller and track the image source.
 	/// - Parameter imageSource: The image source to manage.
-	public init(imageSource: ImageSource) {
+	public init(imageSource: ImageSource, thumbnailOptions: ThumbnailOptions? = nil) {
 		self.imageSource = imageSource
+		self.thumbnailOptions = thumbnailOptions
 		
 		NotificationCenter.default.addObserver(self, selector: #selector(self.didUpdateData), name: ImageSource.didUpdateData, object: imageSource)
 		
@@ -57,11 +77,19 @@ open class ImageSourceController {
 	}
 	
 	private var imageCache = NSCache<NSNumber, CGImage>()
-	private func image(at frame: Int) -> CGImage? {
+	private func image(at frame: Int, thumbnailOptions: ThumbnailOptions?) -> CGImage? {
 		var options = ImageSource.ImageOptions()
 		options.shouldDecodeImmediately = true
+		if let thumbnailOptions = thumbnailOptions {
+			options.createThumbnailBehavior = thumbnailOptions.behavior
+		}
 		
 		if let image = imageCache.object(forKey: NSNumber(value: frame)) {
+			return image
+		} else if let thumbnailOptions = thumbnailOptions, let image = self.imageSource.cgThumbnailImage(at: frame, size: thumbnailOptions.targetSize, mode: thumbnailOptions.mode, options: options) {
+			if self.imageSource.status == .complete {
+				self.imageCache.setObject(image, forKey: NSNumber(value: frame))
+			}
 			return image
 		} else if let image = self.imageSource.cgImage(at: frame, options: options) {
 			if self.imageSource.status == .complete {
@@ -86,9 +114,10 @@ open class ImageSourceController {
 		
 		let updateIteration = self.updateIteration
 		let currentFrame = self.currentFrame
+		let thumbnailOptions = self.thumbnailOptions
 		
 		DispatchQueue.global().async {
-			let image = self.image(at: currentFrame)
+			let image = self.image(at: currentFrame, thumbnailOptions: thumbnailOptions)
 			let properties = self.imageSource.properties(at: currentFrame)
 			
 			DispatchQueue.main.async {
@@ -101,7 +130,10 @@ open class ImageSourceController {
 				
 				// if something changed while we were updating, update again
 				self.isUpdating = false
-				if self.updateIteration != updateIteration || self.currentFrame != currentFrame {
+				if
+					self.updateIteration != updateIteration ||
+					self.currentFrame != currentFrame ||
+					self.thumbnailOptions != thumbnailOptions {
 					self.setNeedsUpdate()
 				}
 			}

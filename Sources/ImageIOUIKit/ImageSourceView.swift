@@ -9,6 +9,12 @@
 	open class ImageSourceView: UIView {
 		public weak var delegate: ImageSourceViewDelegate?
 		
+		public var thumbnailOptions: ImageSourceController.ThumbnailOptions? {
+			didSet {
+				self.controller?.thumbnailOptions = self.thumbnailOptions
+			}
+		}
+		
 		private var controller: ImageSourceController? {
 			didSet {
 				oldValue?.stopAnimating()
@@ -31,7 +37,7 @@
 			set {
 				guard controller?.imageSource !== newValue else { return }
 				if let newValue = newValue {
-					controller = ImageSourceController(imageSource: newValue)
+					controller = ImageSourceController(imageSource: newValue, thumbnailOptions: thumbnailOptions)
 				} else {
 					controller = nil
 				}
@@ -73,7 +79,11 @@
 		}
 		
 		open func load(_ url: URL, with downloader: ImageSourceDownloader = .shared, completionHandler: ((ImageSource?, Data?, URLResponse?, Error?) -> Void)? = nil) {
-			self.task = downloader.download(url, completionHandler: completionHandler)
+			if url.isFileURL {
+				self.imageSource = ImageSource(url: url)
+			} else {
+				self.task = downloader.download(url, completionHandler: completionHandler)
+			}
 		}
 		
 		// MARK: - Initialization
