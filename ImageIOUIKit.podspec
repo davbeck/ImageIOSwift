@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ImageIOUIKit'
-  s.version          = '1.1.2'
+  s.version          = '1.2.0'
   s.summary          = 'UIKit integration for ImageIO.'
 
   s.description      = <<-DESC
@@ -25,5 +25,5 @@ Pod::Spec.new do |s|
 
   s.framework  = 'UIKit'
 	
-  s.dependency 'ImageIOSwift', '~> 1.1.2'
+  s.dependency 'ImageIOSwift', s.version.to_s
 end
