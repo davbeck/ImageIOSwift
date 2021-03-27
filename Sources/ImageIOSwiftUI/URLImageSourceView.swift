@@ -1,3 +1,4 @@
+#if canImport(SwiftUI) && canImport(Combine)
 import Combine
 import ImageIOSwift
 import SwiftUI
@@ -108,3 +109,4 @@ public struct URLImageSourceView: View {
 		}
 	}
 }
+#endif
