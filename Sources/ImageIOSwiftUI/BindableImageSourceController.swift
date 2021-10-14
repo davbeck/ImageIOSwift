@@ -12,11 +12,11 @@ public class BindableImageSourceController: ImageSourceController, ObservableObj
 	private let _didChange = PassthroughSubject<Void, Never>()
 	public let objectDidChange: AnyPublisher<Void, Never>
 	
-	public override init(imageSource: ImageSource) {
+	public override init(imageSource: ImageSource, thumbnailOptions: ImageSourceController.ThumbnailOptions? = nil) {
 		self.objectWillChange = self._willChange.eraseToAnyPublisher()
 		self.objectDidChange = self._didChange.eraseToAnyPublisher()
 		
-		super.init(imageSource: imageSource)
+		super.init(imageSource: imageSource, thumbnailOptions: thumbnailOptions)
 	}
 	
 	public override func sendWillUpdate() {

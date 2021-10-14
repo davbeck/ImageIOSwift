@@ -32,7 +32,7 @@ public struct ImageControllerView<Content: View>: View {
 	public var body: some View {
 		Derived(
 			from: imageSource,
-			using: BindableImageSourceController.init
+			using: { BindableImageSourceController(imageSource: $0, thumbnailOptions: nil) }
 		) { controller in
 			self.content(controller)
 				.onAppear {
