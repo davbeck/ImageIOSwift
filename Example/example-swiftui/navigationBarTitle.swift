@@ -6,10 +6,10 @@ enum DisplayMode {
 
 extension View {
 	func navigationBarTitle(_: String) -> Self {
-		return self
+		self
 	}
-	
+
 	func navigationBarTitle(_: Text, displayMode _: DisplayMode) -> Self {
-		return self
+		self
 	}
 }

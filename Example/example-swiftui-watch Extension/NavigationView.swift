@@ -8,8 +8,8 @@ struct NavigationView<Content>: View where Content: View {
 	init(content: () -> Content) {
 		self.content = content()
 	}
-	
+
 	var body: some View {
-		return content
+		content
 	}
 }

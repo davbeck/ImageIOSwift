@@ -5,7 +5,7 @@ import SwiftUI
 
 extension Publisher {
 	func mapToResult() -> Publishers.Catch<Publishers.Map<Self, Result<Output, Error>>, Just<Result<Output, Error>>> {
-		return self
+		self
 			.map { Result<Output, Error>.success($0) }
 			.catch { Just(Result<Output, Error>.failure($0)) }
 	}
@@ -13,7 +13,7 @@ extension Publisher {
 
 struct RandomUsersResponseView: View {
 	var response: RandomUsersResponse
-	
+
 	var body: some View {
 		List(response.results, id: \.login.uuid) { user in
 			HStack {
@@ -34,7 +34,7 @@ struct RandomUsersResponseView: View {
 
 struct UserListView: View {
 	@State var task = URLSession.shared.dataTaskPublisher(for: URL(string: "https://randomuser.me/api/?results=100")!)
-		.tryMap { (data, _) -> RandomUsersResponse in
+		.tryMap { data, _ -> RandomUsersResponse in
 			var decoder = JSONDecoder()
 			decoder.dateDecodingStrategy = .iso8601
 			return try decoder.decode(RandomUsersResponse.self, from: data)
@@ -42,16 +42,16 @@ struct UserListView: View {
 		.print()
 		.mapToResult()
 		.receive(on: RunLoop.main)
-	
+
 	@State var result: Result<RandomUsersResponse, Error>?
-	
+
 	var body: some View {
 		switch result {
 		case .none:
 			return AnyView(Text("Loading...")
 				.onReceive(task) {
 					self.result = $0
-			})
+				})
 		case let .success(response):
 			return AnyView(RandomUsersResponseView(response: response))
 		case let .failure(error):

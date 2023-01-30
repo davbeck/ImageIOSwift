@@ -13,18 +13,18 @@ public struct Derived<Source: Hashable, Derived, ChildView: View>: View {
 	fileprivate class Lazy: ObservableObject {
 		var source: Source
 		var derived: (Source) -> Derived
-		
+
 		var objectWillChange: AnyPublisher<Void, Never> = Empty().eraseToAnyPublisher()
-		
+
 		init(from source: Source, using derived: @escaping (Source) -> Derived) {
 			self.source = source
 			self.derived = derived
-			
+
 			if let observable = self as? ErasedObservableObject {
 				self.objectWillChange = observable.erasedObjectWillChange
 			}
 		}
-		
+
 		private var _value: Derived?
 		var value: Derived {
 			get {
@@ -41,39 +41,39 @@ public struct Derived<Source: Hashable, Derived, ChildView: View>: View {
 			}
 		}
 	}
-	
+
 	// keeps track of the lazy value using @State
 	// this has to be separate from the parent because `id()` is applied there and that's how state is reset
 	private struct Storage: View {
 		@State fileprivate var derived: Lazy
 		fileprivate var content: (Derived) -> ChildView
-		
+
 		var body: some View {
-			return Observer(derived: derived, content: content)
+			Observer(derived: derived, content: content)
 		}
 	}
-	
+
 	private struct Observer: View {
 		@ObservedObject fileprivate var derived: Lazy
 		fileprivate var content: (Derived) -> ChildView
-		
+
 		var body: some View {
-			return self.content(derived.value)
+			self.content(derived.value)
 		}
 	}
-	
+
 	public var source: Source
 	public var derived: (Source) -> Derived
 	public var content: (Derived) -> ChildView
-	
+
 	public init(from source: Source, using derived: @escaping (Source) -> Derived, content: @escaping (Derived) -> ChildView) {
 		self.source = source
 		self.derived = derived
 		self.content = content
 	}
-	
+
 	public var body: some View {
-		return Storage(
+		Storage(
 			derived: Lazy(from: source, using: derived),
 			content: content
 		)
@@ -84,7 +84,7 @@ public struct Derived<Source: Hashable, Derived, ChildView: View>: View {
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Derived.Lazy: Identifiable where Derived: Identifiable {
 	var id: Derived.ID {
-		return value.id
+		value.id
 	}
 }
 
@@ -106,8 +106,8 @@ protocol ErasedObservableObject {
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 extension Derived.Lazy: ErasedObservableObject where Derived: ObservableObject {
 	var erasedObjectWillChange: AnyPublisher<Void, Never> {
-		return self.value.objectWillChange
-			.map { _ in Void() }
+		self.value.objectWillChange
+			.map { _ in () }
 			.eraseToAnyPublisher()
 	}
 }

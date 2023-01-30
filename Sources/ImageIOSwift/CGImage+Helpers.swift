@@ -1,7 +1,7 @@
 import CoreGraphics
 
-extension CGImage {
-	public var size: CGSize {
-		return CGSize(width: width, height: height)
+public extension CGImage {
+	var size: CGSize {
+		CGSize(width: width, height: height)
 	}
 }

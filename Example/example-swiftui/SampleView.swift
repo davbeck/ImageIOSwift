@@ -5,7 +5,7 @@ import SwiftUI
 struct SampleView: View {
 	var sample: Sample
 	var isAnimationEnabled: Bool = true
-	
+
 	var body: some View {
 		VStack {
 			ImageTaskView(sample.url) { task in

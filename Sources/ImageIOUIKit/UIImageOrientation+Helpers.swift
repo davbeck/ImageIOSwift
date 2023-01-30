@@ -1,9 +1,9 @@
 #if canImport(UIKit)
 	import ImageIOSwift
 	import UIKit
-	
-	extension UIImage.Orientation {
-		public init(exifOrientation: Int) {
+
+	public extension UIImage.Orientation {
+		init(exifOrientation: Int) {
 			switch exifOrientation {
 			case 2:
 				self = .upMirrored
@@ -24,10 +24,10 @@
 			}
 		}
 	}
-	
+
 	extension ImageProperties {
 		var orientation: UIImage.Orientation {
-			return UIImage.Orientation(exifOrientation: exifOrientation)
+			UIImage.Orientation(exifOrientation: exifOrientation)
 		}
 	}
 #endif

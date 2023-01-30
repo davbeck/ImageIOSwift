@@ -11,7 +11,7 @@ class DisplayLink {
 			return NSDate().timeIntervalSinceReferenceDate
 		#endif
 	}
-	
+
 	#if os(iOS) || os(tvOS)
 		private lazy var link = CADisplayLink(target: self, selector: #selector(displayLinkFired))
 	#else
@@ -22,16 +22,16 @@ class DisplayLink {
 			}
 		}
 	#endif
-	
+
 	func start() {
 		#if os(iOS) || os(tvOS)
 			self.link.add(to: .main, forMode: .default)
 		#else
 		#endif
-		
+
 		self.isPaused = false
 	}
-	
+
 	public var isPaused: Bool = true {
 		didSet {
 			#if os(iOS) || os(tvOS)
@@ -45,7 +45,7 @@ class DisplayLink {
 			#endif
 		}
 	}
-	
+
 	public func invalidate() {
 		#if os(iOS) || os(tvOS)
 			self.link.invalidate()
@@ -53,7 +53,7 @@ class DisplayLink {
 			self.timer = nil
 		#endif
 	}
-	
+
 	#if os(iOS) || os(tvOS)
 		@objc private func displayLinkFired(_: CADisplayLink) {
 			if #available(iOS 10.0, tvOS 10.0, *) {
@@ -62,21 +62,21 @@ class DisplayLink {
 				self.onFire(self.link.timestamp)
 			}
 		}
-		
+
 	#else
 		@objc private func timerFired() {
 			self.onFire(DisplayLink.currentTime)
 		}
 	#endif
-	
+
 	public var preferredFramesPerSecond: Int
-	
+
 	public var onFire: (TimeInterval) -> Void
-	
+
 	public init(preferredFramesPerSecond: Int = 0, onFire: @escaping ((TimeInterval) -> Void)) {
 		self.preferredFramesPerSecond = preferredFramesPerSecond
 		self.onFire = onFire
-		
+
 		#if os(iOS) || os(tvOS)
 			if #available(iOS 10.0, tvOS 10.0, macCatalyst 13.0, *) {
 				self.link.preferredFramesPerSecond = preferredFramesPerSecond
@@ -85,7 +85,7 @@ class DisplayLink {
 			self.timeInterval = preferredFramesPerSecond == 0 ? 1 / 60 : 1 / TimeInterval(preferredFramesPerSecond)
 		#endif
 	}
-	
+
 	deinit {
 		invalidate()
 	}

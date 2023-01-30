@@ -23,7 +23,7 @@ extension ImageProperties {
 			return .zero
 		}
 	}
-	
+
 	var scaleX: CGFloat {
 		switch self.exifOrientation {
 		case 2:
@@ -44,7 +44,7 @@ extension ImageProperties {
 			return 1
 		}
 	}
-	
+
 	var scaleY: CGFloat {
 		switch self.exifOrientation {
 		case 2:
@@ -71,7 +71,7 @@ extension ImageProperties {
 @available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
 public struct ImageSourceBase: View {
 	var properties: ImageProperties
-	
+
 	public var body: some View {
 		Rectangle()
 			.fill(Color.clear)
@@ -85,15 +85,15 @@ public struct StaticImageSourceView: View {
 	public var image: CGImage?
 	public var properties: ImageProperties
 	public var label: Text
-	
+
 	public init(image: CGImage?, properties: ImageProperties, label: Text) {
 		self.image = image
 		self.properties = properties
 		self.label = label
 	}
-	
+
 	public var body: some View {
-		return ImageSourceBase(properties: properties)
+		ImageSourceBase(properties: properties)
 			.overlay(
 				image.map { Image($0, scale: 1, label: self.label)
 					.resizable()

@@ -3,7 +3,7 @@ import SwiftUI
 
 let uifaces = ["men", "women"]
 	.flatMap { gender in
-		(0..<100).map { "https://randomuser.me/api/portraits/\(gender)/\($0).jpg" }
+		(0 ..< 100).map { "https://randomuser.me/api/portraits/\(gender)/\($0).jpg" }
 	}
 	.compactMap { URL(string: $0) }
 
@@ -21,7 +21,7 @@ let names = [
 				.foregroundColor(Color(white: 0.4))
 		}
 	}
-	
+
 #else
 	struct Placeholder: View {
 		var body: some View {
@@ -33,7 +33,7 @@ let names = [
 struct ProfileView: View {
 	@State var url: URL = uifaces.randomElement()!
 	@State var name: String = names.randomElement()!
-	
+
 	var body: some View {
 		VStack {
 			ZStack {
@@ -55,7 +55,7 @@ struct ProfileView: View {
 				}
 				Spacer().frame(width: 20)
 				Button("Update name") {
-					self.name = names.randomElement()! + " \(Int.random(in: 0..<100))"
+					self.name = names.randomElement()! + " \(Int.random(in: 0 ..< 100))"
 				}
 			}
 			Spacer()

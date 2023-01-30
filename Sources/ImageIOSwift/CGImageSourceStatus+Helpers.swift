@@ -8,7 +8,7 @@ extension CGImageSourceStatus: CustomStringConvertible {
 	public static let readingHeader = CGImageSourceStatus.statusReadingHeader
 	public static let incomplete = CGImageSourceStatus.statusIncomplete
 	public static let complete = CGImageSourceStatus.statusComplete
-	
+
 	public var description: String {
 		switch self {
 		case .statusUnexpectedEOF:
@@ -29,10 +29,10 @@ extension CGImageSourceStatus: CustomStringConvertible {
 	}
 }
 
-extension ImageSource {
-	public struct Error: Swift.Error, LocalizedError, CustomStringConvertible {
+public extension ImageSource {
+	struct Error: Swift.Error, LocalizedError, CustomStringConvertible {
 		public let status: CGImageSourceStatus
-		
+
 		public init?(_ status: CGImageSourceStatus) {
 			switch status {
 			case .statusReadingHeader, .statusIncomplete, .statusComplete:
@@ -41,11 +41,11 @@ extension ImageSource {
 				self.status = status
 			}
 		}
-		
+
 		public var description: String {
-			return self.status.description
+			self.status.description
 		}
-		
+
 		public var errorDescription: String? {
 			switch self.status {
 			case .statusUnexpectedEOF:

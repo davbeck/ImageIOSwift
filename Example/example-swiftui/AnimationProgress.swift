@@ -2,9 +2,9 @@ import SwiftUI
 
 struct AnimationProgress: View {
 	var progress: Double
-	
+
 	var body: some View {
-		return GeometryReader { proxy in
+		GeometryReader { proxy in
 			HStack {
 				Rectangle()
 					.fill(Color.blue.opacity(0.5))

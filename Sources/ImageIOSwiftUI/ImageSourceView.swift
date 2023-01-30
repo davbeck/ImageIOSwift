@@ -18,7 +18,7 @@ public struct ImageControllerView<Content: View>: View {
 	public var isAnimationEnabled: Bool
 	/// The contents to use to render the image source.
 	public var content: (BindableImageSourceController) -> Content
-	
+
 	/// Create an image controller view.
 	/// - Parameter imageSource: The image source to dipslay.
 	/// - Parameter isAnimationEnabled: When true, animation will start once the image is loaded.
@@ -28,7 +28,7 @@ public struct ImageControllerView<Content: View>: View {
 		self.isAnimationEnabled = isAnimationEnabled
 		self.content = content
 	}
-	
+
 	public var body: some View {
 		Derived(
 			from: imageSource,
@@ -56,7 +56,7 @@ public struct ImageSourceView: View {
 	public var isAnimationEnabled: Bool
 	/// The label associated with the image. The label is used for things like accessibility.
 	public var label: Text
-	
+
 	/// Create a image source view.
 	/// - Parameter imageSource: The image source to dipslay.
 	/// - Parameter isAnimationEnabled: When true, animation will start once the image is loaded.
@@ -66,7 +66,7 @@ public struct ImageSourceView: View {
 		self.isAnimationEnabled = isAnimationEnabled
 		self.label = label
 	}
-	
+
 	public var body: some View {
 		ImageControllerView(imageSource: imageSource, isAnimationEnabled: isAnimationEnabled) { controller in
 			StaticImageSourceView(

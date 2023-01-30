@@ -8,26 +8,26 @@ import ImageIOSwift
 public class BindableImageSourceController: ImageSourceController, ObservableObject {
 	private let _willChange = PassthroughSubject<Void, Never>()
 	public var objectWillChange: AnyPublisher<Void, Never>
-	
+
 	private let _didChange = PassthroughSubject<Void, Never>()
 	public let objectDidChange: AnyPublisher<Void, Never>
-	
-	public override init(imageSource: ImageSource, thumbnailOptions: ImageSourceController.ThumbnailOptions? = nil) {
+
+	override public init(imageSource: ImageSource, thumbnailOptions: ImageSourceController.ThumbnailOptions? = nil) {
 		self.objectWillChange = self._willChange.eraseToAnyPublisher()
 		self.objectDidChange = self._didChange.eraseToAnyPublisher()
-		
+
 		super.init(imageSource: imageSource, thumbnailOptions: thumbnailOptions)
 	}
-	
-	public override func sendWillUpdate() {
+
+	override public func sendWillUpdate() {
 		super.sendWillUpdate()
-		
+
 		self._willChange.send()
 	}
-	
-	public override func sendDidUpdate() {
+
+	override public func sendDidUpdate() {
 		super.sendDidUpdate()
-		
+
 		self._didChange.send()
 	}
 }
