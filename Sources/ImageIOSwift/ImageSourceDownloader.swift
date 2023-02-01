@@ -5,8 +5,14 @@ import Foundation
 
 /// A controller that manages downloading image sources incrementally.
 public class ImageSourceDownloader: NSObject {
+	private let configuration: URLSessionConfiguration
+
 	/// The underlying session used to download image data.
-	public private(set) var session: URLSession!
+	public private(set) lazy var session: URLSession = .init(
+		configuration: configuration,
+		delegate: self,
+		delegateQueue: nil
+	)
 
 	/// The lock queue to protect access to task state.
 	private let queue = DispatchQueue(label: "ImageSourceDownloader")
@@ -18,12 +24,27 @@ public class ImageSourceDownloader: NSObject {
 	///
 	/// - Parameter configuration: The configuration to use with the URLSession.
 	public init(configuration: URLSessionConfiguration = .default) {
+		self.configuration = configuration
+
 		super.init()
 
-		let delegateQueue = OperationQueue()
-		delegateQueue.underlyingQueue = self.queue
+		self.session = URLSession(
+			configuration: configuration,
+			delegate: self,
+			delegateQueue: nil
+		)
+	}
 
-		self.session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
+	/// Create a customized downloader.
+	///
+	/// - Parameter session: A URLSession to use to fetch images.
+	@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+	public init(session: URLSession) {
+		self.configuration = session.configuration
+
+		super.init()
+
+		self.session = session
 
 		#if os(iOS) || os(tvOS)
 			NotificationCenter.default.addObserver(self, selector: #selector(self.didReceiveMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
@@ -286,6 +307,9 @@ public class ImageSourceDownloader: NSObject {
 				return downloadTask
 			} else {
 				let sessionTask = self.session.dataTask(with: request)
+				if #available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *), session.delegate !== self {
+					sessionTask.delegate = self
+				}
 
 				let downloadTask = DownloadTask(sessionTask: sessionTask, queue: self.queue)
 				self.taskCache[request] = downloadTask
@@ -305,26 +329,38 @@ public class ImageSourceDownloader: NSObject {
 }
 
 extension ImageSourceDownloader: URLSessionDataDelegate {
-	public func urlSession(_: URLSession, dataTask sessionTask: URLSessionDataTask, didReceive data: Data) {
-		guard
-			let request = sessionTask.originalRequest,
-			let task = tasks[request]?.value
-		else { return }
+	public func urlSession(
+		_ session: URLSession,
+		dataTask sessionTask: URLSessionDataTask,
+		didReceive data: Data
+	) {
+		queue.async {
+			guard
+				let request = sessionTask.originalRequest,
+				let task = self.tasks[request]?.value
+			else { return }
 
-		task.data.append(data)
+			task.data.append(data)
+		}
 	}
 
-	public func urlSession(_: URLSession, task sessionTask: URLSessionTask, didCompleteWithError error: Error?) {
-		guard
-			let request = sessionTask.originalRequest,
-			let downloadTask = tasks[request]?.value
-		else { return }
+	public func urlSession(
+		_ session: URLSession,
+		task sessionTask: URLSessionTask,
+		didCompleteWithError error: Error?
+	) {
+		queue.async {
+			guard
+				let request = sessionTask.originalRequest,
+				let downloadTask = self.tasks[request]?.value
+			else { return }
 
-		self.tasks[request] = nil
-		downloadTask.complete(with: error)
+			self.tasks[request] = nil
+			downloadTask.complete(with: error)
 
-		if downloadTask.error == nil {
-			self.taskCache[request] = downloadTask
+			if downloadTask.error == nil {
+				self.taskCache[request] = downloadTask
+			}
 		}
 	}
 }
