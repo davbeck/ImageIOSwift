@@ -230,6 +230,12 @@ public class ImageSourceDownloader: NSObject {
 	/// Keeps tasks alive even if there isn't anything referencing them. This way if an image is requested again we can return the task immediately. Values aren't actually used, this is just to keep tasks alive so that they will be available in the tasks array.
 	fileprivate var taskCache = [URLRequest: DownloadTask]()
 
+	public func clearCache() {
+		// we may still have a reference to tasks in the tasks array if something else is keeping them alive
+		// this just removes our hold on the task and allows them to be released if nothing else is referencing them
+		self.taskCache.removeAll()
+	}
+
 	/// Download an image from a given url.
 	///
 	/// Multiple requests for the same resource will use the same download and image source to avoid requesting data multiple times and using extra memory.
@@ -322,9 +328,7 @@ public class ImageSourceDownloader: NSObject {
 	// MARK: - Notifications
 
 	@objc func didReceiveMemoryWarning(_: Notification) {
-		// we may still have a reference to tasks in the tasks array if something else is keeping them alive
-		// this just removes our hold on the task and allows them to be released if nothing else is referencing them
-		self.taskCache.removeAll()
+		clearCache()
 	}
 }
 
