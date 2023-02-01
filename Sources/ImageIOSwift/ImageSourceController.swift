@@ -1,5 +1,6 @@
 import CoreGraphics
 import Foundation
+import Combine
 
 public protocol ImageSourceControllerDelegate: AnyObject {
 	func imageSourceControllerWillUpdate(_ imageSourceController: ImageSourceController)
@@ -14,7 +15,12 @@ public extension ImageSourceControllerDelegate {
 /// Manages the display of an image source, including incremental loading and animation.
 ///
 /// This controller will handle updates from an image source and animation timing. It renders each frame on a background queue and then synchronizes with the main queue. You should use this only from the main queue.
-open class ImageSourceController {
+open class ImageSourceController: ObservableObject {
+	private let _didChange = PassthroughSubject<Void, Never>()
+	public var objectDidChange: any Publisher<Void, Never> {
+		_didChange
+	}
+
 	public weak var delegate: ImageSourceControllerDelegate?
 
 	/// The currently displayed frame of animation.
@@ -147,6 +153,8 @@ open class ImageSourceController {
 
 	open func sendDidUpdate() {
 		self.delegate?.imageSourceControllerDidUpdate(self)
+
+		self._didChange.send()
 	}
 
 	// MARK: - Animation

@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
 	name: "ImageIOSwift",
 	platforms: [
-		.macOS(.v10_10), .iOS(.v9), .watchOS(.v2), .tvOS(.v9),
+		.macOS(.v10_15), .iOS(.v13), .watchOS(.v6), .tvOS(.v13),
 	],
 	products: [
 		.library(

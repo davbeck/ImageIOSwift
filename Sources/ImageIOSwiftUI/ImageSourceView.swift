@@ -17,13 +17,13 @@ public struct ImageControllerView<Content: View>: View {
 	/// When true, animation will start once the image is loaded.
 	public var isAnimationEnabled: Bool
 	/// The contents to use to render the image source.
-	public var content: (BindableImageSourceController) -> Content
+	public var content: (ImageSourceController) -> Content
 
 	/// Create an image controller view.
 	/// - Parameter imageSource: The image source to dipslay.
 	/// - Parameter isAnimationEnabled: When true, animation will start once the image is loaded.
 	/// - Parameter content: The content to render for each frame of the image source.
-	public init(imageSource: ImageSource, isAnimationEnabled: Bool = true, content: @escaping (BindableImageSourceController) -> Content) {
+	public init(imageSource: ImageSource, isAnimationEnabled: Bool = true, content: @escaping (ImageSourceController) -> Content) {
 		self.imageSource = imageSource
 		self.isAnimationEnabled = isAnimationEnabled
 		self.content = content
@@ -32,7 +32,7 @@ public struct ImageControllerView<Content: View>: View {
 	public var body: some View {
 		Derived(
 			from: imageSource,
-			using: { BindableImageSourceController(imageSource: $0, thumbnailOptions: nil) }
+			using: { ImageSourceController(imageSource: $0, thumbnailOptions: nil) }
 		) { controller in
 			self.content(controller)
 				.onAppear {
