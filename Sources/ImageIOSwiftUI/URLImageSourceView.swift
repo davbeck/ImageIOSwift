@@ -2,12 +2,12 @@ import Combine
 import ImageIOSwift
 import SwiftUI
 
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct ImageSourceDownloaderKey: EnvironmentKey {
 	public static var defaultValue: ImageSourceDownloader { .shared }
 }
 
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public extension EnvironmentValues {
 	/// Controls the image source downloader that is used to download image sources.
 	var imageSourceDownloader: ImageSourceDownloader {
@@ -19,7 +19,7 @@ public extension EnvironmentValues {
 /// A view that handles downloading an image source.
 ///
 /// Use this to customize how you display an image task. For instance, you can display a download progress indicator alongside the image.
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct ImageTaskView<Content: View>: View {
 	@Environment(\.imageSourceDownloader) private var imageSourceDownloader: ImageSourceDownloader
 
@@ -59,7 +59,7 @@ public struct ImageTaskView<Content: View>: View {
 }
 
 /// Displays an image soruce downloaded from a url.
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct URLImageSourceView: View {
 	/// The request to use to download.
 	///

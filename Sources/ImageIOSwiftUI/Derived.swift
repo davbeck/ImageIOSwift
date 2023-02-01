@@ -6,7 +6,7 @@ import SwiftUI
 /// If you have a value that is expensive to create (something that requires IO to create for instance), you can use this to generate the value only once per source value. When the value stays the same, the derived value will continue to be used, and when the source changes, a new derived value will be created.
 ///
 /// If Derived is a ObservableObject, content will be called each time it changes, so you do not need to create an additional binding.
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 public struct Derived<Source: Hashable, Derived, ChildView: View>: View {
 	// delays generation of a value until it is needed, then uses that value after that
 	// this has to be a class because value types can't be updated when evaluating body
@@ -81,14 +81,14 @@ public struct Derived<Source: Hashable, Derived, ChildView: View>: View {
 	}
 }
 
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Derived.Lazy: Identifiable where Derived: Identifiable {
 	var id: Derived.ID {
 		value.id
 	}
 }
 
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Derived.Lazy: DynamicProperty where Derived: DynamicProperty {
 	func update() {
 		self.value.update()
@@ -103,7 +103,7 @@ protocol ErasedObservableObject {
 // as of Xcode 11 beta 5, @State no longer updates when the value is a BindableObject,
 // so conditional conformance no longer works
 // we have to instead type erase our publisher to get conditional observing
-@available(iOS 13.0, OSX 10.15, tvOS 13.0, watchOS 6.0, *)
+@available(iOS 14.0, macOS 11.0, tvOS 14.0, watchOS 7.0, *)
 extension Derived.Lazy: ErasedObservableObject where Derived: ObservableObject {
 	var erasedObjectWillChange: AnyPublisher<Void, Never> {
 		self.value.objectWillChange
