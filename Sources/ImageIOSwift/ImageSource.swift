@@ -1,10 +1,16 @@
 import Foundation
 import ImageIO
+import Combine
 
 /// An interface to an image file including metadata
 ///
 /// You can think of `CG/NS/UIImage` as a single frame of pixels. `ImageSource` sits a level below that, providing access to almost anything an image *file* provides, including metadata and multiple representations. For instance, animated images have multiple image frames as well as timing metadata.
-public class ImageSource {
+public class ImageSource: ObservableObject {
+	private let _didChange = PassthroughSubject<Void, Never>()
+	public var objectDidChange: AnyPublisher<Void, Never> {
+		_didChange.eraseToAnyPublisher()
+	}
+	
 	/// The underlying image source
 	public let cgImageSource: CGImageSource
 
@@ -90,12 +96,16 @@ public class ImageSource {
 	///   - data: All data available at this time.
 	///   - isFinal: Set this to true when the file has been completely loaded.
 	public func update(_ data: Data, isFinal: Bool) {
+		objectWillChange.send()
+		
 		CGImageSourceUpdateData(self.cgImageSource, data as CFData, isFinal)
 
 		NotificationCenter.default.post(name: ImageSource.didUpdateData, object: self)
 		if isFinal {
 			NotificationCenter.default.post(name: ImageSource.didFinalizeData, object: self)
 		}
+		
+		_didChange.send()
 	}
 
 	// MARK: - Image Generation

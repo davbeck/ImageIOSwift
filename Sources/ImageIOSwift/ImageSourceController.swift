@@ -41,7 +41,7 @@ open class ImageSourceController: ObservableObject {
 	/// The image source that is managed.
 	public let imageSource: ImageSource
 
-	public struct ThumbnailOptions: Equatable {
+	public struct ThumbnailOptions: Hashable {
 		public var targetSize: CGSize
 		public var mode: ImageSource.ResizingMode
 		public var behavior: ImageSource.ImageOptions.CreateThumbnailBehavior
@@ -50,6 +50,13 @@ open class ImageSourceController: ObservableObject {
 			self.targetSize = targetSize
 			self.mode = mode
 			self.behavior = behavior
+		}
+		
+		public func hash(into hasher: inout Hasher) {
+			hasher.combine(targetSize.width)
+			hasher.combine(targetSize.height)
+			hasher.combine(mode)
+			hasher.combine(behavior)
 		}
 	}
 
@@ -149,6 +156,8 @@ open class ImageSourceController: ObservableObject {
 
 	open func sendWillUpdate() {
 		self.delegate?.imageSourceControllerWillUpdate(self)
+		
+		self.objectWillChange.send()
 	}
 
 	open func sendDidUpdate() {
