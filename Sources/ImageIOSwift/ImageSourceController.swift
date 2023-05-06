@@ -24,7 +24,7 @@ open class ImageSourceController: ObservableObject {
 	public weak var delegate: ImageSourceControllerDelegate?
 
 	/// The currently displayed frame of animation.
-	public private(set) var currentFrame: Int = 0 {
+	@Published public private(set) var currentFrame: Int = 0 {
 		didSet {
 			guard self.currentFrame != oldValue else { return }
 			self.setNeedsUpdate()
@@ -32,11 +32,11 @@ open class ImageSourceController: ObservableObject {
 	}
 
 	/// The current image that should be rendered.
-	public private(set) var currentImage: CGImage?
+	@Published public private(set) var currentImage: CGImage?
 	/// Properties for the current image.
 	///
 	/// You can use this to get things like the images size and orientation.
-	public private(set) var currentProperties: ImageProperties = .init()
+	@Published public private(set) var currentProperties: ImageProperties = .init()
 
 	/// The image source that is managed.
 	public let imageSource: ImageSource
