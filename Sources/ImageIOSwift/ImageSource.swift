@@ -5,7 +5,7 @@ import Combine
 /// An interface to an image file including metadata
 ///
 /// You can think of `CG/NS/UIImage` as a single frame of pixels. `ImageSource` sits a level below that, providing access to almost anything an image *file* provides, including metadata and multiple representations. For instance, animated images have multiple image frames as well as timing metadata.
-public class ImageSource: ObservableObject {
+public final class ImageSource: ObservableObject {
 	private let _didChange = PassthroughSubject<Void, Never>()
 	public var objectDidChange: AnyPublisher<Void, Never> {
 		_didChange.eraseToAnyPublisher()
