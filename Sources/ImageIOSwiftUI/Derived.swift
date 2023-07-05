@@ -1,3 +1,4 @@
+#if canImport(SwiftUI) && canImport(Combine)
 import Combine
 import SwiftUI
 
@@ -111,3 +112,4 @@ extension Derived.Lazy: ErasedObservableObject where Derived: ObservableObject {
 			.eraseToAnyPublisher()
 	}
 }
+#endif
